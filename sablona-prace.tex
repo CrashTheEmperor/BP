@@ -4,8 +4,8 @@
 %  draft,    				  % Testovací překlad
   12pt,       				% Velikost základního písma je 12 bodů
   a4paper,    				% Formát papíru je A4
-  %oneside,      			% Jednostranný tisk
-    twoside,      			% Dvoustranný tisk (kapitoly a další důležité části tedy začínají na lichých stranách)
+  oneside,      			% Jednostranný tisk
+    %twoside,      			% Dvoustranný tisk (kapitoly a další důležité části tedy začínají na lichých stranách)
 	unicode,						% Záložky a metainformace ve výsledném  PDF budou v kódování unicode
 ]{report}				    	% Dokument třídy 'zpráva', vhodná pro sazbu závěrečných prací s kapitolami
 
@@ -159,7 +159,7 @@
 % Vysázení stránky s rozšířeným abstraktem
 % (pokud píšete práci v češtině či slovenštině, vložení rozšířeného abstraktu zrušte;
 %  pro semestrální projekt také není potřeba rozšířený abstrakt uvádět)
-\input{text/rozsireny_abstrakt}
+%\input{text/rozsireny_abstrakt}
 
 %%% Vysázení citace práce
 \makecitation
@@ -194,13 +194,17 @@
 %%% Vložení souboru 'text/cile.tex' s úvodem
 \include{text/cile}
 
-%%% Vložení souboru 'text/reseni' s popisem řešení práce
+%%% Vložení souboru 'text/KNX' s popisem sběrnicového systému KNX
 % (rozdělte na více souborů či kapitol, pokud je vhodné)
-\include{text/reseni}
+\include{text/KNX.tex}
 
-%%% Vložení souboru 'text/vysledky' s popisem vysledků práce
+%%% Vložení souboru 'text/FLOWBOX' s popisem FLOWBOXu
 % (rozdělte na více souborů či kapitol, pokud je vhodné)
-\include{text/vysledky}
+\include{text/FLOWBOX.tex}
+
+%%% Vložení souboru 'text/ETS' s popisem softwaru ETS a praktickou částí
+% (rozdělte na více souborů či kapitol, pokud je vhodné)
+\include{text/ETS}
 
 %%% Vložení souboru 'text/zaver' se závěrem
 \include{text/zaver}

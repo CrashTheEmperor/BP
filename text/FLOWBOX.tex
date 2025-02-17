@@ -1,0 +1,23 @@
+\chapter{Foxtrot}
+Práce je zaměřená na vytvoření vizualizace pro vzdálené ovládání demonstrativního panelu. Za tímto účelem byla navázána spolupráce se společností FLOWBOX. Jedná se o podnik působící ve více než 20 zemích světa, který vyvíjí svou digitalizační a integrační platforma již od roku 2012. Cílem této spolupráce je rozšíření nabídky produktů, kterou dokáže platforma řídit a monitorovat. \cite{FLOWBOX}
+
+\section{Funkce platformy}
+Platforma funguje na bázi sběru informací pomocí snímačů a následném predikování chování systému z historie dat. Pomocí predikovaných dat řídí všechny US, za účelem dosažení maximální efektivity s maximálním využitím zdrojů.
+
+Architektura platformy je tří stupňová. První stupeň je server, který má podmínku umístění v blízkosti řídících členů instalace. Tedy musí být buďto připojen lokálně, nebo prostřednictvím cloudu. Druhý stupeň architektury je komunikační brána (PLC), která slouží k vzájemnému zasílání dat mezi US a serverem. Tyto data server zachytí, zpracuje, ukládá do databáze a dále využívá. Posledním stupněm architektury jsou samotní US (měřící zařízení, senzory, aktory apod.). \cite{FLOWBOX}
+
+Pro vysvětlení koncepce je zde popsáno zavlažování zahrady. Na zahradě máme metostanici, která posílá data (teplota a srážky) serveru skrze komunikační bránu. Server tyto data zpracuje a v případě potřeby zašle zprávu např. PLC, aby otevřelo ventil a začalo zavlažovat. PLC během tohoto úkonu zasílá data o délce otevření ventilu a množství vody, které proteklo na server. Ten data zpracuje a po vyhodnocení zašle zprávu PLC, aby zavřelo ventil. Veškerá data server ukládá, aby bylo později možno vidět spotřebu vody v čase, teplotu a množství srážek.\cite{MITRENGA}
+\\\\Další funkce nabízené společností FLOWBOX \cite{FLOWBOX}:
+\begin{itemize}
+    \item Monitoring energií
+    \item Řízení toku energií
+    \item Řízení kvality prostředí
+    \item Řízení technologií
+    \item Analýza produktivity a vytížení strojů
+    \item Řízení osvětlení
+    \item Bezpečnost a řízení přístupů
+    \item Integrace kamerových systémů
+    \item Vytvoření 2D/3D mapového podkladu objektu
+    \item Integrace parkovacích detekčních systémů
+    \item Optimalizace procesů nakládání s odpady pro sběr odpadu
+\end{itemize}

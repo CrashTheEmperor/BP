@@ -1,0 +1,401 @@
+\chapter{ETS}
+\label{ETS}
+Jedná se o konfigurační softwarový nástroj nezávislý na výrobci pro navrhování a konfiguraci inteligentních instalací a pro řízení budov pomocí systému KNX. Tento software funguje pouze na počítačových platformách využívajících operační systém Windows. \cite{ETS_Kecy}.
+
+Pomocí softwaru lze \cite{Mitrenga}:
+\begin{itemize}
+    \item Vkládat katalogové produkty do projektu - Produkty schválené asociací jsou obsaženy v katalogu a lze je použít v projektu. Produkty lze také přidat manuálně prostřednictvím aplikačních programů s koncovkou ".knxprod".
+    \item Vytvořit architekturu objektu - rozdělit objekt na celky(budovy, patra, místnosti,...)
+    \item Parametrizace produktů
+    \item Vytváření skupinových adres
+    \item Nahrávání řešení projektu do přístrojů
+    \item Vzdálené ovládání připojeného projektu
+    \item Diagnostika
+    \item Vytvoření dokumentace
+\end{itemize}
+
+\section{Tvorba instalace}
+Při vytváření projektu byl zvolen typ páteřní linie na IP, skupinové adresy na třístupňové a topologie zvolena jakožto TP, která byla použita, při tvorbě panelu.
+
+Po úspěšném založení projektu se program přepnul do pracovní části, která je složená z osmi oken \cite{Mitrenga}:
+\begin{itemize}
+    \item Budovy - Rozdělení objektu na celky
+    \item Skupinové adresy - Vytvoření a přiřazení skupinových adres přístrojům
+    \item Topologie - Zobrazení rozložení vytvořeného projektu v topologii
+    \item Kořeny projektu - Zobrazení všech oken kde se pracovalo
+    \item Přístroje - Seznam přístojů v projektu
+    \item Zprávy - Okno zaměřené na tvorbu dokumentace projektu
+    \item Katalog - Vyhledání a vložení produktů do projektu
+    \item Diagnostika - Okno určené pro otestování instalace\\
+\end{itemize}
+
+Pro vytvoření pracovního prostoru bylo použito okno budova. Prostor byl pojmenován Demonstrativní panel a byl rozdělen na 5 celků. Tyto celky reprezentují pokoje zobrazené na panelu (vchod, kuchyň, koupelna, obývací pokoj a rozvaděč umístěný v zadní části panelu). Tohle rozdělení bylo vytvořeno čistě pro zvýšení přehlednosti objektu a následné ulehčení propojování přístrojů mezi sebou. Je nutno také dodat, že vytvoření jedné místnosti je podmínkou pro vkládání přístrojů do pracovní plochy.
+
+Pro vložení přístrojů bylo nutno otevřít okno katalog, který ovšem neobsahoval použité přístroje. Díky této komplikaci bylo nutno navštívit webové stránky výrobců a následné stažení aplikačních programů. Tyto programy byly importovány do katalogu pomocí tlačítka "Import...". Vzhled projektu po přidání přístrojů lze vidět na Obr. \ref{fig:Projekt budovy v ETS}.
+
+\begin{figure}[!h]
+  \begin{center}
+    \includegraphics[scale=0.7]{obrazky/Budova.png}
+  \end{center}
+  \caption[Projekt budovy v ETS]{Projekt budovy v ETS}
+  \label{fig:Projekt budovy v ETS}
+\end{figure}
+
+Po přidání všech přístrojů se zobrazila pracovní plocha, která slouží k zobrazení přehledu všech přístrojů (Zabezpečení - KNX Secure, individuální adresa prvku, místnost v projektu, použitý aplikační program, stav přístroje - nahrána adresa, program, parametrizace, skupinová adresa a informace o produktu). V sloupcích vyjadřujících stav přístroje jsou většinově pomlčky, které znázorňují, že nebyly nahrány všechny části do přístrojů. Tahle skutečnost je zdůvodněná změnami parametrů a skupinových adres.
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=0.5]{obrazky/Přístroje v ETS.png}
+  \end{center}
+  \caption[Pracovní plocha v ETS]{Pracovní plocha v ETS}
+  \label{fig:Pracovní plocha v ETS}
+\end{figure}
+
+\section{Parametrizace tlačítek a detektoru pohybu}
+V této podkapitole bude vysvětleno parametrizování použitých tlačítek. Ty byla pomyslně rozdělená do místností a nastaveny, tak aby spolupracovaly s nejbližšími prvky (světly, žaluziemi, klimatizací a topením). Pro vysvětlení byly vytvořeny tabulky popisu funkcí jednotlivých tlačítek. 
+
+\subsection{ABB - SBR/U6.0.1-84}
+Jedná se o šestinásobné tlačítko se zabudovaným termostatem, které lze použít na regulaci teploty, ovládání žaluzií, ovládání osvětlení a nastavení dvou scén, které mohou obsahovat až osm objektů. Každé stisknutí tlačítka změní barvu signalizační LED na předem stanovenou hodnotu (rozpoznání zapnuto/vypnuto). \cite{ABB}
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=1.5]{obrazky/ABB.jpg}
+  \end{center}
+  \caption[Šestinásobné tlačítko s termostatem ABB - SBR/U6.0.1-84 \cite{ABB}]{Šestinásobné tlačítko s termostatem ABB - SBR/U6.0.1-84 \cite{ABB}}
+  \label{fig:Šestinásobné tlačítko s termostatem ABB SBR/U6.0.1-84}
+\end{figure}
+
+\newpage Tlačítko bylo nastaveno na odesílání aktuální hodnoty teploty co deset minut. Tlačítka jsou rozložena po horizontálních párech s označením funkční blok 1 až 3. V záložce každého bloku byly nastaveny obě tlačítka na krátká a dlouhá stisknutí. V záložkách  \textit{Common parameter} byl vybrán typ objektu na 1-bit. Při krátkém stisknutí tlačítko odesílá hodnotu jedna, při dlouhém stisknutí posílá hodnotu 2. Následně v záložce \textit{Extended parameters} byly nastaveny hodnoty odesílaných objektů u dlouhého stisknutí na on ("1") a u krátkého na off ("0").
+
+V záložkách \textit{LED Button} pro každý funkční blok byla každá dioda nastavena do modu status. Přijímaný objekt byl nastaven na 1-bit a hodnota jasu na \textit{bright} nastavena signalizační barva LED diod na bílou při vypnutí a červenou při zapnutí. 
+
+\subsection{Berker - 75663593}
+Osminásobné člačítko s termostatem by mělo být schopno regulovat pokojovou teplotu, ovládat žaluzie, ovládat osvětlení a scény. V této práci se ovšem nepovedlo nastavit ani při použití více zařízení a softwaru od Berkeru, který dokázal otevřít externí okno parametrizace v německém jazyce. Po ukončení parametrizace se parametry neuloží. \cite{Berker}
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=1.3]{obrazky/Berker.jpg}
+  \end{center}
+  \caption[Osminásobné tlačítko Berker - 75663593 \cite{Berker}]{Osminásobné tlačítko - Berker - 75663593 \cite{Berker}}
+  \label{fig:Osminásobné člačítko s termostatem Berker 75663593}
+\end{figure}
+
+\subsection{Ekinex - EK-ED2-TP-RW}
+Jedná se o čtyřnásobné tlačítko se zabudovaným teplotním senzorem pro ovládání žaluzií, osvětlení a scén. \cite{Ekinex}
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=0.6]{obrazky/Ekinex.png}
+  \end{center}
+  \caption[Čtyřnásobné tlačítko Ekinex - EK-ED2-TP-RW \cite{Mitrenga}]{Čtyřnásobné tlačítko Ekinex - EK-ED2-TP-RW \cite{Mitrenga}}
+  \label{fig:Čtyřnásobné tlačítko se zabudovaným teplotním senzorem Ekinex - EK-ED2-TP-RW}
+\end{figure}
+
+Tlačítko bylo nastaveno v záložce \textit{General} na dvě svislé klapky. Obě klapky byly nastaveny na dlouhé a krátké stisknutí. V případě první klapky se horní krátký stisk nastavil na funkci \textit{toggle} (přepínání). Dlouhý stisk představuje funkci \textit{off}. Pro dolní část klapky, je nastavení přesně opačné. Druhá klapka je nastavená stejným způsobem, akorát místo funkce \textit{toggle} byla použita funkce \textit{none}. Tato funkce zasílá "0", která znamená u žaluzií pohyb směrem nahorů.
+
+\subsection{Basalte - Senido 202-03}
+Další z použitých snímačů je čtyřnásobné dotykové tlačítko se zabudovaným snímačem teploty pro ovládání žaluzií, ovládání osvětlení a scén se schopností rozlišovat krátké a dlouhé stisknutí, a to nejen na jednom segmentu, ale má možnost snímat více segmentů najednou (multitouch). Dokáže ovládat, až šest scén s osmi objekty. Další ze schopností tlačítka je posílání tříbajtové hodnoty RGB. Poslední z funkcí tlačítka je zobrazování statusu díky RGB podsvícení. \cite{Basalte}
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=0.4]{obrazky/Basalte.jpg}
+  \end{center}
+  \caption[Čtyřnásobné dotykové tlačítko Basalte - Senido 202-03 \cite{Basalte}]{Čtyřnásobné dotykové tlačítko Basalte - Senido 202-03 \cite{Basalte}}
+  \label{fig:Čtyřnásobné dotykové tlačítko Basalte - Senido 202-03}
+\end{figure}
+
+\newpage Tlačítko bylo nastaveno v záložce \textit{General} na čtyři různá tlačítka. Dále se v této záložce povolila funkce řadiče scén. První trojici tlačítek, byla nastavena scéna, kterou při stisknutí budou volat.  Každá z těchto scén byla nastavena v korespondující záložce označené číslem. Poslední tlačítko bylo nastaveno na demonstraci schopnosti zasílat hodnoty RGB. Jedná se o 2 nastavené hodnoty, které se rozlišují délkou stisku. Pro demonstraci funkce multitouch byly vybrána funkce \textit{room toggle + General on/off/scene}. Pro krátký stisk byla vybrána scéna, která se zapne při krátkém stisku. Při druhém stisku se panel vypne. Dlouhý stisk má přiřazenou vlastní scénu. V záložce \textit{Temperature senzor} bylo nastaveno, aby senzor zasílal teplotu každých 5 minut. Záložka \textit{Scene controller} určiná pro nastavení řadiče scén, byla nastavena na všech osmi výstupech na hodnotu 1-bit.
+
+\subsection{Simon - 8400100-039}
+Čtyřnásobné tlačítko se zabudovaným RGB podsvícením a teplotním senzorem pro ovládání žaluzií a osvětlení. \cite{Simon}
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=0.4]{obrazky/Simon.png}
+  \end{center}
+  \caption[Čtyřnásobné tlačítko Simon - 8400100-039 \cite{Simon}]{Čtyřnásobné tlačítko Simon - 8400100-039 \cite{Simon}}
+  \label{fig:Čtyřnásobné tlačítko Simon - 8400100-039}
+\end{figure}
+
+V záložce \textit{General} bylo vybráno 4 tlačítkové provedení, které je použito na demonstrativním panelu. Jako další možnost, která byla povolena byl vnitřní senzor teploty. Poté v záložce \textit{FeedBack} byly nastaveny hodnoty jasu a hlasitosti na maximum. Dále zde byla aktivována možnost zapnout vibrace při doteku. Pro nastavení samotné funkcionality tlačítek se musela použít záložka \textit{Inputs}, kde se nastavilo oddělení tlačítek od sebe (všechna tlačítka jsou samostatně). Tlačítka v tomto případě jsou číslována od spodního levého rohu po sloupcích (1 a 2 levá strana, 3 a 4 pravá strana). Poté už se nastavovala samotná funkcionalita tlačítek. Byla vybrána možnost krátkého i dlouhého stisku. V případě krátkého stisku žaluzie vyjedou/sjedou samostatně. Dlouhý stisk znamená pohyb pouze v čase, kdy je tlačítko stisknuto.
+
+\subsection{HDL - M/TBP6.1-A2}
+Předposlední tlačítko je od společnosti HDL. Jedná se o šestinásobné dotykové tlačítko Čtyřnásobné tlačítko se zabudovaným RGB podsvícením pro ovládání žaluzií, osvětlení, stmívání a ovládání dvou scén s deseti objekty. Dále také obsahuje RGB kontrolér, který dokáže posílat 3-byte hodnotu obsahující informace o intenzitě každé složky. \cite{HDL}
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=0.25]{obrazky/HDL.jpg}
+  \end{center}
+  \caption[Šestinásobné tlačítko HDL - M/TBP6.1-A2 \cite{HDL}]{Šestinásobné tlačítko HDL - M/TBP6.1-A2 \cite{HDL}}
+  \label{fig:Šestinásobné tlačítko HDL - M/TBP6.1-A2}
+\end{figure}
+
+První z parametrů, které je možno nastavit v záložce \textit{General} byla citlivost dotyku, a to na hodnotu 4. Dále se pak povolily scény. Následně se obě scény nastaví v záložkáckách \textit{Panel scene A} a \textit{Panel scene B}. První scéna byla nastavena na dle Obr. \ref{fig:Parametry scény A tlačítka HDL - M/TBP6.1-A2} a druhá dle Obr. \ref{fig:Parametry scény B tlačítka HDL - M/TBP6.1-A2}.
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=0.4]{obrazky/Scena A.png}
+  \end{center}
+  \caption[Parametry scény A tlačítka HDL - M/TBP6.1-A2]{Parametry scény A tlačítka HDL - M/TBP6.1-A2}
+  \label{fig:Parametry scény A tlačítka HDL - M/TBP6.1-A2}
+\end{figure}
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=0.4]{obrazky/Scena B.png}
+  \end{center}
+  \caption[Parametry scény B tlačítka HDL - M/TBP6.1-A2]{Parametry scény B tlačítka HDL - M/TBP6.1-A2}
+  \label{fig:Parametry scény B tlačítka HDL - M/TBP6.1-A2}
+\end{figure}
+
+Při nastavování tlačítek bylo nutno nastavit krátké a dlouhé stisknutí tlačítek. Krátkému stisknutí byla přiřazena funkce \textit{toggle}, která dovoluje přepínat osvětlení mezi hodnotami zapnuto a vypnuto. Dlouhé stisknutí bylo nastaveno na dobu 1s a používá se na stmívání. Pro demonstraci stmívání byly nastaveny různé hodnoty kroku prvních 4 tlačítek. Každé z těchto tlačítek má nastavenou signaliční podsvícení na jinou hodnotu. První tlačítko bylo nastaveno červenou barvu, druhou na zelenou, třetí na modrou a čtvrté na bílou. Při signalizaci se zvýší jas barev o 70\%. Zbylá 2 tlačítka byla přepnuta do modu RGB kontrolér, který odesílají hodnotu RGB jak pro krátké, tak i pro dlouhé stisknutí. Tato hodnota se také signalizuje při stisknutí tlačítek. 
+
+\subsection{Siemens - QMX3.P37}
+Jedná se o ovládací panel určený na regulování pokojové teploty s integrovaným displejem. Tento displej dokáže zobrazovat vlhkost vzduchu, koncentraci CO2 v ovzduší a samotnou teplotu místnosti. Také obsahuje osm tlačítek, která obsahují žluté statusové LED. Tento panel umožňuje také ovládání žaluzií, osvětlení a scény. \cite{Siemens}
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=0.125]{obrazky/Siemens.jpg}
+  \end{center}
+  \caption[Ovladací panel Siemens - QMX3.P37 \cite{Siemens}]{Ovladací panel Siemens - QMX3.P37 \cite{Siemens}}
+  \label{fig:Ovladací panel Siemens - QMX3.P37}
+\end{figure}
+
+\newpage V tomto případě bylo zařízení nastaveno na spínání pomocí jednoho tlačítka. Nejprve v záložce \textit{General} byla nastavena hodnota svitu signaližačnních LED na 100\% hodnotu. V další záložce byl nastaven teplotní senzor na odesílání hodnoty každých 10 minut. Poté se už nastavovaly jednotlivé tlačítkové páry. Funkce páru byla zvolena \textit{Individual}, která umožňonila nezávislé funguvání obou tlačítek. Dále se u obou tlačítek nastavila možnost \textit{1 - button switching / send value}, \textit{Short/long press} (dlouhé stisknutí po uplynutí 0,5s) a vybrala se možnost odesílání druhé hodnoty při dlouhém stisku. Levým tlačítkům byla přiřazena hodnota \textit{on} a pravým \textit{off}. Také byla nastavena signalizace stisku tlačítek. Kvůli tomu byla možnost \textit{LED display} nastavena na \textit{status object} a možnost \textit{LED activation} pro levá tlačítka na \textit{0 = LED off; 1 = LED on}. Pravá tlačítka byla nastavena \textit{0 = LED on; 1 = LED off}. Po pozdější úvaze o zefektivnění panelu se pro 1. a 4. řadu tlačítek změnil dlouhý stisk na \textit{Toggle}.  
+
+\subsection{B.E.G - Indor 140-L-KNX-DX}
+Poslední snímač, který se použil na panelu je detektor přítomnosti s teplotním senzorem a dvěmi tlačítky. \cite{BEG}
+
+Parametrizace tohoto prvku byla celá v němčině, a to dosti zkomplikovalo postup. První záložka \textit{Grundeinstellungen} (Základní nastavení) se nastavila hodnota teploměru (Temperturmessung) na aktiviertz. Poté v záložce teploměru se v možností zasílání teploty (\textit{Temperaturwer senden}) zvolilo odesílání při změně (bei Änderung). Další parametry byly nastaveny v záložce \textit{Tastenfunktionen} (Klíčové funkce), kde se aktivovala tlačítka T1 a T2. Nastavení \textit{Präsenzmelder} (Detektoru pohybu) zůstal v plně automatickém řežimu (\textit{Vollautomatik}). V první podzáložce detektoru pohybu byla nastavená doba vypnutí na 30 sekund. Při nastavování obou tlačítek byl vybrán režim spínání (\textit{Betriebsart}).
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=0.45]{obrazky/BEG.png}
+  \end{center}
+  \caption[Detektor pohybu B.E.G - Indor 140-L-KNX-DX \cite{Mitrenga}]{Detektor pohybu B.E.G - Indor 140-L-KNX-DX  \cite{Mitrenga}}
+  \label{fig:Detektor pohybu B.E.G - Indor 140-L-KNX-DX }
+\end{figure}
+
+\section{Parametrizace akčních členů}
+Tahle podkapitola se zaměřuje na parametrizaci použitých akčních členů umístěných v rozvaděči na zadní straně panelu.
+\subsection{ABB SA/S8.10.2.1}
+Tento osmikanálový spínací člen nebyl nijak parametrizován za účelem dosáhnutí ponechání ve stavu spínacího aktoru, který zasílá status pouze při změně. Úkolem tohoto aktoru je spínání LED představující topení (šest) a klimatizaci (dvě).
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=0.25]{obrazky/ABB aktor1.jpg}
+  \end{center}
+  \caption[Osmikanálový spínací člen ABB - SA/S8.10.2.1 \cite{ABB aktor1}]{Osmikanálový spínací člen ABB - SA/S8.10.2.1  \cite{ABB aktor1}}
+  \label{fig:Osmikanálový spínací člen ABB - SA/S8.10.2.1}
+\end{figure}
+
+\subsection{ABB - JRA/S4.230.2.1}
+Jedná se o čtyřkanálový žaluziový člen, který je určen na ovládaní, žaluzií. Jelikož se v projektu používají pouze 2 žaluziové okruhy, tak se využívá pouze polovina akčního členu. Využívají se první dva kanály. Jediná změna od původní parametrizace je v záložkách \textit{Drive} pro jednotlivé kanály a to nastavení ukončení pohybu po 5 sekundách (tj. žaluzie může po stisku vyjíždět/sjíždět po dobu maximálně 5 sekund). 
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=0.25]{obrazky/ABB aktor2.jpg}
+  \end{center}
+  \caption[Čtyřkanálový žaluziový člen ABB - JRA/S4.230.2.1 \cite{ABB aktor2}]{Čtyřkanálový žaluziový člen ABB - JRA/S4.230.2.1  \cite{ABB aktor2}}
+  \label{fig:Čtyřkanálový žaluziový člen ABB - JRA/S4.230.2.1}
+\end{figure}
+
+\subsection{HDL - M/R8.10.1}
+Osmikanálový spínací člen HDL se v této práci využívá, na spínání osvětlení respektive 7 LED, které představují osvětlení umístěné v domě. V případě tohoto členu nebyla nutná žádná změna oproti původnímu nastavení parametrů. Všechny kanály jsou nastaveny, jako spínací aktor s typem kontaktu Normally Opened (NO). Zasílání statusu probíhá pouze při změně hodnoty.
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=0.35]{obrazky/HLD aktor1.jpg}
+  \end{center}
+  \caption[Osmikanálový spínací člen HDL - M/R8.10.1 \cite{HDL aktor1}]{Osmikanálový spínací člen HDL - M/R8.10.1  \cite{HDL aktor1}}
+  \label{fig:Osmikanálový spínací člen HDL - M/R8.10.1}
+\end{figure}
+
+\subsection{HDL - M/DRGBW4.1}
+Čtyřnásobný stmívací člen poskytnutý společností HDL, byl v této práci použit na ovládání RGBW LED pásku ukrytém v demonstrativním panelu. Výhodou tohoto členu je možnost ovládat kanál barevných složek zvlášť. Každý kanál (\textit{Channel}) je nastaven na odesílání stavové hodnoty (1bit) při změně. Dále se nastavily hodnoty času pro stmívání v záložkách \textit{dimming config} každého kanálu na 1 sekundu pro zapnutí i vypnutí. 
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=0.4]{obrazky/HLD aktor2.jpg}
+  \end{center}
+  \caption[Čtyřnásobný stmívací člen HDL - M/DRGBW4.1 \cite{HDL aktor2}]{Čtyřnásobný stmívací člen HDL - M/DRGBW4.1 \cite{HDL aktor2}}
+  \label{fig:Čtyřnásobný stmívací člen HDL - M/DRGBW4.1}
+\end{figure}
+
+\section{Připojená komunikační rozhraní}
+Pro umožnění parametrizace a externího řízení bylo nutno přidat do projektu dvě různá rozhraní pro komunikaci. Ani jedno z těchto rozhraní nebylo nijak parametrizováno a bylo ponecháno v původním stavu. První z nich je IP Secure router Siemens - 5WG1 146-1AB03, který je převážně určen k bezpečnému přenosu dat. Lze z něj také využít jako liniová spojka.. \cite{Siemens IP}
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=0.55]{obrazky/Siemens router.jpg}
+  \end{center}
+  \caption[IP Secure router Siemens - 5WG1 146-1AB03 \cite{Siemens IP}]{IP Secure router Siemens - 5WG1 146-1AB03 \cite{Siemens IP}}
+  \label{fig:IP Secure router Siemens - 5WG1 146-1AB03}
+\end{figure}
+
+Druhé komunikační rozhraní použité na panelu je Weinzierl - KNX IP BAOS 774. Využívá se za účelem komunikace skrze telegramy, nebo datové body. Dále umožňuje přístup k objektům pomocí TCP/IP protokolu anebo za pomoci webového rozhraní. \cite{Weinzier}
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[scale=0.2]{obrazky/IP BAOS.jpg}
+  \end{center}
+  \caption[Komunikační rozhraní Weinzierl - KNX IP BAOS 774 \cite{Weinzier ob}]{Komunikační rozhraní Weinzierl - KNX IP BAOS 774 \cite{Weinzier ob}}
+  \label{fig:Komunikační rozhraní Weinzierl - KNX IP BAOS 774}
+\end{figure}
+
+\section{Vytvoření skupinových adres projektu}
+V závislosti na informacích obsažených v podkapitole \ref{Adresování} se tato podkapitola zaměří pouze na tvorbu skupinových adres. První část této podkapitoly bude věnována vytvoření a popsání tabulek jednotlivých místností. Tyto tabulky bude použity pro popis funkce jednotlivých tlačítek a následně pro tvorbu skupinových adres. Dále tyto tabulky nebudou obsahovat tlačítko společnosti Berker, které nelze parametrizovat.
+
+První místnost, které budou nastaveny jsou kuchyně a koupelna. Do těchto prostor byly pomyslně nainstalovány tlačíka společnosti Ekinex a Siemens. Aby se využilo maximálně těchto tlačítek, budou využita obě tlačítka i v jiných místnostech. Zejména se jedná o tlačítko Ekinex, které má na pravé klapce žaluzie. V případě tlačítka Siemens se jedná pouze o využití velkého množství tlačítek, které budou použity při dlouhém stisku na ovládání celé budovy. 
+
+\begin{table}[h]
+ \caption[Funkce kuchyňských tlačítek pro krátké stisknutí]{Funkce kuchyňských tlačítek pro krátké stisknutí}
+   \small
+    \centering
+	  \begin{tabular}{|c|c|c|}
+	    \hline
+	    Tlačítko & Ekinex & Siemens  \\
+	    \hline\hline
+	    1. & S1 Zapnuto/Vypnuto & Ch3 Vypnuto \\
+	    \hline
+        2. & S2 Zapnuto/Vypnuto & Ch3 Zapnuto \\
+	    \hline
+        3. & Ž1, Ž2 krok nahorů & T3 Vypnuto \\
+	    \hline
+        4. & Ž1, Ž2 krok dolů & T3 Zapnuto \\
+	    \hline
+        5. & - & T3/1 Vypnuto \\
+	    \hline 
+        6. & - & T3/1 Zapnuto \\
+	    \hline 
+	    7. & - & T3/2 Vypnuto \\
+	    \hline
+	    8. & - & T3/2 Zapnuto \\
+	    \hline
+	  \end{tabular}
+\end{table}
+
+\begin{table}[h]
+ \caption[Funkce kuchyňských tlačítek při dlouhém stisknutí]{Funkce kuchyňských tlačítek při dlouhém stisknutí}
+   \small
+    \centering
+	  \begin{tabular}{|c|c|c|}
+	    \hline
+	    Tlačítko & Ekinex & Siemens  \\
+	    \hline\hline
+	    1. & S1, S2, S6 Zapnuto/Vypnuto &  Ch1 Zapnuto/Vypnuto \\
+	    \hline
+        2. & S6 Zapnuto/Vypnuto &  Ch2 Zapnuto/Vypnuto \\
+	    \hline
+        3. &  Ž1, Ž2 nahorů & T1, T2, T2 Vypnuto \\
+	    \hline
+        4. & Ž1, Ž2 dolů & T1, T2, T2 Zapnuto \\
+	    \hline
+        5. & - &  Ch1, Ch2, Ch3 Vypnuto\\
+	    \hline 
+        6. & - & Ch1, Ch2, Ch3 Zapnuto \\
+	    \hline 
+	    7. & - & S1,S2,S6 Vypnuto \\
+	    \hline
+	    8. & - & S3,S4,S5 Zapnuto \\
+	    \hline
+	  \end{tabular}
+\end{table}
+
+\newpage Dalším místností se dvěma pomyslně nainstalovanými tlačítky je obyvací pokoj. Jedná se o tlačítka společnosti ABB a Simon. Tlačítko Simon bude použito na ovládání žaluzií a tlačítko ABB na ovládání topení, chlazení a světel v místnosti.
+
+\begin{table}[h]
+ \caption[Funkce tlačítek obývacího pokoje při krátké stisknutí]{Funkce tlačítek obývacího pokoje při krátké stisknutí}
+   \small
+    \centering
+	  \begin{tabular}{|c|c|c|}
+	    \hline
+	    Tlačítko & ABB & Simon  \\
+	    \hline\hline
+	    1. & T1 Vypnuto & Ž1 krok nahorů  \\
+	    \hline
+        2. & T2 Vypnuto & Ž1 krok dolů  \\
+	    \hline
+        3. & Ch1,Ch2 Vypnuto & Ž2 krok nahorů  \\
+	    \hline
+        4. & S3 Vypnuto & Ž2 krok dolů  \\
+	    \hline
+        5. & S4 Vypnuto & - \\
+	    \hline 
+        6. & S5 Vypnuto & - \\
+	    \hline 
+	  \end{tabular}
+\end{table}
+
+\begin{table}[h]
+ \caption[Funkce tlačítek obývacího pokoje při dlouhém stisknutí]{Funkce tlačítek obývacího pokoje při dlouhém stisknutí}
+   \small
+    \centering
+	  \begin{tabular}{|c|c|c|}
+	    \hline
+	    Tlačítko & ABB & Simon  \\
+	    \hline\hline
+	    1. & T1 Zapnuto & Ž1 nahorů  \\
+	    \hline
+        2. & T2 Zapnuto & Ž1 dolů  \\
+	    \hline
+        3. & Ch1,Ch2 Zapnuto & Ž2 nahorů  \\
+	    \hline
+        4. & S3 Zapnuto & Ž2 dolů  \\
+	    \hline
+        5. & S4 Zapnuto & - \\
+	    \hline 
+        6. & S5 Zapnuto & - \\
+	    \hline 
+	  \end{tabular}
+\end{table}
+
+Dotyková tlačítka společností Basalte a HDL byla určena na ovládání scén a barvy pozadí objektu. Tlačítko společnosti basalte v této práci reaguje pouze na  krátký dotek jednotlivých tlačítek. Tahle skutečnost je způsobena použitím scén. Při použití funkce volání scény nelze využít dlouhého dotek. Další z vlastností tlačítka je již zmiňovaný multitouch, který funguje na bázi doteku dvou a více ploch najednou. V této práci je použit krátký dotek na zavolání scény odchod a dlouhý dotek na volání scény příchod.
+
+\begin{table}[h]
+ \caption[Funkce dotykových tlačítek při krátké stisknutí]{Funkce dotykových tlačítek při krátké stisknutí}
+   \small
+    \centering
+	  \begin{tabular}{|c|c|c|}
+	    \hline
+	    Tlačítko & Basalte & HDL \\
+	    \hline\hline
+	    1. & Scéna dovolená  & Červené podsvícení \\
+	    \hline
+        2. & Scéna léto  &  Zelené podsvícení \\
+	    \hline
+        3. & Scéna zima  & Modré podsvícení   \\
+	    \hline
+        4. & RGB Kontroler & Bílé podsvícení \\
+	    \hline
+        5. & - & Nastavená hodnota RGB 1 \\
+	    \hline 
+        6. & - &  Nastavená hodnota RGB 2 \\
+	    \hline 
+	  \end{tabular}
+\end{table}
+
+\begin{table}[h]
+ \caption[Funkce dotykových tlačítek při dlouhém stisknutí]{Funkce dotykových tlačítek při dlouhém stisknutí}
+   \small
+    \centering
+	  \begin{tabular}{|c|c|c|}
+	    \hline
+	    Tlačítko & Basalte & HDL  \\
+	    \hline\hline
+	    1. & - & Červené podsvícení stmívání  \\
+	    \hline
+        2. & - & Zelené podsvícení stmívání \\
+	    \hline
+        3. & - & Modré podsvícení stmívání  \\
+	    \hline
+        4. & - & Bílé podsvícení  stmívání \\
+	    \hline
+        5. & - & Nastavená hodnota RGB 3 \\
+	    \hline 
+        6. & - & Nastavená hodnota RGB 4 \\
+	    \hline 
+	  \end{tabular}
+\end{table}
+
+Poslední z použitých spínačů je detektor pohybu, kterému bylo logicky přiřazeno přední světlo domu.\\ \\Ze vzniklých tabulek byly vytvořeny skupinové adresy, které byly rozděleny do skupin dle přístroje (Světla, Žaluzie, Topení, Klimatizace, LED, Scény a Měření). Tyto skupiny se dále dělí na podle funkcionality a množství. Poslední vrstva již představuje jednotlivé objekty, nebo scény. Výpis skupinových adres je součástí příloh.

@@ -10,8 +10,8 @@
   %english-slovak,	% originální jazyk je angličtina, překlad je slovensky
 %
 %%% Z následujících voleb typu práce lze použít pouze jednu
-  semestral,		  % semestrální práce (výchozí)
-  %bachelor,			%	bakalářská práce
+  %semestral,		  % semestrální práce (výchozí)
+  bachelor,			%	bakalářská práce
   %master,			  % diplomová práce
   %treatise,			% pojednání o disertační práci
   %doctoral,			% disertační práce
@@ -23,17 +23,17 @@
 %%% Níže uvedený přepinač 'electronic' lze použít pro generování elektronické verze práce; pokud je aktivní, vnější a vnitřní okraj sazebního obrazce budou shodné pro liché i sudé stránky.
 % Pozor, neplést si s volbou oneside/twoside!
 % Pozor, pro tiskovou verzi nechejte vypnuté!
-%	electronic			
+%    electronic			
 ]{thesis}   % Balíček pro sazbu studentských prací
 
 
 %%% Jméno a příjmení autora ve tvaru
 %  [tituly před jménem]{Křestní}{Příjmení}[tituly za jménem]
 % Pokud osoba nemá titul před/za jménem, smažte celý řetězec '[...]'
-\author[Bc.]{Křestní}{Příjmení}
+\author{Luboš}{Kelnar}
 
 %%% Identifikační číslo autora (VUT ID)
-\butid{007}
+\butid{221 302}
 
 %%% Pohlaví autora/autorky
 % (nepoužije se ve variantě english-czech ani english-slovak)
@@ -43,7 +43,7 @@
 %%% Jméno a příjmení vedoucího/školitele včetně titulů
 %  [tituly před jménem]{Křestní}{Příjmení}[tituly za jménem]
 % Pokud osoba nemá titul před/za jménem, smažte celý řetězec '[...]'
-\advisor[prof.\ Ing.]{Křestní}{Příjmení}[CSc.]
+\advisor[doc.\ Ing.]{Petr}{Fiedler}[Ph.D.]
 
 %%% Jméno a příjmení oponenta včetně titulů
 %  [tituly před jménem]{Křestní}{Příjmení}[tituly za jménem]
@@ -52,7 +52,7 @@
 % v případě, že nechcete, aby se na titulním snímku prezentace zobrazoval oponent, pouze příkaz zakomentujte;
 % u obhajoby semestrální práce se oponent nezobrazuje (jelikož neexistuje)
 % U dizertační práce jsou typicky dva až tři oponenti. Pokud je chcete mít na titulním slajdu, prosím ručně odkomentujte a upravte jejich jména v definici "VUT title page" v souboru thesis.sty.
-\opponent[doc.\ Mgr.]{Křestní}{Příjmení}[Ph.D.]
+%\opponent[doc.\ Mgr.]{Křestní}{Příjmení}[Ph.D.]
 
 %%% Název práce
 %  Parametr ve složených závorkách {} je název v originálním jazyce,
@@ -61,17 +61,17 @@
 %  \def\insertshorttitle{Zkác.\ náz.\ práce}
 %  kde jako parametr vyplníte zkrácený název. Pokud nechcete zkracovat název, budete muset předefinovat,
 %  jak se vytváří patička slidu. Viz odkaz: https://bit.ly/3EJTp5A
-\title[Title of Student's Thesis]{Název studentské práce}
+\title[Remote control and~visualization of a~demonstrative KNX panel]{Vzdálené řízení a~vizualizace demonstrativního panelu KNX}
 
 %%% Označení oboru studia
 %  Parametr ve složených závorkách {} je název oboru v originálním jazyce,
 %  parametr v hranatých závorkách [] je překlad
-\specialization[Teleinformatics]{Teleinformatika}
+\specialization[Automation and~Measurement]{Automatizační a~měřicí technika}
 
 %%% Označení ústavu
 %  Parametr ve složených závorkách {} je název ústavu v originálním jazyce,
 %  parametr v hranatých závorkách [] je překlad
-%\department[Department of Control and Instrumentation]{Ústav automatizace a měřicí techniky}
+\department[Department of Control and Instrumentation]{Ústav automatizace a měřicí techniky}
 %\department[Department of Biomedical Engineering]{Ústav biomedicínského inženýrství}
 %\department[Department of Electrical Power Engineering]{Ústav elektroenergetiky}
 %\department[Department of Electrical and Electronic Technology]{Ústav elektrotechnologie}
@@ -81,7 +81,7 @@
 %\department[Department of Microelectronics]{Ústav mikroelektroniky}
 %\department[Department of Radio Electronics]{Ústav radioelektroniky}
 %\department[Department of Theoretical and Experimental Electrical Engineering]{Ústav teoretické a experimentální elektrotechniky}
-\department[Department of Telecommunications]{Ústav telekomunikací}
+%\department[Department of Telecommunications]{Ústav telekomunikací}
 %\department[Department of Power Electrical and Electronic Engineering]{Ústav výkonové elektrotechniky a elektroniky}
 
 %%% Označení fakulty
@@ -100,9 +100,9 @@
 \facultylogo[logo/FEKT_zkratka_barevne_PANTONE_CZ]{logo/UTKO_color_PANTONE_CZ}
 
 %%% Rok odevzdání práce
-\graduateyear{2030}
+\graduateyear{2025}
 %%% Akademický rok odevzdání práce
-\academicyear{2029/30}
+\academicyear{2024/25}
 
 %%% Datum obhajoby (uplatní se pouze v prezentaci k obhajobě)
 \date{11.\,11.\,1980} 
@@ -113,23 +113,21 @@
 
 %%% Abstrakt
 \abstract[%
-Překlad abstraktu
-(v~angličtině, pokud je originálním jazykem čeština či slovenština; v~češtině či slovenštině, pokud je originálním jazykem angličtina)
+The aim of this bachelor’s thesis is to implement remote control and visualization of a demonstration KNX panel using the Foxtrot PLC and other visualization tools with Docker. The visualization will be available through a web application for mobile devices or tablets, presented as a clear menu divided into sections based on the type of appliances and a section for an overall overview of the installation. The thesis begins with an introduction to KNX technology and a detailed description of the system control options. Furthermore, it describes visualization options using the native Foxtrot web server or other solutions with Raspberry Pi and Docker containers.
 ]{%
-Abstrakt práce v~originálním jazyce
+Cílem této bakalářské práce je realizace vzdáleného řízení a vizualizace demonstračního panelu KNX pomocí PLC Foxtrot a dalších zobrazovacích nástrojů s využitím Dockeru. Samotná vizualizace bude dostupná prostřednictvím webové aplikace pro mobilní zařízení nebo tablet, a to v podobě přehledného menu rozděleného do sekcí podle typu spotřebičů a do sekce pro celkový přehled instalace. Práce začíná seznámením s technologií KNX a podrobným popisem možností řízení systému. Dále jsou popsány možnosti vizualizace za využití nativního webového serveru Foxtrot nebo jiných řešení s využitím Raspberry Pi a Docker kontejnerů.
 }
 
 %%% Klíčová slova
 \keywrds[%
-Překlad klíčových slov
-(v~angličtině, pokud je originálním jazykem čeština či slovenština; v~češtině či slovenštině, pokud je originálním jazykem angličtina)
+demonstration panel, ETS, Foxtrot, Raspberry Pi, Docker, intelligent wiring, KNX
 ]{%
-Klíčová slova v~originálním jazyce
+demonstrativní panel, ETS, Foxtrot, Raspberry Pi, Docker, inteligentní elektroinstalace, KNX
 }
 
 %%% Poděkování
 \acknowledgement{%
-Rád bych poděkoval vedoucímu bakalářské/diplomové/disertační práce
-panu Ing.~XXX YYY, Ph.D.\ za odborné vedení,
+Rád bych poděkoval vedoucímu bakalářské práce
+panu doc. Ing. Petru Fiedlerovi, Ph.D\ a konzultantu panu Ing. Branislavu Bátorovi Ph.D. za odborné vedení,
 konzultace, trpělivost a~podnětné návrhy k~práci.
 }%
