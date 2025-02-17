@@ -83,73 +83,84 @@
 % není tak vysazen ani nadpis snímku
 \maketitle
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 1. snímek s cíli (zadaním) práce
+\begin{frame} 
+	% nadpis snímku
+	\frametitle{Obsah}
+	\begin{itemize}
+			\item Cíle práce
+			\item Tvorba instalace
+			\item Parametrizace
+			\item Tvorba skupinových adres
+			\item Výsledky
+			\item Závěr
+	\end{itemize}
+\end{frame}
+
 \begin{frame} 
 	% nadpis snímku
 	\frametitle{Cíle práce}
 	\begin{itemize}
-			\item Nastudovat
-			\item Popsat
-				\begin{itemize}
-					\item nastudované
+			\item Seznámení s technologií KNX.
+			    \begin{itemize}
+					\item Historie.
+					\item Možnosti použití technologie.
+					\item Sběrnicová instalace.
+					\item Zabezpečení.
+					\item Topologie.
 				\end{itemize}
-			\item Implementovat
+			\item Seznámení se společností Flowbox.
+			\item Vytvoření programu pomocí softwaru ETS.
 				\begin{itemize}
-					\item nastudované
-					\item nové
-				\end{itemize}
-			\item Porovnat a vyhodnotit
-				\begin{itemize}
-						\item výsledky
+					\item Tvorba instalace.
+					\item Parametrizace.
+					\item Skupinové adresy.
 				\end{itemize}
 	\end{itemize}
 \end{frame}
 
-
 %%%%%%%%%%%%%
 \begin{frame} 
-	\frametitle{Klíčové nástroje}
+	\frametitle{Tvorba instalace}
+	\begin{itemize}
+	    \item Kroky tvorby:
+	        \begin{itemize}
+	            \item Zvolení typu páteřní linie, skupinové adresy a topologie.
+	            \item Segmentace budovy.
+	            \item Výběr prvku z katalogu.
+	        \end{itemize}
+	\end{itemize}
+			\begin{figure}%	
+				\centering
+				\vspace{0.2cm}	              % horizontální mezera
+				\includegraphics[width=1\columnwidth]{obrazky/Katalog.png}
+				\caption{Katalog}
+				%\caption{Popisek obrázku}%
+				%\label{obr:ukazka}
+			\end{figure}
+\end{frame}
 
-	% prostředí 'alertblock', které slouží pro zdůraznění informace
-	\begin{alertblock}{Pro práci je klíčový Eulerův vzorec}
-		$$\eul^{\jmag x}=\cos x + \jmag\sin x$$
-	\end{alertblock}
 
-	\vspace{4ex}
-	Eulerova identita je speciálním případem tohoto vzorce, jestliže dosadíme $x=\uppi$\,:
-
-	% prostředí 'block', které slouží jako informativní
-	\begin{block}{Eulerova identita}
-		$$\eul^{\jmag \uppi}=\cos \uppi + \jmag\sin \uppi,$$\\
-		odkud vyplývá
-		$$\eul^{\jmag \uppi}+1=0.$$
-	\end{block}
-\end{frame} 
-
-
-%%%%%%%%%%%%%
 \begin{frame} 
-	\frametitle{Plošný spoj}
+	\frametitle{Tvorba instalace}
 	
 	\begin{columns}[T] 								% prostředí sloupce s umístěním nahoře
-		\begin{column}{0.4\textwidth}		% první sloupec
-			Obrázek znázorňuje model:\\[2ex]
-			%
+		\begin{column}{0.35\textwidth}		% první sloupec
+			Pracovní plocha znázorňuje:\\[2ex]
 			\begin{itemize}
-				\item Deska
-				\item Součástky
-				\item Signály
-				\item Napájení
+				\item Umístění.
+				\item Individuální adresy.
+				\item Aplikační program.
+				\item Výrobce.
+				\item Produkt.
 			\end{itemize}
 		\end{column}
 		%
-		\begin{column}{0.6\textwidth}		% druhý sloupec
+		\begin{column}{0.75\textwidth}		% druhý sloupec
 			\begin{figure}%	
 				\centering
 				\vspace{1cm}	              % horizontální mezera
-				\includegraphics[width=0.8\columnwidth]{obrazky/soucastky}
-				%lze vložit popisek, ale povetšinou je to v prezentaci zbytečné
+				\includegraphics[width=1\columnwidth]{obrazky/Přístroje v ETS.png}
+				\caption{Přístroje v ETS}
 				%\caption{Popisek obrázku}%
 				%\label{obr:ukazka}
 			\end{figure}
@@ -157,33 +168,85 @@
 	\end{columns}											% ukončení prostředí sloupce
 \end{frame}
 
+\begin{frame} 
+	\frametitle{Parametrizace}
+	\begin{itemize}
+	    \item Výběr provedení.
+	    \item Nastavování vnitřních senzorů.
+	    \item Nastavování funkcí.
+	    \item Nastavování scén.
+	\end{itemize}
+			\begin{figure}%	
+				\centering
+				\vspace{0.2cm}	              % horizontální mezera
+				\includegraphics[width=.5\columnwidth]{obrazky/Ukazka parametrizace.png}
+				\caption{Ukázka parametrizace}
+				%\caption{Popisek obrázku}%
+				%\label{obr:ukazka}
+			\end{figure}
+\end{frame}
+
+\begin{frame} 
+	\frametitle{Tvorba skupinových adres}
+	\begin{itemize}
+	    \item Kroky tvorby skupinových adres:	
+	        \begin{itemize}
+	            \item Vytvoření hlavní skupinové adresy.
+	            \item Vytvoření střední skupinové adresy.
+	            \item Vytvoření podskupinové adresy.
+	            \item Vložení objektů z přístrojů.
+	        \end{itemize}
+	\end{itemize}
+
+			\begin{figure}%	
+				\centering
+				\vspace{0.2cm}	              % horizontální mezera
+				\includegraphics[width=1\columnwidth]{obrazky/Ukazka skupinovych adres.png}
+				\caption{Ukázka skupinových adres}
+				%\caption{Popisek obrázku}%
+				%\label{obr:ukazka}
+			\end{figure}
+\end{frame}
 
 %%%%%%%%%%%%%
 \begin{frame} 
 	\frametitle{Výsledky}
-	\vspace{1cm}
-	\begin{table}[]
-		\centering
-		\caption{Výsledky měření mobilních sítí}
-		\label{tab:tabulka}
-			\begin{tabular}{lcc}
-				\toprule
-					Technologie  & Rychlost stahování [kB/s] & Rychlost nahrávání [kB/s] \\
-				\midrule
-					GPRS (2,5G)	& 7,2 	& 3,6\\
-					UMTS 3G     & 48 		& 48\\
-					HSPA (3,5G)	&	1\,706	&	720\\
-					LTE (4G) 		& 40\,750 & 10\,750\\
-				\bottomrule                                       
-			\end{tabular}
-	\end{table}
+	\begin{columns}[T] 								% prostředí sloupce s umístěním nahoře
+		\begin{column}{0.6\textwidth}		% první sloupec
+	        \begin{itemize}
+	            \item Hotová kapitola zaměřená na sběrnicový systém KNX.
+	            \item Navázaný kontakt se společností Flowbox.
+	            \item Hotová kapitola zaměřená na práci v ETS.
+	            \item Funkční program.
+	            \item Nenastavitelné tlačítko Berker.
+	        \end{itemize}
+	    \end{column}
+	    
+	\begin{column}{0.4\textwidth}		% druhý sloupec
+			\begin{figure}%	
+				\includegraphics[width=.8\columnwidth]{obrazky/IMG_20211217_121402.jpg}
+				\caption{Nastavený panel}
+				%\caption{Popisek obrázku}%
+				%\label{obr:ukazka}
+			\end{figure}
+		\end{column}
+	\end{columns}
 \end{frame}
 
 
 %%%%%%%%%%%%%
 \begin{frame} 
 	\frametitle{Závěr}
-	\dots
+\begin{itemize}
+    \item Pro bližší seznámení s problematikou nutno absolvovat školení KNX.
+    \item Více, než polovina práce je hotova.
+    \item Do dalšího vydání práce:
+        \begin{itemize}
+            \item Nutnost změny dynamických scén.
+            \item Vytvoření komunikačního driveru ve spolupráci se společností Flowbox.
+            \item Vytvoření vizualizace skrze server Flowbox.
+        \end{itemize}
+\end{itemize}
 \end{frame}
 
 
@@ -197,11 +260,12 @@
 \end{frame}
 
 % otázky oponenta
-\frame{
-\frametitle{Otázky oponenta}
-	\emph{Jaká je souvislost Vašeho vzorce (1.2) s~Maxwellovými rovnicemi v~integrálním tvaru?}\\[2ex]
+%\frame{
+%\frametitle{Otázky oponenta}
+%	\emph{Jaká je souvislost Vašeho vzorce (1.2) s~Maxwellovými rovnicemi v~integrálním tvaru?}\\[2ex]
 	%
-	Již staří Římané\,\dots
-}
+%	Již staří Římané\,\dots
+%}
 
 \end{document}
+
