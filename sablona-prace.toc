@@ -1,0 +1,57 @@
+\babel@toc {czech}{}\relax 
+\babel@toc {czech}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {czech}{}\relax 
+\contentsline {chapter}{Úvod}{12}{section*.7}%
+\contentsline {chapter}{Cíle práce}{13}{section*.9}%
+\contentsline {chapter}{\numberline {1}Sběrnicový systém KNX}{14}{chapter.10}%
+\contentsline {section}{\numberline {1.1}Historie}{14}{section.11}%
+\contentsline {subsection}{\numberline {1.1.1}EIBA}{14}{subsection.12}%
+\contentsline {subsection}{\numberline {1.1.2}KNX}{14}{subsection.13}%
+\contentsline {section}{\numberline {1.2}Možnosti použití technologie}{15}{section.14}%
+\contentsline {section}{\numberline {1.3}Sběrnicové instalace}{16}{section.15}%
+\contentsline {subsection}{\numberline {1.3.1}Sběrnicové přístroje}{16}{subsection.16}%
+\contentsline {subsection}{\numberline {1.3.2}Adresování}{17}{subsection.19}%
+\contentsline {subsection}{\numberline {1.3.3}Komunikace}{18}{subsection.22}%
+\contentsline {subsection}{\numberline {1.3.4}Datový bod}{19}{subsection.25}%
+\contentsline {section}{\numberline {1.4}Zabezpečení}{20}{section.27}%
+\contentsline {section}{\numberline {1.5}Topologie}{21}{section.28}%
+\contentsline {subsection}{\numberline {1.5.1}Individuální adresa}{22}{subsection.30}%
+\contentsline {subsection}{\numberline {1.5.2}Spojka}{23}{subsection.32}%
+\contentsline {subsection}{\numberline {1.5.3}Routingové číslo}{23}{subsection.33}%
+\contentsline {subsection}{\numberline {1.5.4}Interní a externí rozhraní}{23}{subsection.35}%
+\contentsline {chapter}{\numberline {2}ETS}{25}{chapter.36}%
+\contentsline {section}{\numberline {2.1}Tvorba instalace}{25}{section.37}%
+\contentsline {section}{\numberline {2.2}Parametrizace tlačítek a detektoru pohybu}{27}{section.40}%
+\contentsline {subsection}{\numberline {2.2.1}ABB - SBR/U6.0.1-84}{27}{subsection.41}%
+\contentsline {subsection}{\numberline {2.2.2}Berker - 75663593}{28}{subsection.43}%
+\contentsline {subsection}{\numberline {2.2.3}Ekinex - EK-ED2-TP-RW}{28}{subsection.45}%
+\contentsline {subsection}{\numberline {2.2.4}Basalte - Senido 202-03}{29}{subsection.47}%
+\contentsline {subsection}{\numberline {2.2.5}Simon - 8400100-039}{30}{subsection.49}%
+\contentsline {subsection}{\numberline {2.2.6}HDL - M/TBP6.1-A2}{31}{subsection.51}%
+\contentsline {subsection}{\numberline {2.2.7}Siemens - QMX3.P37}{32}{subsection.55}%
+\contentsline {subsection}{\numberline {2.2.8}B.E.G - Indor 140-L-KNX-DX}{33}{subsection.57}%
+\contentsline {section}{\numberline {2.3}Parametrizace akčních členů}{34}{section.59}%
+\contentsline {subsection}{\numberline {2.3.1}ABB SA/S8.10.2.1}{34}{subsection.60}%
+\contentsline {subsection}{\numberline {2.3.2}ABB - JRA/S4.230.2.1}{34}{subsection.62}%
+\contentsline {subsection}{\numberline {2.3.3}HDL - M/R8.10.1}{35}{subsection.64}%
+\contentsline {subsection}{\numberline {2.3.4}HDL - M/DRGBW4.1}{35}{subsection.66}%
+\contentsline {section}{\numberline {2.4}Připojená komunikační rozhraní}{36}{section.68}%
+\contentsline {section}{\numberline {2.5}Vytvoření skupinových adres projektu}{37}{section.71}%
+\contentsline {chapter}{\numberline {3}Foxtrot}{40}{chapter.78}%
+\contentsline {section}{\numberline {3.1}Komunikace KNX/IP}{40}{section.79}%
+\contentsline {section}{\numberline {3.2}Komunikace MQTT}{40}{section.80}%
+\contentsline {section}{\numberline {3.3}Web Server}{40}{section.81}%
+\contentsline {chapter}{\numberline {4}Raspberry Pi 5}{41}{chapter.82}%
+\contentsline {section}{\numberline {4.1}Docker Compose}{41}{section.83}%
+\contentsline {subsection}{\numberline {4.1.1}Kontejnerizace}{41}{subsection.84}%
+\contentsline {subsection}{\numberline {4.1.2}Tvorba YAML souboru}{41}{subsection.85}%
+\contentsline {section}{\numberline {4.2}Mosquitto}{41}{section.86}%
+\contentsline {section}{\numberline {4.3}Home Assistant}{41}{section.87}%
+\contentsline {section}{\numberline {4.4}Influxdb}{41}{section.88}%
+\contentsline {section}{\numberline {4.5}Grafana}{41}{section.89}%
+\contentsline {chapter}{Závěr}{42}{section*.91}%
+\contentsline {chapter}{Literatura}{43}{section*.93}%
+\contentsline {chapter}{Seznam symbol\r {u} a zkratek}{46}{section*.95}%
+\contentsline {chapter}{Seznam p\v {r}\'{\i }loh}{47}{section*.97}%
+\contentsline {chapter}{\numberline {A}Skupinové adresy }{48}{chapter.98}%
