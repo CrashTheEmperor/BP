@@ -1,13 +1,15 @@
 \chapter{Skupinové adresy}
+\label{apend:skupinove_adresy}
 \includepdf[pages = 1]{pdf/GroupAddressesReport}
 \includepdf[pages = 2]{pdf/GroupAddressesReport}
 \includepdf[pages = 3]{pdf/GroupAddressesReport}
 \includepdf[pages = 4]{pdf/GroupAddressesReport}
 \chapter{Definice funkčního bloku fbRoomTempMod}
-\begin{lstlisting}[language=ST]
+\label{apend:fbRoomTempMod}
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Definice funkčního bloku fbRoomTempMod}, label={lst:fbRoomTempMod}]
+(*
 FUNCTION_BLOCK fbRoomTempMod
-(*Simulace změny teploty v pokojích
-*)
+(*Simulace změny teploty v pokojích*)
   VAR_INPUT
     Heat_1       : BOOl; // Topení vstup 1 [-]
     Heat_1_WATTS : REAL; // Topení výkon 1 [W] => [J/s]

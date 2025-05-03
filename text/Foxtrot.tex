@@ -1,4 +1,5 @@
 \chapter{Vizualizace skrze programovatelný logický automat}
+\label{sec:vizualizace_automat}
 V této kapitole se nachází popis jednotlivých částí ovládání instalace skrze PLC firmy TECO - CP-2007 \cite{TECO}, které obsahuje knihovny pro práci s KNX/IP \cite{KNXlib} a MQTT \cite{MQTTlib} a dále integrovaný webový server pro vizualizaci \cite{WebMaker}. Všechny tyto části jsou podrobněji rozvedeny v následujících podkapitolách.
 Ovládání a vizualizace instalace je možné provádět i skrze PLC jiných výrobců za předpokladu, že mají implementované knihovny pro komunikace KNX/IP a MQTT. PLC výrobce TECO bylo vybráno kvůli jeho specializaci na domácí automatizaci, dostupnosti a ceně.
 \section{CP - 2007}
@@ -84,7 +85,7 @@ Pro ovládání instalace byly vytvořeny funkční bloky, které byly poté pou
 \noindent Níže jsou uvedeny definice jednotlivých funkční bloků, které byly použity pro ovládání a vizualizaci instalace. Pro jejich realizaci byly použity jazyky CFC a ST.
 
 \subsubsection{fbKNXVisuBool}
-\begin{lstlisting}[language=ST]
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Definice funkčního bloku fbKNXVisuBool}, label={lst:fbKNXVisuBool}]
 FUNCTION_BLOCK fbKNXVisuBool
   VAR_INPUT
     IN           : BOOL R_EDGE; //Světlo ON Vizu
@@ -112,7 +113,7 @@ FUNCTION_BLOCK fbKNXVisuBool
 \end{figure}
 \newpage
 \subsubsection{fbKNXShutters}
-\begin{lstlisting}[language=ST]
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Definice funkčního bloku fbKNXShutters}, label={lst:fbKNXShutters}]
     FUNCTION_BLOCK fbKNXShutters
     VAR_INPUT
       UP           : BOOL R_EDGE; //Rolety nahorů Vizu
@@ -273,6 +274,7 @@ Uvažujeme, že místnost je kvádr o rozměrech specifikovaných uživatelským
 \end{itemize}
 
 \noindent Průběh teploty v místnosti je zobrazen na Obr. \ref{fig:simulace_teplota}, kde je demonstrováno chování při běhu topení a klimatizace v horním grafu. Ve spodní části grafu je zase zobrazeno chování teploty bez působení topení a klimatizace. Teplota okolí je v tomto případě nastavená na 21 °C. Z průběhu lze vypozorovat, že se teplota ustálí na teplotu okolí a tudíž, lze považovat model za korektní.
+\newpage
 \begin{figure}[!ht]
     \begin{center}
         \includegraphics[scale=0.52]{obrazky/simulace_teploty_kuchyne.pdf}
@@ -281,7 +283,7 @@ Uvažujeme, že místnost je kvádr o rozměrech specifikovaných uživatelským
     \label{fig:simulace_teplota}
 \end{figure}
 
-\noindent Tento funkční blok byl použit pro simulaci teploty v obývacím pokoji, kuchyni. Definice tohoto funkčního bloku je zobrazena kvůli své velikosti v příloze číslo 2. Pro venkovní teplotu byl použit signál, který byl napojen na teploměr na panelu. V případě koupelny byla teplota simulována jako sinusoida v rozmezí 18-22 °C a periodou 3 minuty. Tento způsob byl zvolen kvůli absenci teploměru a akčního členu pro řízení teploty. 
+\noindent Tento funkční blok byl použit pro simulaci teploty v obývacím pokoji, kuchyni. Definice tohoto funkčního bloku je zobrazena kvůli své velikosti v příloze \ref{apend:fbRoomTempMod}. Pro venkovní teplotu byl použit signál, který byl napojen na teploměr na panelu. V případě koupelny byla teplota simulována jako sinusoida v rozmezí 18-22 °C a periodou 3 minuty. Tento způsob byl zvolen kvůli absenci teploměru a akčního členu pro řízení teploty. 
 
 \subsubsection{fbLivRoom}
 \subsubsection{fbKitch}
