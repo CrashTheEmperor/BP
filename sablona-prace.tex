@@ -94,6 +94,20 @@
     {Ý}{{\'Y}}1
     {Ž}{{\v{Z}}}1
 }
+% Definice jazyka Structured Text pro listings
+\lstdefinelanguage{ST}{
+  keywords={FUNCTION_BLOCK, END_FUNCTION_BLOCK, VAR_INPUT, END_VAR, VAR_OUTPUT, 
+            VAR_IN_OUT, VAR, VAR_TEMP, IF, THEN, ELSE, ELSIF, END_IF, CASE, OF, 
+            END_CASE, FOR, TO, BY, DO, END_FOR, WHILE, END_WHILE, REPEAT, UNTIL, 
+            END_REPEAT, RETURN, EXIT, BOOL, INT, DINT, REAL, TIME, TON, TOF, R_TRIG, 
+            F_TRIG, RS, SR, TP, R_EDGE, F_EDGE, TRUE, FALSE, AND, OR, NOT,
+            XOR, ADD, SUB, MUL, DIV, MOD, EQ, NEQ, LT, LE, GT, GE, <, <=, >, >=,},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{(*}{*)},
+  string=[b]{'}{'},
+  morestring=[b]',
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%      Definice informací o dokumentu             %%%%%%%%%%
@@ -217,5 +231,4 @@
 %%% Vložení souboru 'text/prilohy' s přílohami
 % Obvykle je přítomen alespoň popis co najdeme na přiloženém médiu
 \include{text/prilohy}
-
 \end{document}
