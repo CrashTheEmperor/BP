@@ -198,3 +198,384 @@ Temperature := RoomTemp;
 INIT := TRUE;
 END_FUNCTION_BLOCK
 \end{lstlisting}
+\newpage
+\chapter{Popis funkčního bloku fbBath}
+\label{apend:fbBath}
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Definice funkčního bloku fbBath}, label={lst:fbBath}]
+  FUNCTION_BLOCK fbBath
+  VAR_INPUT
+    SV6_ON       : BOOl; //Vizu světlo 6 on
+    SV6_OFF      : BOOl; //Vizu světlo 6 off
+    SV6_KNX_FB   : BOOl; //KNX světlo 6 feedback
+  END_VAR
+  VAR_OUTPUT
+    SV6          : BOOL;   //Vizualizace světla 6
+    SV6_CMD      : DT_CMD_BOOL;   //Příkaz světla 6
+    TemperBath   : REAL;   //Vizualizace + komunikace
+  END_VAR
+  VAR_IN_OUT
+  END_VAR
+  VAR
+    Time_s   : REAL := 0.0;
+    fbSV6 : fbKNXVisuBool;
+  END_VAR
+  VAR_TEMP
+  END_VAR
+  VAR CONSTANT
+    PI       : REAL := 3.14159265;
+    Freq     : REAL := 0.005; // perioda cca 3 minuty 20 sekund
+    TaskTime : REAL := 400.0; // 250 ms
+  END_VAR
+\end{lstlisting}
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[scale=0.7]{obrazky/fbBath.png}
+  \end{center}
+  \caption[Logika funkčního bloku fbBath]{Logika funkčního bloku fbBath}
+  \label{fig:fbBath}
+\end{figure}
+\pagebreak
+\newpage
+\chapter{Definice funkčního bloku fbKitch}
+\label{apend:fbKitch}
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Definice funkčního bloku fbKitch}, label={lst:fbKitch}]
+  FUNCTION_BLOCK fbKitch
+  VAR_INPUT
+    SV1_ON         : BOOl; //Vizu světlo 1 on
+    SV1_OFF        : BOOl; //Vizu světlo 1 off
+    SV1_KNX_FB     : BOOl; //KNX světlo 1 feedback,
+    SV2_ON         : BOOl; //Vizu světlo 2 on
+    SV2_OFF        : BOOl; //Vizu světlo 2 off
+    SV2_KNX_FB     : BOOl; //KNX světlo 2 feedback
+    Heater3_ON     : BOOl; //Vizu topení 3 on
+    Heater3_OFF    : BOOl; //Vizu topení 3 off
+    Heater3_KNX_FB : BOOl; //KNX klimatizace 3 feedback
+    Climat3_ON     : BOOl; //Vizu klimatizace 3 on
+    Climat3_OFF    : BOOl; //Vizu klimatizace 3 off
+    Climat3_KNX_FB : BOOl; //KNX topení 3 feedback
+    wall_temp1     : REAL; // Teplota koupelna [deg C]
+    wall_temp2     : REAL; // Teplota ven [deg C]
+    wall_temp3     : REAL; // Teplota ven [deg C]
+    wall_temp4     : REAL; // Teplota ven [deg C]
+    ceiling_temp   : REAL; // Teplota obyvak [deg C]
+  END_VAR
+  VAR_OUTPUT
+    SV1            : BOOL;   //Vizualizace světla 1
+    SV2            : BOOL;   //Vizualizace světla 2
+    Heater3        : BOOL;   //Vizualizace topení 3
+    Climat3        : BOOL;   //Vizualizace klimatizace 3
+    SV1_CMD        : DT_CMD_BOOL;   //Příkaz světla 1
+    SV2_CMD        : DT_CMD_BOOL;   //Příkaz světla 2
+    Heater3_CMD    : DT_CMD_BOOL;   //Příkaz topení 3
+    Climat3_CMD    : DT_CMD_BOOL;   //Příkaz klimatizace 3
+    TemperKitchen  : REAL;   //Vizualizace + komunikace
+  END_VAR
+  VAR_IN_OUT
+  END_VAR
+  VAR
+    fbSV1 : fbKNXVisuBool;
+    fbSV2 : fbKNXVisuBool;
+    fbHeater3 : fbKNXVisuBool;
+    fbKitchMod : fbRoomTempMod;
+    fbClimat3 : fbKNXVisuBool;
+  END_VAR
+  VAR_TEMP
+  END_VAR
+\end{lstlisting}
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[scale=0.7]{obrazky/fbKitch.png}
+  \end{center}
+  \caption[Logika funkčního bloku fbKitch]{Logika funkčního bloku fbKitch}
+  \label{fig:fbKitch}
+\end{figure}
+\pagebreak
+\chapter{Definice funkčního bloku fbLivRoom}
+\label{apend:fbLivRoom}
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Definice funkčního bloku fbLivRoom}, label={lst:fbLivRoom}]
+FUNCTION_BLOCK fbLivRoom
+  VAR_INPUT
+    SV3_ON          : BOOl; //Vizu světlo 3 on
+    SV3_OFF         : BOOl; //Vizu světlo 3 off
+    SV3_KNX_FB      : BOOl; //KNX světlo 3 feedback,
+    SV4_ON          : BOOl; //Vizu světlo 4 on
+    SV4_OFF         : BOOl; //Vizu světlo 4 off
+    SV4_KNX_FB      : BOOl; //KNX světlo 4 feedback
+    SV5_ON          : BOOl; //Vizu světlo 5 on
+    SV5_OFF         : BOOl; //Vizu světlo 5 off
+    SV5_KNX_FB      : BOOl; //KNX světlo 5 feedback
+    Shut1_UP        : BOOl; //Vizu rolety 1 on
+    Shut1_DW        : BOOl; //Vizu rolety 1 down
+    Shut1_STEP_UP   : BOOl; //Vizu rolety 1 on krok
+    Shut1_STEP_DW   : BOOl; //Vizu rolety 1 off krok
+    Shut1_KNX_FB_UP : BOOl; //KNX rolety 1 feedback up
+    Shut1_KNX_FB_DW : BOOl; //KNX rolety 1 feedback down
+    Shut2_UP        : BOOl; //Vizu rolety 2 on
+    Shut2_DW        : BOOl; //Vizu rolety 2 down
+    Shut2_STEP_UP   : BOOl; //Vizu rolety 2 on krok
+    Shut2_STEP_DW   : BOOl; //Vizu rolety 2 off krok
+    Shut2_KNX_FB_UP : BOOl; //KNX rolety 2 feedback up
+    Shut2_KNX_FB_DW : BOOl; //KNX rolety 2 feedback down
+    Heater1_ON      : BOOl; //Vizu topení 1 on
+    Heater1_OFF     : BOOl; //Vizu topení 1 off
+    Heater1_KNX_FB  : BOOl; //KNX klimatizace 1 feedback
+    Heater2_ON      : BOOl; //Vizu topení 2 on
+    Heater2_OFF     : BOOl; //Vizu topení 2 off
+    Heater2_KNX_FB  : BOOl; //KNX klimatizace 2 feedback
+    Climat1_ON      : BOOl; //Vizu klimatizace 1 on
+    Climat1_OFF     : BOOl; //Vizu klimatizace 1 off
+    Climat1_KNX_FB  : BOOl; //KNX topení 1 feedback
+    Climat2_ON      : BOOl; //Vizu klimatizace 2 on
+    Climat2_OFF     : BOOl; //Vizu klimatizace 2 off
+    Climat2_KNX_FB  : BOOl; //KNX topení 2 feedback
+    wall_temp1      : REAL; // Teplota koupelna [deg C]
+    wall_temp2      : REAL; // Teplota ven [deg C]
+    wall_temp3      : REAL; // Teplota ven [deg C]
+    wall_temp4      : REAL; // Teplota ven [deg C]
+    floor_temp      : REAL; // Teplota v místnosti pod [deg C]
+    ceiling_temp    : REAL; // Teplota obyvak [deg C]
+  END_VAR
+  VAR_OUTPUT
+    SV3          : BOOL;   //Vizualizace světla 3
+    SV4          : BOOL;   //Vizualizace světla 4
+    SV5          : BOOL;   //Vizualizace světla 5
+    SV3_CMD      : DT_CMD_BOOL;   //Příkaz světla 3
+    SV4_CMD      : DT_CMD_BOOL;   //Příkaz světla 4
+    SV5_CMD      : DT_CMD_BOOL;   //Příkaz světla 5
+    Heater1        : BOOL;   //Vizualizace topení 1
+    Heater2        : BOOL;   //Vizualizace topení 2
+    Heater1_CMD    : DT_CMD_BOOL;   //Příkaz topení 1
+    Heater2_CMD    : DT_CMD_BOOL;   //Příkaz topení 2
+    Climat1        : BOOL;   //Vizualizace klimatizace 1
+    Climat2        : BOOL;   //Vizualizace klimatizace 2
+    Climat1_CMD    : DT_CMD_BOOL;   //Příkaz klimatizace 1
+    Climat2_CMD    : DT_CMD_BOOL;   //Příkaz klimatizace 2
+    Shut1_UP_OUT   : BOOL;   //Vizualizace žaluzie 1 UP
+    Shut1_DOWN_OUT : BOOL;   //Vizualizace žaluzie 1 DOWN
+    Shut1_CMD      : DT_CMD_BOOL;   //Příkaz žaluzie 1
+    Shut1_STEP_CMD : DT_CMD_BOOL;   //Příkaz žaluzie 1 KROK
+    Shut2_UP_OUT   : BOOL;   //Vizualizace žaluzie 2 UP
+    Shut2_DOWN_OUT : BOOL;   //Vizualizace žaluzie 2 DOWN
+    Shut2_CMD      : DT_CMD_BOOL;   //Příkaz žaluzie 2
+    Shut2_STEP_CMD : DT_CMD_BOOL;   //Příkaz žaluzie 2 KROK
+    TemperLivingR  : REAL;   //Vizualizace + komunikace
+  END_VAR
+  VAR_IN_OUT
+  END_VAR
+  VAR
+    fbSV3 : fbKNXVisuBool;
+    fbSV4 : fbKNXVisuBool;
+    fbSV5 : fbKNXVisuBool;
+    fbHeater1 : fbKNXVisuBool;
+    fbClimat1 : fbKNXVisuBool;
+    fbHeater2 : fbKNXVisuBool;
+    fbClimat2 : fbKNXVisuBool;
+    fbLivingRMod : fbRoomTempMod;
+    fbShut1 : fbKNXShutters;
+    fbShut2 : fbKNXShutters;
+  END_VAR
+  VAR_TEMP
+  END_VAR
+\end{lstlisting}
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[scale=0.6]{obrazky/fbLivRoom.png}
+  \end{center}
+  \caption[Logika funkčního bloku fbLivRoom]{Logika funkčního bloku fbLivRoom}
+  \label{fig:fbLivRoom}
+\end{figure}
+\pagebreak
+\chapter{Definice funkčního bloku fbOutz}
+\label{apend:fbOutz}
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Definice funkčního bloku fbOutz}, label={lst:fbOutz}]
+  FUNCTION_BLOCK fbOutz
+  VAR_INPUT
+    SV7_ON       : BOOl R_EDGE; //Vizu světlo 7 on
+    SV7_OFF      : BOOl R_EDGE; //Vizu světlo 7 off
+    SV7_KNX_FB   : BOOl; //KNX světlo 7 feedback
+    KNX_OUT_TEMP : REAL; // KNX Teplota venku
+  END_VAR
+  VAR_OUTPUT
+    SV7          : BOOL;   //Vizualizace světla 7
+    SV7_CMD      : DT_CMD_BOOL;   //Příkaz světla 7
+    TemperOut    : REAL;   //Vizualizace + komunikace
+  END_VAR
+  VAR_IN_OUT
+  END_VAR
+  VAR
+    fbSV7 : fbKNXVisuBool;
+  END_VAR
+  VAR_TEMP
+  END_VAR
+\end{lstlisting}
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[scale=1.3]{obrazky/fbOutz.png}
+  \end{center}
+  \caption[Logika funkčního bloku fbOutz]{Logika funkčního bloku fbOutz}
+  \label{fig:fbOutz}
+\end{figure}
+\pagebreak
+\chapter{Program komunikace mezi PLC a KNX}
+\label{apend:KNXComm}
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Program komunikace mezi PLC a KNX}, label={lst:prgKNXComm}]
+  PROGRAM prgKNXComm
+  VAR_INPUT
+  END_VAR
+  VAR_OUTPUT
+  END_VAR
+  VAR
+    init : BOOL;
+    knx  : fbKnxIpBaosBin;
+    
+    SHUT1_FB_PULSE : TON;
+    SHUT2_FB_PULSE : TON;
+
+    datapoint1       : T_KNX_OBJECT_DPT1;     // SV1_FB
+    datapoint2       : T_KNX_OBJECT_DPT1;     // SV2_FB
+    datapoint3       : T_KNX_OBJECT_DPT1;     // SV3_FB
+    datapoint4       : T_KNX_OBJECT_DPT1;     // SV4_FB
+    datapoint5       : T_KNX_OBJECT_DPT1;     // SV5_FB
+    datapoint6       : T_KNX_OBJECT_DPT1;     // SV6_FB
+    datapoint7       : T_KNX_OBJECT_DPT1;     // SV7_FB
+
+    datapoint8       : T_KNX_OBJECT_DPT1;     // HEAT1_FB
+    datapoint9       : T_KNX_OBJECT_DPT1;     // HEAT2_FB
+    datapoint10      : T_KNX_OBJECT_DPT1;     // HEAT3_FB
+
+    datapoint11      : T_KNX_OBJECT_DPT1;     // COLD1_FB
+    datapoint12      : T_KNX_OBJECT_DPT1;     // COLD2_FB
+    datapoint13      : T_KNX_OBJECT_DPT1;     // COLD3_FB
+
+    datapoint14      : T_KNX_OBJECT_DPT1;     // SHUT1_FB
+    datapoint15      : T_KNX_OBJECT_DPT1;     // SHUT1_CMD
+    datapoint16      : T_KNX_OBJECT_DPT1;     // SHUT2_FB
+    datapoint17      : T_KNX_OBJECT_DPT1;     // SHUT2_CMD
+
+    datapoint18      : T_KNX_OBJECT_DPT1;     // SV1_CMD
+    datapoint19      : T_KNX_OBJECT_DPT1;     // SV2_CMD
+    datapoint20      : T_KNX_OBJECT_DPT1;     // SV3_CMD
+    datapoint21      : T_KNX_OBJECT_DPT1;     // SV4_CMD
+    datapoint22      : T_KNX_OBJECT_DPT1;     // SV5_CMD
+    datapoint23      : T_KNX_OBJECT_DPT1;     // SV6_CMD
+    datapoint24      : T_KNX_OBJECT_DPT1;     // SV7_CMD
+
+    datapoint25      : T_KNX_OBJECT_DPT1;     // HEAT1_CMD
+    datapoint26      : T_KNX_OBJECT_DPT1;     // HEAT2_CMD
+    datapoint27      : T_KNX_OBJECT_DPT1;     // HEAT3_CMD
+
+    datapoint28      : T_KNX_OBJECT_DPT1;     // krok Žaluzií 1
+    datapoint29      : T_KNX_OBJECT_DPT1;     // krok Žaluzií 2
+
+    datapoint30      : T_KNX_OBJECT_DPT18;    // scéna
+    datapoint31      : T_KNX_OBJECT_DPT9;     // teplota
+
+    knxObjectList    : ARRAY[1..31] OF UDINT; // pole adres
+  END_VAR
+  VAR_TEMP
+  END_VAR
+  
+// pole adres
+IF NOT init THEN
+  knxObjectList[1]  := PTR_TO_UDINT( ADR(datapoint1));   // SV1_FB
+  knxObjectList[2]  := PTR_TO_UDINT( ADR(datapoint2));   // SV2_FB
+  knxObjectList[3]  := PTR_TO_UDINT( ADR(datapoint3));   // SV3_FB
+  knxObjectList[4]  := PTR_TO_UDINT( ADR(datapoint4));   // SV4_FB
+  knxObjectList[5]  := PTR_TO_UDINT( ADR(datapoint5));   // SV5_FB
+  knxObjectList[6]  := PTR_TO_UDINT( ADR(datapoint6));   // SV6_FB
+  knxObjectList[7]  := PTR_TO_UDINT( ADR(datapoint7));   // SV7_FB
+
+  knxObjectList[8]  := PTR_TO_UDINT( ADR(datapoint8));   // HEAT1_FB
+  knxObjectList[9]  := PTR_TO_UDINT( ADR(datapoint9));   // HEAT2_FB
+  knxObjectList[10] := PTR_TO_UDINT( ADR(datapoint10));  // HEAT3_FB
+
+  knxObjectList[11] := PTR_TO_UDINT( ADR(datapoint11));  // COLD1_FB
+  knxObjectList[12] := PTR_TO_UDINT( ADR(datapoint12));  // COLD2_FB
+  knxObjectList[13] := PTR_TO_UDINT( ADR(datapoint13));  // COLD3_FB
+
+  knxObjectList[14] := PTR_TO_UDINT( ADR(datapoint14));  // SHUT1_FB
+  knxObjectList[15] := PTR_TO_UDINT( ADR(datapoint15));  // Zastarale
+  knxObjectList[16] := PTR_TO_UDINT( ADR(datapoint16));  // SHUT2_FB
+  knxObjectList[17] := PTR_TO_UDINT( ADR(datapoint17));  // Zastarale
+
+  knxObjectList[18] := PTR_TO_UDINT( ADR(datapoint18));  // SV1_CMD
+  knxObjectList[19] := PTR_TO_UDINT( ADR(datapoint19));  // SV2_CMD
+  knxObjectList[20] := PTR_TO_UDINT( ADR(datapoint20));  // SV3_CMD
+  knxObjectList[21] := PTR_TO_UDINT( ADR(datapoint21));  // SV4_CMD
+  knxObjectList[22] := PTR_TO_UDINT( ADR(datapoint22));  // SV5_CMD
+  knxObjectList[23] := PTR_TO_UDINT( ADR(datapoint23));  // SV6_CMD
+  knxObjectList[24] := PTR_TO_UDINT( ADR(datapoint24));  // SV7_CMD
+
+  knxObjectList[25] := PTR_TO_UDINT( ADR(datapoint25));  // HEAT1_CMD
+  knxObjectList[26] := PTR_TO_UDINT( ADR(datapoint26));  // HEAT2_CMD
+  knxObjectList[27] := PTR_TO_UDINT( ADR(datapoint27));  // HEAT3_CMD
+
+  knxObjectList[28] := PTR_TO_UDINT( ADR(datapoint28));  // krok Žaluzie 1
+  knxObjectList[29] := PTR_TO_UDINT( ADR(datapoint29));  // krok Žaluzie 2
+
+  knxObjectList[30] := PTR_TO_UDINT( ADR(datapoint30));  // scéna
+  knxObjectList[31] := PTR_TO_UDINT( ADR(datapoint31));  // teplota
+
+  init := TRUE;
+END_IF
+
+knx( firstKnxObject := 1,
+     lastKnxObject := 31,
+     ethCode := ETH2_uni2,
+     knxIP := STRING_TO_IPADR('192.168.xxx.xx'),
+     knxList := void( knxObjectList));
+
+// Feedbacky
+SV1_FB       := datapoint1 .value;
+SV2_FB       := datapoint2 .value;
+SV3_FB       := datapoint3 .value;
+SV4_FB       := datapoint4 .value;
+SV5_FB       := datapoint5 .value;
+SV6_FB       := datapoint6 .value;
+SV7_FB       := datapoint7 .value;
+
+HEAT1_FB     := datapoint8 .value;
+HEAT2_FB     := datapoint9 .value;
+HEAT3_FB     := datapoint10.value;
+
+COLD1_FB     := datapoint11.value;
+COLD2_FB     := datapoint12.value;
+COLD3_FB     := datapoint13.value;
+
+SHUT1_FB_PULSE(IN := datapoint14.altValue, PT := T#1s);
+SHUT2_FB_PULSE(IN := datapoint16.altValue, PT := T#1s);
+
+SHUT1_FB_UP   := datapoint14.value AND SHUT1_FB_PULSE.Q;
+SHUT1_FB_DOWN := NOT(datapoint14.value) AND SHUT1_FB_PULSE.Q;
+SHUT2_FB_UP   := datapoint16.value AND SHUT2_FB_PULSE.Q;
+SHUT2_FB_DOWN := NOT(datapoint16.value) AND SHUT2_FB_PULSE.Q;
+
+// Příkazy
+IF SV1_CMD.CMD       THEN datapoint18.value := SV1_CMD.CMD_VAL; END_IF;
+IF SV2_CMD.CMD       THEN datapoint19.value := SV2_CMD.CMD_VAL; END_IF;
+IF SV3_CMD.CMD       THEN datapoint20.value := SV3_CMD.CMD_VAL; END_IF;
+IF SV4_CMD.CMD       THEN datapoint21.value := SV4_CMD.CMD_VAL; END_IF;
+IF SV5_CMD.CMD       THEN datapoint22.value := SV5_CMD.CMD_VAL; END_IF;
+IF SV6_CMD.CMD       THEN datapoint23.value := SV6_CMD.CMD_VAL; END_IF;
+IF SV7_CMD.CMD       THEN datapoint24.value := SV7_CMD.CMD_VAL; END_IF;
+
+IF HEAT1_CMD.CMD     THEN datapoint25.value := HEAT1_CMD.CMD_VAL; END_IF;
+IF HEAT2_CMD.CMD     THEN datapoint26.value := HEAT2_CMD.CMD_VAL; END_IF;
+IF HEAT3_CMD.CMD     THEN datapoint27.value := HEAT3_CMD.CMD_VAL; END_IF;
+
+IF SHUT1_CMD.CMD     THEN datapoint15.value  := SHUT1_CMD.CMD_VAL; END_IF;
+IF SHUT1_STEP_CMD.CMD THEN datapoint28.value := SHUT1_STEP_CMD.CMD_VAL; END_IF;
+IF SHUT2_CMD.CMD     THEN datapoint17.value  := SHUT1_CMD.CMD_VAL; END_IF;
+IF SHUT2_STEP_CMD.CMD THEN datapoint29.value := SHUT1_STEP_CMD.CMD_VAL; END_IF;
+
+// Shutdown scéna
+IF SHUTDOWN_MQTT THEN
+  datapoint30.control := TRUE;
+  datapoint30.scene   := 5;
+END_IF
+
+// Posílání teploty
+KNX_TEMPER := datapoint31.value;
+
+END_PROGRAM
+\end{lstlisting}

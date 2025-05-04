@@ -169,7 +169,7 @@ Uvažujeme, že místnost je kvádr o rozměrech specifikovaných uživatelským
     \item $Q$ - energie potřebná ke změně teploty o 1 °C [J]
     \item $c_p$ - měrná tepelná kapacita vzduchu - 1005 [J$\cdot$kg$^{-1}\cdot$K$^{-1}$] \newline
 \end{itemize}
-\noindent Dále uvažujeme obal kvádru (stěny, podlahu a strop) s různými tloušťkami a tepelnými vodivostmi. Pro zjednodušení výpočtu se předpokládá, že dveře a okna místnosti nemají rozdílný vliv oproti stěnám a tudíž tepelný tok zůstává na celé ploše strany stejný a směr toku závisí pouze na poměru teplot na obou stranách zdi. Dále je předpoklad nulových teplot z jiných směrů. Také budeme předpokládat, že materiál bude všude stejný a to cihla. 
+\noindent Dále uvažujeme obal kvádru (stěny, podlahu a strop) s různými tloušťkami a tepelnými vodivostmi (Fourierův zákon vedení tepla \ref{eq:tepelny_tok}). Pro zjednodušení výpočtu se předpokládá, že dveře a okna místnosti nemají rozdílný vliv oproti stěnám a tudíž tepelný tok zůstává na celé ploše strany stejný a směr toku závisí pouze na poměru teplot na obou stranách zdi. Dále je předpoklad nulových teplot z jiných směrů. Také budeme předpokládat, že materiál bude všude stejný a to cihla. 
 
 \begin{equation}
     S = a \cdot b
@@ -234,7 +234,6 @@ Uvažujeme, že místnost je kvádr o rozměrech specifikovaných uživatelským
     \label{fig:simulace_funkce}
 \end{figure}
 \noindent Toto funkce bylo potřeba převést do rekurzivní podoby, aby bylo možné je implementovat do funkčního bloku.
-
 \begin{equation}
     y_{RůstTed} = y_{RůstPred} + \frac{ln(1 + k_{Růst} \cdot \Delta t)}{ln(1 + k_{Růst} \cdot T_{Max})} \cdot (y_{Max} - y_{RůstPred}) 
     \label{eq:rust_rekurzivni}
@@ -285,11 +284,119 @@ Uvažujeme, že místnost je kvádr o rozměrech specifikovaných uživatelským
 
 \noindent Tento funkční blok byl použit pro simulaci teploty v obývacím pokoji, kuchyni. Definice tohoto funkčního bloku je zobrazena kvůli své velikosti v příloze \ref{apend:fbRoomTempMod}. Pro venkovní teplotu byl použit signál, který byl napojen na teploměr na panelu. V případě koupelny byla teplota simulována jako sinusoida v rozmezí 18-22 °C a periodou 3 minuty. Tento způsob byl zvolen kvůli absenci teploměru a akčního členu pro řízení teploty. 
 
-\subsubsection{fbLivRoom}
-\subsubsection{fbKitch}
-\subsubsection{fbBath}
-\subsubsection{fbOutz}
-
+\subsubsection{funkční bloky jednotlivých místností}
+Funkční bloky jednotlivých místností se skládají z výše uvedených funkcí, které byly poskládány v závislosti na požadavcích jednotlivých místností - viz. Obr. \ref{fig:Vzheled panelu}. Všechny funkční bloky mají definici vypsanou v přílohách dokumentu:
+\begin{itemize}
+    \item \textbf{fbBath} - V příloze \ref{apend:fbBath}
+    \item \textbf{fbKitch} - V příloze \ref{apend:fbKitch}
+    \item \textbf{fbLivRoom} - V příloze \ref{apend:fbLivRoom}
+    \item \textbf{fbOutz} - V příloze \ref{apend:fbOutz}
+\end{itemize}
 \subsection{Komunikace KNX/IP}
+Důležitou součástí ovládání instalace je komunikace s KNX/IP, která byla realizována pomocí knihovny KNXlib \cite{KNXlib}. Obsahem této knihovny jsou dva funkční bloky určené ke komunikaci:
+\begin{itemize}
+    \item \textbf{fbKnxIpBaos} - Funkční blok pro komunikaci s KNX/IP BAOS 772 v režimu TCP master
+    \item  \textbf{fbKnxIpBaosBin} - Funkční blok pro komunikaci s KNX/IP BAOS 772/774 skrze binární protokol v režimu TCP Master \newline
+\end{itemize}
+Dále tato knihovna obsahuje datové struktury, které obsahují definice jednotlicých datapointů, které jsou potřeba pro komunikaci mezi PLC a KNX/IP Baos 774:
+\begin{table}[h]
+    \caption[Definice KNX datapointů]{Definice KNX datapointů}
+        \small
+            \centering
+            \begin{tabular}{|c|c|c|}
+                \hline
+                Typ objektu KNX & Datový typ PLC & Popis  \\
+                \hline\hline
+                DPT 01 & T\_KNX\_OBJECT\_DPT1 & Binár -- 1 Bit \\
+                \hline
+                DPT 02 & T\_KNX\_OBJECT\_DPT2 & Binár s kontrolou (Priorita) -- 2 Bits \\
+                \hline
+                DPT 03 & T\_KNX\_OBJECT\_DPT3 & Stmívání nahoru/dolů -- 4 Bit \\
+                \hline
+                DPT 04 & T\_KNX\_OBJECT\_DPT4 & Znak -- 1 Byte \\
+                \hline
+                DPT 05 & T\_KNX\_OBJECT\_DPT5 & Scaling -- 1 Byte (8 Bitová Unsigned hodnota) \\
+                \hline
+                DPT 06 & T\_KNX\_OBJECT\_DPT6 & Signed hodnota -- 1 Byte \\
+                \hline
+                DPT 07 & T\_KNX\_OBJECT\_DPT7 & Unsigned hodnota -- 2 Bytes \\
+                \hline
+                DPT 08 & T\_KNX\_OBJECT\_DPT8 & Signed hodnota -- 2 Bytes \\
+                \hline
+                DPT 09 & T\_KNX\_OBJECT\_DPT9 & Float hodnota -- 2 Bytes \\
+                \hline
+                DPT 10 & T\_KNX\_OBJECT\_DPT10 & Čas -- 3 Bytes \\
+                \hline
+                DPT 11 & T\_KNX\_OBJECT\_DPT11 & Datum -- 3 Bytes \\
+                \hline
+                DPT 12 & T\_KNX\_OBJECT\_DPT12 & Unsigned hodnota -- 4 Bytes \\
+                \hline
+                DPT 13 & T\_KNX\_OBJECT\_DPT13 & Signed hodnota -- 4 Bytes \\
+                \hline
+                DPT 14 & T\_KNX\_OBJECT\_DPT14 & Float hodnota -- 4 Bytes \\
+                \hline
+                DPT 15 & T\_KNX\_OBJECT\_DPT15 & Access data -- 4 Bytes \\
+                \hline
+                DPT 16 & T\_KNX\_OBJECT\_DPT16 & Řetězec znaků -- 14 Bytes \\
+                \hline
+                DPT 17 & T\_KNX\_OBJECT\_DPT17 & Scéna -- 1 Byte \\
+                \hline
+                DPT 18 & T\_KNX\_OBJECT\_DPT18 & Kontroler scén -- 1 Byte \\
+                \hline
+                DPT unknown & T\_KNX\_OBJECT\_RAW & Max. 14 Byte, Data jako pole, byte-by-byte \\
+                \hline
+            \end{tabular}
+\end{table}
+\subsubsection{Realizace komununikace KNX/IP}
+Pro realizaci v tomto případě byla potřeba kromě přidání knihovny, a vytvoření programu ještě nastavit ethernet port. V tomto případě to byl do \textit{ETH2} přidán obecný kanál \textit{UNI1}, který bylo potřeba nastavit jako TCP Server. Dále je pak nutné vytvořit proměnné dle tabulky datapointů vytvořené v KNX IP BAOS viz. kapitola \ref{}, získat jejich adresy a poté je vložit do pole.
+
+Dalším krokem je nastavení funkčního bloku \textit{fbKnxIpBaosBin}. Nejprve se nastaví číslo prvního a posledního datapointu, který má funkční blok zpracovat, poté se nastaví použitý ethernet port a IP adresa KNX/IP BAOS 774 instalace. Nakonec se předá do portu \textit{knxList} námi definované pole s adresami.Po tomto kroku je už možné pracovat s proměnnými a vytvoření logik.
+
+V případě této práce se používají pouze 3 druhy datapointů a to:
+\begin{itemize}
+    \item \textbf{DPT 1} - ovládání a indikace binárního signálu
+    \item \textbf{DPT 9} - hodnota teploty z teploměru
+    \item \textbf{DPT 18} - ovládání scény \newline
+\end{itemize}
+Níže je uvedena ukázka realizace komunikace, která vyplývá z implementace uvedené v příloze \ref{apend:KNXComm}:
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Implementace komunikace KNX/IP}, label={lst:komunikace_knx}]
+PROGRAM prgKNXComm
+  VAR
+    init : BOOL;
+    knx  : fbKnxIpBaosBin;
+    knxObjectList    : ARRAY[1..4] OF UDINT; // pole adres
+    datapoint1      : T_KNX_OBJECT_DPT1;     // SV1_FB
+    datapoint2      : T_KNX_OBJECT_DPT1;     // SV1_CMD
+    datapoint3      : T_KNX_OBJECT_DPT18;    // scéna
+    datapoint4      : T_KNX_OBJECT_DPT9;     // teplota
+  END_VAR
+
+IF NOT init THEN // Pole adres
+  knxObjectList[1]  := PTR_TO_UDINT( ADR(datapoint1));
+  knxObjectList[2]  := PTR_TO_UDINT( ADR(datapoint2));
+  knxObjectList[3]  := PTR_TO_UDINT( ADR(datapoint3));
+  knxObjectList[4]  := PTR_TO_UDINT( ADR(datapoint4));
+  init := TRUE;
+END_IF
+
+knx( firstKnxObject := 1,
+     lastKnxObject := 4,
+     ethCode := ETH2_uni2,
+     knxIP := STRING_TO_IPADR('192.168.xxx.xxx'),
+     knxList := void( knxObjectList));
+
+SV1_FB := datapoint1.value; // Feedback
+IF SV1_CMD THEN datapoint2.value := SV1_CMD.CMD_VAL; // CMD
+
+IF SCENE THEN // scéna
+  datapoint3.control := TRUE;
+  datapoint3.scene   := 5;
+END_IF
+
+KNX_TEMPER := datapoint4.value;// Posílání teploty
+END_PROGRAM
+\end{lstlisting}
 \subsection{Komunikace MQTT}
+Bude přidáno  11.5.2024 po úspěšném testování a realizaci.
 \subsection{Vizualizace}
+V této sekci je popsána tvorba vizualizace panelu pomocí integrovaného webového serveru. Nastavení a realizace webového serveru je realizována pomocí integrovaného nástroje WebMaker.
