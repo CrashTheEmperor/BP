@@ -109,6 +109,71 @@
   morestring=[b]',
 }
 
+% Definice jazyka Bash s rozšířenou podporou pro příkazy
+\lstdefinelanguage{bash}{
+  morekeywords={if, then, else, elif, fi, for, do, done, while, until, case, esac,
+            function, select, in, break, continue, return, exit, shift, 
+            source, alias, unalias, set, unset, export, local, readonly,
+            declare, typeset, let, eval, exec, trap, wait, kill, getopts,
+            test, command, builtin, enable, help, type, hash, sudo, su,
+            mkdir, rmdir, touch, mv, cp, rm, ls, cd, pwd, echo, cat, less,
+            more, head, tail, grep, egrep, fgrep, find, sed, awk, cut, sort, 
+            uniq, tr, wc, diff, patch, tar, gzip, gunzip, bzip2, bunzip2, zip,
+            unzip, chown, chmod, chgrp, ps, top, htop, kill, pkill, pgrep,
+            lsof, netstat, ifconfig, ip, ping, traceroute, ssh, scp, rsync, curl,
+            wget, apt, apt-get, dnf, yum, pacman, systemctl, journalctl, crontab,
+            printf, pushd, popd},
+  sensitive=false,
+  morecomment=[l]{\#},
+  morestring=[b]"",
+  morestring=[b]'',
+  morestring=[d]``,
+  alsoletter={.},
+  alsoother={$},
+  otherkeywords={ [, ], \{, \}, |, >, <, >>, >|},
+  moredelim=[s][\color{black}]{\$\{}{\}},
+  literate=
+    {├}{{\textcolor{gray}{├}}}{1}
+    {─}{{\textcolor{gray}{─}}}{1}
+    {└}{{\textcolor{gray}{└}}}{1}
+    {│}{{\textcolor{gray}{│}}}{1}
+}
+
+% Definice jazyka YAML s podporou pro různé datové struktury
+\lstdefinelanguage{yaml}{
+  keywords={true, false, null, yes, no, on, off},
+  sensitive=false,
+  comment=[l]{\#},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]{'},
+  morestring=[b]{"},
+  morestring=[s]{[}{]},
+  morestring=[s]{\{}{\}},
+  literate=
+    {:}{{\textcolor{red}{:}}}{1}
+    {-}{{\textcolor{blue}{-}}}{1}
+    {>}{{\textcolor{blue}{>}}}{1}
+    {|}{{\textcolor{blue}{|}}}{1}
+    {\ -\ }{{\textcolor{blue}{\ -\ }}}{3}
+    {├}{{\textcolor{gray}{\textbackslash u251C}}}{1}
+    {─}{{\textcolor{gray}{\textbackslash u2500}}}{1}
+    {└}{{\textcolor{gray}{\textbackslash u2514}}}{1}
+    {│}{{\textcolor{gray}{\textbackslash u2502}}}{1}
+}
+
+% Nastavení pro adresářové struktury
+\lstset{
+  backgroundcolor={\color{lightgray}},
+  basicstyle=\ttfamily\small,
+  columns=fullflexible,
+  frame=single,
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+  showstringspaces=false,
+  keepspaces=true,
+  upquote=true
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%      Definice informací o dokumentu             %%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -2,12 +2,13 @@
 \babel@toc {czech}{}\relax 
 \babel@toc {english}{}\relax 
 \babel@toc {czech}{}\relax 
-\contentsline {table}{\numberline {1.1}{\ignorespaces Přehled nejpoužívanějších datových typů}}{20}{table.26}%
-\contentsline {table}{\numberline {1.2}{\ignorespaces Individuální adresy v topologii \cite {Topologie}}}{22}{table.31}%
-\contentsline {table}{\numberline {2.1}{\ignorespaces Funkce kuchyňských tlačítek pro krátké stisknutí}}{38}{table.73}%
-\contentsline {table}{\numberline {2.2}{\ignorespaces Funkce kuchyňských tlačítek při dlouhém stisknutí}}{38}{table.74}%
-\contentsline {table}{\numberline {2.3}{\ignorespaces Funkce tlačítek obývacího pokoje při krátké stisknutí}}{39}{table.75}%
-\contentsline {table}{\numberline {2.4}{\ignorespaces Funkce tlačítek obývacího pokoje při dlouhém stisknutí}}{39}{table.76}%
-\contentsline {table}{\numberline {2.5}{\ignorespaces Funkce dotykových tlačítek při krátké stisknutí}}{40}{table.77}%
-\contentsline {table}{\numberline {2.6}{\ignorespaces Funkce dotykových tlačítek při dlouhém stisknutí}}{40}{table.78}%
-\contentsline {table}{\numberline {3.1}{\ignorespaces Definice KNX datapointů}}{50}{table.146}%
+\contentsline {table}{\numberline {1.1}{\ignorespaces Přehled nejpoužívanějších datových typů}}{25}{table.31}%
+\contentsline {table}{\numberline {1.2}{\ignorespaces Individuální adresy v topologii \cite {Topologie}}}{27}{table.36}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces Datapointy pro komunikaci KNX IP BAOS 774 s PLC}}{42}{table.77}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Funkce kuchyňských tlačítek pro krátké stisknutí}}{43}{table.79}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Funkce kuchyňských tlačítek při dlouhém stisknutí}}{43}{table.80}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces Funkce tlačítek obývacího pokoje při krátké stisknutí}}{44}{table.81}%
+\contentsline {table}{\numberline {2.5}{\ignorespaces Funkce tlačítek obývacího pokoje při dlouhém stisknutí}}{44}{table.82}%
+\contentsline {table}{\numberline {2.6}{\ignorespaces Funkce dotykových tlačítek při krátké stisknutí}}{45}{table.83}%
+\contentsline {table}{\numberline {2.7}{\ignorespaces Funkce dotykových tlačítek při dlouhém stisknutí}}{45}{table.84}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Definice KNX datapointů v PLC}}{55}{table.152}%

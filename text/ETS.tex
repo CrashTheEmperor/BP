@@ -227,7 +227,9 @@ Osmikanálový spínací člen HDL se v této práci využívá, na spínání o
 \end{figure}
 
 \section{Připojená komunikační rozhraní}
-Pro umožnění parametrizace a externího řízení bylo nutno přidat do projektu dvě různá rozhraní pro komunikaci. Ani jedno z těchto rozhraní nebylo nijak parametrizováno a bylo ponecháno v původním stavu. První z nich je IP Secure router Siemens - 5WG1 146-1AB03, který je převážně určen k bezpečnému přenosu dat. Lze z něj také využít jako liniová spojka.. \cite{Siemens IP}
+Pro umožnění parametrizace a externího řízení bylo nutno přidat do projektu dvě různá rozhraní pro komunikaci. První z nich je IP Secure router Siemens - 5WG1 146-1AB03, který je převážně určen k bezpečnému přenosu dat. Lze z něj také využít jako liniová spojka. \cite{Siemens IP}
+
+Tomuto rozhraní byla pouze nastavena IP adresa, maska a základní brána pro komunikaci s RaspberryPi skrze tunelování.
 
 \begin{figure}[!ht]
   \begin{center}
@@ -239,6 +241,8 @@ Pro umožnění parametrizace a externího řízení bylo nutno přidat do proje
 
 Druhé komunikační rozhraní použité na panelu je Weinzierl - KNX IP BAOS 774. Využívá se za účelem komunikace skrze telegramy, nebo datové body. Dále umožňuje přístup k objektům pomocí TCP/IP protokolu anebo za pomoci webového rozhraní. \cite{Weinzier}
 
+Tohle rozhraní taktéž bylo parametrizováno pro komunikaci s PLC. Byla mu nastavena odlišná IP adresa, stejná maska a brána jako u předchozího rozhraní. Dále se v něm definovaly datapointy pro komunikaci. Ty jsou definované v tabulce \ref{tab:Datapointy pro komunikaci KNX IP BAOS 774 s PLC}.
+
 \begin{figure}[!ht]
   \begin{center}
     \includegraphics[scale=0.2]{obrazky/IP BAOS.jpg}
@@ -246,7 +250,87 @@ Druhé komunikační rozhraní použité na panelu je Weinzierl - KNX IP BAOS 77
   \caption[Komunikační rozhraní Weinzierl - KNX IP BAOS 774 \cite{Weinzier ob}]{Komunikační rozhraní Weinzierl - KNX IP BAOS 774 \cite{Weinzier ob}}
   \label{fig:Komunikační rozhraní Weinzierl - KNX IP BAOS 774}
 \end{figure}
-
+\pagebreak
+\begin{table}[!ht]
+  \caption[Datapointy pro komunikaci KNX IP BAOS 774 s PLC]{Datapointy pro komunikaci KNX IP BAOS 774 s PLC}
+  \label{tab:Datapointy pro komunikaci KNX IP BAOS 774 s PLC}
+  \small
+    \centering
+    \begin{tabular}{|c|c|c|}
+      \hline
+        Datapoint & Typ & Účel  \\
+          \hline\hline
+            1. & DPT 1 & Světlo pracovna zpětná vazba \\
+          \hline
+            2. & DPT 1 & Světlo obývací pokoj zpětná vazba \\
+          \hline
+            3. & DPT 1 & Světlo televize zpětná vazba \\
+          \hline
+            4. & DPT 1 & Světlo linka zpětná vazba \\
+          \hline
+            5. & DPT 1 & Světlo kuchyně zpětná vazba \\
+          \hline
+            6. & DPT 1 & Světlo koupelna zpětná vazba \\
+          \hline
+            7. & DPT 1 & Vchodové světlo zpětná vazba \\
+          \hline
+            8. & DPT 1 & Topení pracovna zpětná vazba \\
+          \hline
+            9. & DPT 1 & Topení televize zpětná vazba \\
+          \hline
+            10. & DPT 1 & Topení kuchyň zpětná vazba \\
+          \hline
+            11. & DPT 1 & Klimatizace pracovna zpětná vazba \\
+          \hline
+            12. & DPT 1 & Klimatizace televize zpětná vazba \\
+          \hline
+            13. & DPT 1 & Klimatizace kuchyně zpětná vazba \\
+          \hline
+            14. & DPT 1 & Levé žaluzie zpětná vazba \\
+          \hline
+            15. & DPT 1 & Levé žaluzie příkaz \\
+          \hline
+            16. & DPT 1 & Pravé žaluzie zpětná vazba \\
+          \hline
+            17. & DPT 1 & Pravé žaluzie příkaz \\
+          \hline
+            18. & DPT 1 & Světlo pracovna příkaz \\
+          \hline
+            19. & DPT 1 & Světlo obývací pokoj příkaz \\
+          \hline
+            20. & DPT 1 & Světlo televize příkaz \\
+          \hline
+            21. & DPT 1 & Světlo linka příkaz \\
+          \hline
+            22. & DPT 1 & Světlo kuchyně příkaz \\
+          \hline
+            23. & DPT 1 & Světlo koupelna příkaz \\
+          \hline
+            24. & DPT 1 & Vchodové světlo příkaz \\
+          \hline
+            25. & DPT 1 & Topení pracovna příkaz \\
+          \hline
+            26. & DPT 1 & Topení televize příkaz \\
+          \hline
+            27. & DPT 1 & Topení kuchyň příkaz \\
+          \hline
+            28. & DPT 1 & Klimatizace pracovna příkaz \\
+          \hline
+            29. & DPT 1 & Klimatizace televize příkaz \\
+          \hline
+            30. & DPT 1 & Klimatizace kuchyně příkaz \\
+          \hline
+            31. & DPT 1 & Krokování levé žaluzie \\
+          \hline
+            32. & DPT 1 & Krokování levé žaluzie \\
+          \hline
+            33. & DPT 18 & Scéna odchod \\
+          \hline
+            34. & DPT 9 & Teplota okolí panelu \\
+          \hline
+  \end{tabular}
+\end{table}
+\newpage
 \section{Vytvoření skupinových adres projektu}
 V závislosti na informacích obsažených v podkapitole \ref{Adresování} se tato podkapitola zaměří pouze na tvorbu skupinových adres. První část této podkapitoly bude věnována vytvoření a popsání tabulek jednotlivých místností. Tyto tabulky bude použity pro popis funkce jednotlivých tlačítek a následně pro tvorbu skupinových adres. Dále tyto tabulky nebudou obsahovat tlačítko společnosti Berker, které nelze parametrizovat.
 
@@ -355,8 +439,8 @@ První místnost, které budou nastaveny jsou kuchyně a koupelna. Do těchto pr
 \end{table}
 
 Dotyková tlačítka společností Basalte a HDL byla určena na ovládání scén a barvy pozadí objektu. Tlačítko společnosti basalte v této práci reaguje pouze na  krátký dotek jednotlivých tlačítek. Tahle skutečnost je způsobena použitím scén. Při použití funkce volání scény nelze využít dlouhého dotek. Další z vlastností tlačítka je již zmiňovaný multitouch, který funguje na bázi doteku dvou a více ploch najednou. V této práci je použit krátký dotek na zavolání scény odchod a dlouhý dotek na volání scény příchod.
-
-\begin{table}[h]
+\newpage
+\begin{table}[!ht]
  \caption[Funkce dotykových tlačítek při krátké stisknutí]{Funkce dotykových tlačítek při krátké stisknutí}
    \small
     \centering
@@ -379,7 +463,7 @@ Dotyková tlačítka společností Basalte a HDL byla určena na ovládání sc�
 	  \end{tabular}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[!ht]
  \caption[Funkce dotykových tlačítek při dlouhém stisknutí]{Funkce dotykových tlačítek při dlouhém stisknutí}
    \small
     \centering

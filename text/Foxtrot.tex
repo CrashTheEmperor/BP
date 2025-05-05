@@ -285,6 +285,7 @@ Uvažujeme, že místnost je kvádr o rozměrech specifikovaných uživatelským
 \noindent Tento funkční blok byl použit pro simulaci teploty v obývacím pokoji, kuchyni. Definice tohoto funkčního bloku je zobrazena kvůli své velikosti v příloze \ref{apend:fbRoomTempMod}. Pro venkovní teplotu byl použit signál, který byl napojen na teploměr na panelu. V případě koupelny byla teplota simulována jako sinusoida v rozmezí 18-22 °C a periodou 3 minuty. Tento způsob byl zvolen kvůli absenci teploměru a akčního členu pro řízení teploty. 
 
 \subsubsection{funkční bloky jednotlivých místností}
+\label{subsection:fb_mistnosti}
 Funkční bloky jednotlivých místností se skládají z výše uvedených funkcí, které byly poskládány v závislosti na požadavcích jednotlivých místností - viz. Obr. \ref{fig:Vzheled panelu}. Všechny funkční bloky mají definici vypsanou v přílohách dokumentu:
 \begin{itemize}
     \item \textbf{fbBath} - V příloze \ref{apend:fbBath}
@@ -300,7 +301,7 @@ Důležitou součástí ovládání instalace je komunikace s KNX/IP, která byl
 \end{itemize}
 Dále tato knihovna obsahuje datové struktury, které obsahují definice jednotlicých datapointů, které jsou potřeba pro komunikaci mezi PLC a KNX/IP Baos 774:
 \begin{table}[h]
-    \caption[Definice KNX datapointů]{Definice KNX datapointů}
+    \caption[Definice KNX datapointů v PLC]{Definice KNX datapointů v PLC}
         \small
             \centering
             \begin{tabular}{|c|c|c|}
@@ -348,7 +349,7 @@ Dále tato knihovna obsahuje datové struktury, které obsahují definice jednot
             \end{tabular}
 \end{table}
 \subsubsection{Realizace komununikace KNX/IP}
-Pro realizaci v tomto případě byla potřeba kromě přidání knihovny, a vytvoření programu ještě nastavit ethernet port. V tomto případě to byl do \textit{ETH2} přidán obecný kanál \textit{UNI1}, který bylo potřeba nastavit jako TCP Server. Dále je pak nutné vytvořit proměnné dle tabulky datapointů vytvořené v KNX IP BAOS viz. kapitola \ref{}, získat jejich adresy a poté je vložit do pole.
+Pro realizaci v tomto případě byla potřeba kromě přidání knihovny, a vytvoření programu ještě nastavit ethernet port. V tomto případě to byl do \textit{ETH2} přidán obecný kanál \textit{UNI1}, který bylo potřeba nastavit jako TCP Server. Dále je pak nutné vytvořit proměnných dle tabulky datapointů \ref{tab:Datapointy pro komunikaci KNX IP BAOS 774 s PLC}, získat jejich adresy a poté je vložit do pole.
 
 Dalším krokem je nastavení funkčního bloku \textit{fbKnxIpBaosBin}. Nejprve se nastaví číslo prvního a posledního datapointu, který má funkční blok zpracovat, poté se nastaví použitý ethernet port a IP adresa KNX/IP BAOS 774 instalace. Nakonec se předá do portu \textit{knxList} námi definované pole s adresami.Po tomto kroku je už možné pracovat s proměnnými a vytvoření logik.
 
@@ -399,4 +400,28 @@ END_PROGRAM
 \subsection{Komunikace MQTT}
 Bude přidáno  11.5.2024 po úspěšném testování a realizaci.
 \subsection{Vizualizace}
-V této sekci je popsána tvorba vizualizace panelu pomocí integrovaného webového serveru. Nastavení a realizace webového serveru je realizována pomocí integrovaného nástroje WebMaker.
+V této sekci je popsána tvorba vizualizace panelu pomocí integrovaného webového serveru. Nastavení a realizace webového serveru je realizována pomocí integrovaného nástroje WebMaker. Tento nástroj je popsán v dokumentaci \cite{WebMaker}.
+Prvním krokem k vytvoření je vytvoření struktury projektu. V tomto případě to bude 5 stránek ve formátu .XML zasazených do webové struktury: \newline
+
+\dirtree{%
+.1 /Vizualizace.
+.2 Prehled - PAGE1.xml.
+.2 Venek - PAGE2.xml.
+.2 Kuchyn - PAGE3.xml.
+.2 Koupelna - PAGE4.xml.
+.2 Obyvaci\_pokoj - PAGE5.xml. 
+}
+\vspace{0.3cm}
+Druhým krokem bylo importování sady ikonek, které byly použity jako vícerozměrné obrázky napojené na výstupy funkčních bloků uvedených v podkapitole \ref{subsection:fb_mistnosti}. Tyto ikony byly získány na stránce Flaticon \cite{Flaticon}, která poskytuje vektorové ikony na projekty zdarma s možností úpravy. 
+
+
+\begin{figure}[!ht]
+    \begin{center}
+        \includegraphics[scale=0.6]{obrazky/Ikonky.png}
+    \end{center}
+    \caption[Ikony použité pro vizualizaci]{Ikony použité pro vizualizaci}
+    \label{fig:ikony}
+\end{figure}
+
+Dále se musely vytvořit ovládací tlačítka pro ovládání jednotlivých objektů. Tato tlačítka byla také vytvořena jako vícerozměrné obrázky, které byly napojeny na vstupy funkčních bloků. Pro zobrazování teplot v jednotlivých místnostech byla použita zadávací poles parametrem \textit{Read only}. 
+Výsledná vizualizace je uvedena v příloze \ref{apend:vizualizace}. Vzhled byl zvolen minimalistický a funkční s ohledem na viditelnost a přehlednost. Pozadí bylo zvoleno černé, aby šel lépe vidět kontrast ikon a textu. Dalším důvodem byla ochrana zraku při ovládání v noci.

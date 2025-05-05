@@ -103,7 +103,7 @@ Nejčastěji se využívá třístupňová struktura kvůli přehlednosti. Hlavn
 \\
 \\
 \\
-\subsection{Komunikace}
+\subsection{Komunikace po sběrnici}
 Komunikace přístrojů na sběrnici probíhá pomocí tzv. telegramů (viz Obr. \ref{fig:Struktura telegramu}), kde je délka dat závislá na typu datového bodu  (1bit - 14bytů).
 Nejdůležitější části telegramu jsou tři bloky \cite{Celkovy prehled}:
 \begin{itemize}
@@ -131,9 +131,40 @@ Komunikace na sběrnici probíhá pouze v případě, že je na sběrnici logick
 \end{figure}
 
 Aby jsme se vyhli kolizím a jeden z přístrojů mohl vysílat je přenos řízen principem CSMA/CA (Carrier Sense Multiple Access with Collision Avoidance vícenásobný přenos s vyhnutím se kolizím), který funguje tak, že pokud přístroj odesílající logickou “1” detekuje logickou “0”, aby se uvolnila cesta pro přenos jinému přístroji. Přístroj s přerušeným přenosem sleduje provoz na sběrnici a vyčká do konce přenosu jiného zařízení a poté zkusí znova vysílat. \cite{Celkovy prehled}
+\subsection{KNXnet/IP}
 
+Pro překlenutí fyzické sběrnice KNX a IP sítí slouží protokol \emph{KNXnet/IP}, který definuje dva základní režimy:
+
+\subsubsection{Tunelování (Tunnelling)}  
+Tunelování umožňuje bod–bod komunikaci mezi KNX sběrnicí a IP klientem. KNX telegramy se zabalí do UDP/IP paketů a posílají na port 3671. Server udržuje pro každé TCP/UDP spojení vlastní \textit{Individual Address}, kterou klientovi přidělí při navázání tunelu. Z toho v praxi vyplývají tyto tři možné režimy \cite{KNXTunnel}:
+
+\begin{itemize}
+  \item \textbf{Sdílená adresa (Shared IA)}  
+    \newline Režim A používá KNXnet/IP Server \textbf{stejnou} \textit{Individual Address} pro všechny tunelovací relace. Klienti tedy sdílí mezi sebou jeden fyzický adresní bod na TP-lince. Výsledkem je jednoduchá konfigurace, ale horší rozlišovací schopnost mezi klienty posílajícími telegram.
+  \item \textbf{Dedikovaná adresa (Dedicated IA)}  
+    \newline Režim B přidělí každému tunelovacímu klientovi \textbf{unikátní} \textit{Individual Address}. Tudíž lze monitorovat a spravovat každou relaci individuálně.
+
+  \item \textbf{Kombinovaný režim (Routing + Tunnelling)}  
+    \newline V Režimu C server kromě přidělení dedikovaných tunelů funguje i jako KNX/IP Router pro multicast skupinových telegramů. Má tedy jednu IA pro routování (např. 1.1.0), tak další IA pro tunnelling relace. Díky tomu zvládne jak point-to-point servis a diagnostiku, tak i point-to-multipoint přenosy mezi subnety. \newline
+\end{itemize}
+\begin{figure}[!h]
+  \begin{center}
+    \includegraphics[scale=0.7]{obrazky/KNX_Tunelling.png}
+  \end{center}
+  \caption[Tunelování \cite{KNXTunnel}]{Tunelování \cite{KNXTunnel}}
+  \label{fig:Tunelovani}
+\end{figure}
+\subsubsection{Routing (Routing)} 
+Routing zajišťuje přenos skupinových (point-to-multipoint) telegramů mezi více KNX liniovými segmenty(linky/subnety). Každý KNXnet/IP Router přijímá příchozí telegramy na multicastové skupině a podle filtrovaných adres je znovu vysílá na KNX sběrnici. Díky tomu umožňuje velmi rychlé doručení telegramů současně do více destinací. \cite{KNXRouting}
+\begin{figure}[!h]
+  \begin{center}
+    \includegraphics[scale=0.7]{obrazky/KNX_Routing.png}
+  \end{center}
+  \caption[Routování \cite{KNXRouting}]{Routování \cite{KNXRouting}}
+  \label{fig:Routovani}
+\end{figure}
 \subsection{Datový bod}
-Datové typy byly standardizovány za účelem zajištění kompatibility podobných přístrojů od různých výrobců. Jedná se například o stmívání, žaluzie a hodiny. Standardizace zahrnuje požadavky na formát dat a strukturu komunikačních objektů snímačů a akčních členů. I tak existuje více druhů datových bodů (DPT) se stejnou funkcionalitou. Kombinace různých typů DPT se nazývají funkčními bloky.\cite{Celkovy prehled}
+Datové typy byly standardizovány za účelem zajištění kompatibility podobných přístrojů od různých výrobců. Jedná se například o stmívání, žaluzie a hodiny. Standardizace zahrnuje požadavky na formát dat a strukturu komunikačních objektů snímačů a akčních členů. I tak existuje více druhů datových bodů (DPT) se stejnou funkcionalitou. Kombinace různých typů DPT se nazývají funkčními bloky. \cite{Celkovy prehled}
 \\Skutečná informace datového bodu:
 \begin{itemize}
     \item Není uložena v paměti zařízení.
@@ -262,4 +293,4 @@ Toto číslo také brání zasmyčkování (nekonečnému kolování) telegramu.
 Systém KNX je otevřený jiným systémům za použití vhodných rozhraní umístěných na libovolné linii (většinou se jedná o páteřní linii). Lze připojit například programovatelný logický automat (PLC), digitální síť integrovaných služeb (ISDN), systémová technika budov, internet a mnohé další.
 Tato rozhraní přenáší obousměrně zprávy, které převede na komunikační protokol.
 
-Nejedná se ovšem jenom o spojovaní KNX s externími médii, ale je možno spojit různá KNX média mezi sebou (např. spojení TP a RF). Existuje také možnost připojení částí instalace skrze optická vlákna. Tohle spojení přináší řadu výhod zejména galvanické oddělení celků a zvýšení celkové délky vedení. \cite{Topologie}
+Nejedná se ovšem jenom o spojovaní KNX s externími médii, ale je možno spojit různá KNX média mezi sebou (např. spojení TP, RF, optika) \cite{Topologie}.
