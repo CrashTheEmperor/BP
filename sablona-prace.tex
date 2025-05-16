@@ -101,12 +101,13 @@
             END_CASE, FOR, TO, BY, DO, END_FOR, WHILE, END_WHILE, REPEAT, UNTIL, 
             END_REPEAT, RETURN, EXIT, BOOL, INT, DINT, REAL, TIME, TON, TOF, R_TRIG, 
             F_TRIG, RS, SR, TP, R_EDGE, F_EDGE, TRUE, FALSE, AND, OR, NOT,
-            XOR, ADD, SUB, MUL, DIV, MOD, EQ, NEQ, LT, LE, GT, GE, <, <=, >, >=,},
+            XOR, ADD, SUB, MUL, DIV, MOD, EQ, NEQ, LT, LE, GT, GE, <, <=, >, >=,
+            PROGRAM, END_PROGRAM, STRING, USINT, UINT},
   sensitive=false,
   comment=[l]{//},
   morecomment=[s]{(*}{*)},
   string=[b]{'}{'},
-  morestring=[b]',
+  morestring=[b]''
 }
 
 % Definice jazyka Bash s rozšířenou podporou pro příkazy
@@ -161,9 +162,49 @@
     {│}{{\textcolor{gray}{\textbackslash u2502}}}{1}
 }
 
+% Definice jazyka JSON s podporou pro různé datové struktury
+\lstdefinelanguage{json}{
+  keywords={true, false, null},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]{'},
+  morestring=[b]{"},
+  morestring=[s]{[}{]},
+  morestring=[s]{\{}{\}},
+  literate=
+    {:}{{\textcolor{red}{:}}}{1}
+    {,}{{\textcolor{blue}{,}}}{1}
+    {>}{{\textcolor{blue}{>}}}{1}
+    {|}{{\textcolor{blue}{|}}}{1}
+    {\ -\ }{{\textcolor{blue}{\ -\ }}}{3}
+}
+
+% Definice jazyka InfluxDB (Flux)
+\lstdefinelanguage{flux}{
+  keywords={from, range, filter, map, reduce, yield, window, sum, mean, last, group, aggregateWindow, fill, union, join, pivot, experimental, to, by, fn, r, with, and, or, if, then, else, tables, every, createEmpty, unit, tables},
+  sensitive=true,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]{'},
+  morestring=[b]{"},
+  literate=
+    {=>}{{{\color{blue}{=>}}}}{2}
+    {|}{{{\color{blue}{|}}}}{1}
+    {>}{{{\color{blue}{>}}}}{1}
+    {<}{{{\color{blue}{<}}}}{1}
+    {=}{{{\color{blue}{=}}}}{1}
+    {:}{{{\color{red}{:}}}}{1}
+    {,}{{{\color{blue}{,}}}}{1}
+    {[}{{{\color{blue}[}}}{1}
+    {]}{{{\color{blue}]}}}{1}
+    {\{}{{{\color{blue}\{}}}{1}
+    {\}}{{{\color{blue}\}}}}{1}
+}
+
 % Nastavení pro adresářové struktury
 \lstset{
-  backgroundcolor={\color{lightgray}},
+  backgroundcolor={\color{white}},
   basicstyle=\ttfamily\small,
   columns=fullflexible,
   frame=single,
@@ -171,7 +212,7 @@
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
   showstringspaces=false,
   keepspaces=true,
-  upquote=true
+  upquote=true,
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

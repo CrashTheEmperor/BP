@@ -44,6 +44,8 @@ VAR_GLOBAL
   SHUT1_FB_DOWN   : BOOL := FALSE; //KNX COMM SHUT1 FB
   SHUT1_CMD       : DT_CMD_BOOL; //KNX CMD SHUT1
   SHUT1_STEP_CMD  : DT_CMD_BOOL; //KNX CMD SHUT1 STEP
+\end{lstlisting}
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=38, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
   SHUT2_FB_UP     : BOOL := FALSE; //KNX COMM SHUT2 FB
   SHUT2_FB_DOWN   : BOOL := FALSE; //KNX COMM SHUT2 FB
   SHUT2_CMD       : DT_CMD_BOOL; //KNX CMD SHUT1
@@ -94,6 +96,9 @@ FUNCTION_BLOCK fbRoomTempMod
     TimeStep     : REAL := 0.0; // Hodnota kroku v ms
     VAir         : REAL := 0.0; // Obsah vzduchu[m^3]
     MAir         : REAL := 0.0; // Váha vzduchu[Kg]
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=36, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
     QAir         : REAL := 0.0; // Energie změna o 1degC[J]
     RoomTemp     : REAL := 20.0;// Pokojová teplota[degC]
     DeltaTemp    : REAL := 0.0; // Teplota za cyklus[degC]
@@ -134,6 +139,9 @@ FUNCTION_BLOCK fbRoomTempMod
     FiFloor      : REAL := 0.0; // Tepelný tok podlaha[J/s]
     FiCeiling    : REAL := 0.0; // Tepelný tok strop[J/s]
   END_VAR
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=76, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
   VAR CONSTANT
     RoAir : REAL := 1.204; // Hustota vzduchu[Kg/m^3]
     CpAir : REAL := 1005.0; // Tepelná kap vzduchu[J/(kg*K)]
@@ -164,8 +172,9 @@ IF NOT(INIT) THEN
   AreaWall3 := height * lenght;
   AreaWall4 := height * lenght;
   AreaFloor := lenght * width;
-  AreaCeiling := lenght 
-  
+  AreaCeiling := lenght * width;
+END_IF;
+
 (* Výpočet deltaT *)
 DeltaTempWall_1 := wall_temp1 - RoomTemp;
 DeltaTempWall_2 := wall_temp2 - RoomTemp;
@@ -174,6 +183,10 @@ DeltaTempWall_4 := wall_temp4 - RoomTemp;
 DeltaTempFloor := floor_temp - RoomTemp;
 DeltaTempCeiling := ceiling_temp - RoomTemp;
 
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=116, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
+(* Ošetření teploty *)
 (* Výpočet tepelných toků přes stěny *)
 FiWall_1 := (LambdaBrick * AreaWall1 * DeltaTempWall_1) / wall_thic1;
 FiWall_2 := (LambdaBrick * AreaWall2 * DeltaTempWall_2) / wall_thic2;
@@ -211,6 +224,9 @@ IF Heat_2 THEN
 ELSE
   FiHeatTmp2 := FiHeatTmp2 * EXP(-KHeatFall2 * (TimeStep));
 END_IF;
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=154, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
 (* Klimatizace 1 *)
 IF Cold_1 THEN
   FiColdTmp1 := FiColdTmp1 + AlphaCold * (Cold_1_WATTS - FiColdTmp1);
@@ -367,6 +383,8 @@ FUNCTION_BLOCK fbLivRoom
     wall_temp1      : REAL; // Teplota koupelna[degC]
     wall_temp2      : REAL; // Teplota ven[degC]
     wall_temp3      : REAL; // Teplota ven[degC]
+\end{lstlisting}
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=39, numberstyle=\small, numbersep=10pt, , frame=single, basicstyle=\ttfamily\small]
     wall_temp4      : REAL; // Teplota ven[degC]
     floor_temp      : REAL; // Teplota v místnosti pod[degC]
     ceiling_temp    : REAL; // Teplota obyvak[degC]
@@ -405,6 +423,9 @@ FUNCTION_BLOCK fbLivRoom
     fbHeater2 : fbKNXVisuBool;
     fbClimat2 : fbKNXVisuBool;
     fbLivingRMod : fbRoomTempMod;
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=77, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
     fbShut1 : fbKNXShutters;
     fbShut2 : fbKNXShutters;
   END_VAR
@@ -432,12 +453,8 @@ FUNCTION_BLOCK fbLivRoom
     SV7_CMD      : DT_CMD_BOOL;   //Příkaz světla 7
     TemperOut    : REAL;   //Vizualizace + komunikace
   END_VAR
-  VAR_IN_OUT
-  END_VAR
   VAR
     fbSV7 : fbKNXVisuBool;
-  END_VAR
-  VAR_TEMP
   END_VAR
 \end{lstlisting}
 \begin{figure}[!ht]
@@ -488,6 +505,9 @@ FUNCTION_BLOCK fbLivRoom
     datapoint28      : T_KNX_OBJECT_DPT1;  // COLD1_CMD
     datapoint29      : T_KNX_OBJECT_DPT1;  // COLD2_CMD
     datapoint30      : T_KNX_OBJECT_DPT1;  // COLD3_CMD
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=38, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
     datapoint31      : T_KNX_OBJECT_DPT1;  // krok Ž 1
     datapoint32      : T_KNX_OBJECT_DPT1;  // krok Ž 2
     datapoint33      : T_KNX_OBJECT_DPT18; // scéna
@@ -527,7 +547,10 @@ IF NOT init THEN // pole adres
   knxObjectList[31] := PTR_TO_UDINT( ADR(datapoint31));
   knxObjectList[32] := PTR_TO_UDINT( ADR(datapoint32));  
   knxObjectList[33] := PTR_TO_UDINT( ADR(datapoint33));    
-  knxObjectList[34] := PTR_TO_UDINT( ADR(datapoint34));   
+  knxObjectList[34] := PTR_TO_UDINT( ADR(datapoint34));
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=78, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]   
   init := TRUE;
 END_IF
 knx( firstKnxObject := 1,
@@ -568,6 +591,9 @@ IF SV7_CMD.CMD       THEN datapoint24.value := SV7_CMD.CMD_VAL; END_IF;
 IF HEAT1_CMD.CMD     THEN datapoint25.value := HEAT1_CMD.CMD_VAL; END_IF;
 IF HEAT2_CMD.CMD     THEN datapoint26.value := HEAT2_CMD.CMD_VAL; END_IF;
 IF HEAT3_CMD.CMD     THEN datapoint27.value := HEAT3_CMD.CMD_VAL; END_IF;
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=118, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
 IF COLD1_CMD.CMD     THEN datapoint28.value := COLD1_CMD.CMD_VAL; END_IF;
 IF COLD2_CMD.CMD     THEN datapoint29.value := COLD2_CMD.CMD_VAL; END_IF;
 IF COLD3_CMD.CMD     THEN datapoint30.value := COLD3_CMD.CMD_VAL; END_IF;
@@ -584,56 +610,565 @@ END_IF
 KNX_TEMPER := datapoint34.value;
 END_PROGRAM
 \end{lstlisting}
+\pagebreak
 \chapter{Program komunikace mezi PLC a Home Assistant - MQTT}
 \label{apend:MQTTComm}
-\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Program komunikace mezi PLC a Home Assistant - MQTT}, label={lst:prgMQTTComm}]
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Program komunikace mezi PLC a Home Assistant \protect\textendash{} MQTT}, label={lst:prgMQTTComm}]
+PROGRAM prgMQTTComm
+  VAR
+  Pub       : fbMQTTPublisher;
+  Subs      : fbMQTTSubscriber;
 
+  brokerIPaddr : STRING := '192.168.255.1';
+  brokerPort   : UINT   := 1883;
+  localPort    : UINT   := 60000;
+  localPort2   : UINT   := 50000;
+  keepAlive            : BOOL  := TRUE;
+  keepAliveInterval    : TIME  := T#60s;
+  pingInterval         : TIME  := T#10s;
+  connTimeOut          : TIME  := T#5s;
+
+  state : USINT := 0;
+  connMessage : STRING := 'Connected';
+  pubConnTopicMsg : STRING := 'plc/Connect/Publisher';
+  subConnTopicMsg : STRING := 'plc/Connect/Subscriber';
+  dataTopicMsg : STRING := 'plc/ALL_TEMPS';
+  pubComParam   : T_MQTT_COM_PUB_PARAM := (
+    pRetain := TRUE,
+    qos     := 1,
+    dup     := FALSE,
+    clean   := FALSE
+  );
+  willParamPub  : T_MQTT_COM_WILL_PARAM := (
+    wRetain := FALSE,
+    topic   := 'plc/Connect/Publisher',
+    mess    := 'Disconnected',
+    flag    := TRUE,
+    qos     := 1
+  );
+  subComParam : T_MQTT_COM_SUB_PARAM := (
+    qos     := 1,
+    clean   := FALSE
+  );
 \end{lstlisting}
-\chapter{Vizualizace PLC}
-\label{apend:vizualizace}
+\pagebreak
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=37, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
+  willParamSub  : T_MQTT_COM_WILL_PARAM := (
+    wRetain := FALSE,
+    topic   := 'plc/Connect/Subscriber',
+    mess    := 'Disconnected',
+    flag    := TRUE,
+    qos     := 1
+  );
+
+  jsonPayload       : STRING[255];
+  sOut   : STRING[16];
+  sKit   : STRING[16];
+  sLiv   : STRING[16];
+  sBath  : STRING[16];
+  currentTopic : STRING[80];
+  currentData : STRING[255];
+  currentSendCom : BOOL;
+
+  pubTimer : TON;
+  stateTimer : TON;
+  stateCooldown : TON;
+  END_VAR
+sOut := REAL_TO_STRINGF(OUTSIDE_TEMPER, '%.2f');
+sKit := REAL_TO_STRINGF(KITCHEN_TEMPER, '%.2f');
+sLiv := REAL_TO_STRINGF(LIVINGR_TEMPER, '%.2f');
+sBath := REAL_TO_STRINGF(BATHROOM_TEMPER, '%.2f');
+jsonPayload := CONCAT(
+  '{',
+    '"OUTSIDE_TEMPER": ',  sOut,  ',',
+    '"KITCHEN_TEMPER": ',  sKit,  ',',
+    '"LIVINGR_TEMPER": ',  sLiv,  ',',
+    '"BATHROOM_TEMPER": ', sBath,
+  '}'
+);
+
+CASE state OF
+  0: // Inicializace
+    currentTopic := '';
+    currentData := '';
+    currentSendCom := FALSE;
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=76, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
+    IF Pub.connected_to_broker THEN
+      stateTimer(IN:=TRUE, PT:=T#5s);
+      IF stateTimer.Q THEN
+        currentTopic := pubConnTopicMsg;
+        currentData := connMessage;
+        currentSendCom := TRUE;
+        stateTimer(IN:=FALSE);
+        state := 1;
+      END_IF;
+    ELSE
+      stateTimer(IN:=FALSE);
+    END_IF;
+    
+  1: // Publisher Connected
+    IF NOT Pub.busy AND NOT currentSendCom THEN
+      stateCooldown(IN:=TRUE, PT:=T#3s);
+      IF stateCooldown.Q THEN
+        currentTopic := subConnTopicMsg;
+        currentData := connMessage;
+        currentSendCom := TRUE;
+        stateCooldown(IN:=FALSE);
+        state := 2;
+      END_IF;
+    END_IF;
+
+  2: // Subs Connected
+    IF NOT Pub.busy AND NOT currentSendCom THEN
+      stateCooldown(IN:=TRUE, PT:=T#3s);
+      IF stateCooldown.Q THEN
+        stateCooldown(IN:=FALSE);
+        state := 3;
+        pubTimer(IN:=FALSE);
+      END_IF;
+    END_IF;
+
+      3: // Normální provoz
+    currentTopic := dataTopicMsg;
+    currentData := jsonPayload;
+    pubTimer(IN:=TRUE, PT:=T#5s);
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=115, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
+    IF pubTimer.Q AND NOT Pub.busy AND NOT currentSendCom THEN
+      currentSendCom := TRUE;
+      pubTimer(IN:=FALSE);
+    END_IF;
+    
+    IF NOT Pub.connected_to_broker AND NOT Subs.connected_to_broker THEN
+      state := 0;
+    END_IF;
+END_CASE;
+
+Pub(
+  chanCode          := ETH2_uni1,
+  brokerIP          := STRING_TO_IPADR(brokerIPaddr),
+  brokerPort        := brokerPort,
+  localPort         := localPort,
+  connect           := TRUE,
+  keepAlive         := keepAlive,
+  keepAliveInterval := keepAliveInterval,
+  pingInterval      := pingInterval,
+  connTimeOut       := connTimeOut,
+  clientId_auto     := FALSE,
+  clientId          := 'PLC_TECO_CP2007_PUB',
+  comParam          := pubComParam,
+  willParam         := willParamPub,
+  topicTxt          := currentTopic,
+  dataTxt           := currentData,
+  sendCom           := currentSendCom
+);
+
+IF currentSendCom AND Pub.busy THEN
+  currentSendCom := FALSE;
+END_IF;
+
+Subs(
+  chanCode          := ETH2_uni0,
+  brokerIP          := STRING_TO_IPADR(brokerIPaddr),
+  brokerPort        := brokerPort,
+  localPort         := localPort2,
+  connect           := TRUE,
+  keepAlive         := keepAlive,
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=155, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
+  keepAliveInterval := keepAliveInterval,
+  pingInterval      := pingInterval,
+  connTimeOut       := connTimeOut,
+  clientId_auto     := FALSE,
+  clientId          := 'PLC_TECO_CP2007_SUB',
+  loginName         := '',
+  loginPass         := '',
+  comParam          := subComParam,
+  willParam         := willParamSub,
+  subRq             := Subs.connected_to_broker,
+  unSubRq           := FALSE,
+  topicTxt          := 'ha/SHUTDOWN'
+);
+
+IF Subs.dataRec THEN
+  SHUTDOWN_MQTT := (Subs.dataTxt = 'true');
+ELSE
+  SHUTDOWN_MQTT := FALSE;
+END_IF;
+END_PROGRAM
+\end{lstlisting}
+\chapter{Docker YAMLy}
+\label{apend:dockeryaml}
+\begin{lstlisting}[language=YAML, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Portainer YAML}, label={lst:portaineryaml}]
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    ports:
+      - 9000:9000
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+\end{lstlisting}
+\begin{lstlisting}[language=YAML, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Stack YAML}, label={lst:stackyaml}]
+services:
+  home-assistant:
+    container_name: home-assistant
+    image: homeassistant/home-assistant:2025.4
+    volumes:
+      - /mnt/sda1/usb/config/home-assistant:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+  influxdb:
+    container_name: influxdb
+    image: influxdb:2.7.11
+    ports:
+      - 8086:8086
+    restart: unless-stopped
+    volumes:
+      - /mnt/sda1/usb/data/influxdb:/var/lib/influxdb2
+      - /mnt/sda1/usb/config/influxdb:/etc/influxdb2
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=YAML, breaklines=true, numbers=left, firstnumber=24, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
+    environment:
+      - INFLUXDB_DB=db0
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_INIT_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_INIT_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=fekt
+      - DOCKER_INFLUXDB_INIT_BUCKET=kyblicek
+  grafana:
+    image: grafana/grafana-oss:11.6.0
+    container_name: grafana
+    user: "${UID_GRAFANA}:${GID_GRAFANA}"
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    volumes:
+      - /mnt/sda1/usb/data/grafana:/var/lib/grafana
+      - /etc/grafana/provisioning:/etc/grafana/provisioning
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    depends_on:
+      - influxdb
+    environment:
+      - GF_DATABASE_TIMEOUT=1000
+      - GF_DATABASE_MAX_OPEN_CONN=2
+      - GF_DATABASE_MAX_IDLE_CONN=2
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto:2.0.21
+    restart: unless-stopped
+    user: "${UID_MOSQUITTO}:${GID_MOSQUITTO}"
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - /mnt/sda1/usb/config/mosquitto:/mosquitto/config
+      - /mnt/sda1/usb/data/mosquitto:/mosquitto/data
+      - /mnt/sda1/usb/logs/mosquitto:/mosquitto/log
+\end{lstlisting}
 \begin{figure}[!ht]
   \begin{center}
-  \includegraphics[scale=0.65]{obrazky/prgVizu.png}
+  \includegraphics[scale=0.42]{obrazky/portainer.png}
   \end{center}
-  \caption[Vizualizace PLC]{Vizualizace PLC}
-  \label{fig:vizualizace}
+  \caption[Portainer Stack]{Portainer Stack}
+  \label{fig:portainer}
 \end{figure}
+\chapter{Home Assistant configuration.yaml}
+\label{apend:configyaml}
+\begin{lstlisting}[language=YAML, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Home Assistant configuration.yaml}, label={lst:configyaml}]
+# Loads default set of integrations. Do not remove.            
+default_config:
+
+# Load frontend themes from the themes folder                  
+frontend:                                                      
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml                    
+scene: !include scenes.yaml                                    
+
+influxdb:
+  api_version: 2           
+  ssl: false
+  host: localhost                                              
+  port: 8086                                                   
+  token: xxx
+  organization: xxx                                
+  bucket: kyblicek                                             
+  tags:                                                        
+    source: HA                                                 
+  tags_attributes:                                              
+    - friendly_name                                             
+  default_measurement: units                                   
+
+mqtt:
+  sensor:
+    - name: "Venek teplota"
+      state_topic: "plc/ALL_TEMPS"
+      value_template: "{{ value_json.OUTSIDE_TEMPER | float }}"
+      device_class: "temperature"
+      unit_of_measurement: "..C"
+      unique_id: "tmp_out"
+    - name: "Kuchyn teplota"
+      state_topic: "plc/ALL_TEMPS"                             
+      value_template: "{{ value_json.KITCHEN_TEMPER | float }}"
+      device_class: "temperature"
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=YAML, breaklines=true, numbers=left, firstnumber=38, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
+      unit_of_measurement: "..C"                                
+      unique_id: "tmp_kitch"                                   
+    - name: "Obyvak teplota"                                   
+      state_topic: "plc/ALL_TEMPS"                             
+      value_template: "{{ value_json.LIVINGR_TEMPER | float }}" 
+      device_class: "temperature"                               
+      unit_of_measurement: "..C"                               
+      unique_id: "tmp_liv"                                     
+    - name: "Koupelna teplota"                                 
+      state_topic: "plc/ALL_TEMPS"                             
+      value_template: "{{ value_json.BATHROOM_TEMPER | float }}"
+      device_class: "temperature"                              
+      unit_of_measurement: "..C"                               
+      unique_id: "tmp_bath"
+  binary_sensor:           
+    - name: "PLC MQTT Publisher"              
+      state_topic: "plc/Connect/Publisher"         
+      payload_on:  "Connected"                                 
+      payload_off: "Disconnected"   
+      device_class: connectivity
+      unique_id: plc_mqtt_publisher
+    - name: "PLC MQTT Subscriber"
+      state_topic: "plc/Connect/Subscriber"                    
+      payload_on:  "Connected"                                 
+      payload_off: "Disconnected"
+      device_class: connectivity
+      unique_id: plc_mqtt_subscriber
+  button:                                                      
+    - name: "Central stop"                                     
+      unique_id: "MQTT_Shutdown"                                
+      command_topic: "ha/SHUTDOWN"                              
+      payload_press: "true" 
+\end{lstlisting}
+\chapter{Grafana dashboardy}
+\label{apend:grafana}
+\begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Spotřeba klimatizace}, label={lst:grafanaKlimatizaceEnergie}]
+from(bucket: "kyblicek")
+  |> range(start: -1h)
+  |> filter(fn: (r) => r["domain"] == "switch")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["friendly_name"] == "Klimatizace u televize" or r["friendly_name"] == "Leva zaluzie" or r["friendly_name"] == "Prava zaluzie")
+  |> map(fn: (r) => ({ r with _value: float(v: r._value) * 1000.0 }))
+  |> aggregateWindow(every: 1m, fn: last, createEmpty: true)
+  |> fill(column: "_value", usePrevious: true)
+  |> window(every: 1h, createEmpty: false)
+  |> integral(unit: 1h)
+  |> last()
+  |> group(columns: [])
+  |> sum(column: "_value")
+  |> map(fn: (r) => ({ r with _value: r._value / 1000.0 }))
+  |> yield(name: "Spotreba klimatizace za posledni hodinu (kWh)")
+\end{lstlisting} 
+\begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Spotřeba topení}, label={lst:grafanaTopeniEnergie}]
+from(bucket: "kyblicek")
+  |> range(start: -1h)
+  |> filter(fn: (r) => r["domain"] == "switch")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["friendly_name"] == "Topeni kuchyne" or r["friendly_name"] == "Topeni pracovna" or r["friendly_name"] == "Topeni u televize")
+  |> map(fn: (r) => ({ r with _value: float(v: r._value) * 4000.0 }))
+  |> aggregateWindow(every: 1m, fn: last, createEmpty: true)
+  |> fill(column: "_value", usePrevious: true)
+  |> window(every: 1h, createEmpty: false)
+  |> integral(unit: 1h)
+  |> last()
+  |> group(columns: [])
+  |> sum(column: "_value")
+  |> map(fn: (r) => ({ r with _value: r._value / 1000.0 }))
+  |> yield(name: "Spotreba topeni za posledni hodinu (kWh)")
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Spotřeba světla}, label={lst:grafanaSvetloEnergie}]
+from(bucket: "kyblicek")
+  |> range(start: -1h)
+  |> filter(fn: (r) => r["domain"] == "light")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> map(fn: (r) => ({ r with _value: float(v: r._value) * 15.0 }))
+  |> aggregateWindow(every: 1m, fn: last, createEmpty: true)
+  |> fill(column: "_value", usePrevious: true)
+  |> window(every: 1h, createEmpty: false)
+  |> integral(unit: 1h)
+  |> last()
+  |> group(columns: [])
+  |> sum(column: "_value")
+  |> map(fn: (r) => ({ r with _value: r._value / 1000.0 }))
+  |> yield(name: "Spotreba svetel za posledni hodinu (kWh)")
+\end{lstlisting}
+\begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Rozložení spotřeby}, label={lst:grafanaSpotreba}]
+from(bucket: "kyblicek")
+  |> range(start: -1h)
+  |> filter(fn: (r) => r["domain"] == "switch")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["friendly_name"] == "Klimatizace kuchyne" or r["friendly_name"] == "Klimatizace pracovna" or r["friendly_name"] == "Klimatizace u televize")
+  |> map(fn: (r) => ({ r with _value: float(v: r._value) * 1000.0 }))
+  |> aggregateWindow(every: 1m, fn: last, createEmpty: true)
+  |> fill(column: "_value", usePrevious: true)
+  |> window(every: 1h, createEmpty: false)
+  |> integral(unit: 1h)
+  |> last()
+  |> group(columns: [])
+  |> sum(column: "_value")
+  |> map(fn: (r) => ({ r with _value: r._value / 1000.0 }))
+  |> yield(name: "Spotreba klimatizace za posledni hodinu (kWh)")
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Spínání klimatizace}, label={lst:grafanaKlimatizace}]
+from(bucket: "kyblicek")
+  |> range(start: -24h)
+  |> filter(fn: (r) => r["domain"] == "switch")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["friendly_name"] == "Klimatizace kuchyne" or r["friendly_name"] == "Klimatizace pracovna" or r["friendly_name"] == "Klimatizace u televize")
+  |> aggregateWindow(every: 1m, fn: last, createEmpty: true)
+  |> fill(column: "_value", usePrevious: true)
+  |> yield(name: "Stav klimatizaci kazdou minutu")
+\end{lstlisting}
+\begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Spínání topení}, label={lst:grafanaTopeni}]
+from(bucket: "kyblicek")
+  |> range(start: -24h)
+  |> filter(fn: (r) => r["domain"] == "switch")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["friendly_name"] == "Topeni kuchyne" or r["friendly_name"] == "Topeni pracovna" or r["friendly_name"] == "Topeni u televize")
+  |> aggregateWindow(every: 1m, fn: last, createEmpty: true)
+  |> fill(column: "_value", usePrevious: true)
+  |> yield(name: "Stav topeni kazdou minutu")
+\end{lstlisting}
+\begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Spínání světel}, label={lst:grafanaSvetla}]
+from(bucket: "kyblicek")
+  |> range(start: -24h)
+  |> filter(fn: (r) => r["domain"] == "light")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> aggregateWindow(every: 1m, fn: last, createEmpty: true)
+  |> fill(column: "_value", usePrevious: true)
+  |> yield(name: "Stav svetel kazdou minutu")
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Spínání žaluzií}, label={lst:grafanaZaluzie}]
+from(bucket: "kyblicek")
+  |> range(start: -24h)
+  |> filter(fn: (r) => r["domain"] == "switch")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["friendly_name"] == "Leva zaluzie" or r["friendly_name"] == "Prava zaluzie")
+  |> aggregateWindow(every: 1m, fn: last, createEmpty: true)
+  |> fill(column: "_value", usePrevious: true)
+  |> yield(name: "Stav zaluzii kazdou minutu")
+\end{lstlisting}
+\begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Celkové měsíční náklady}, label={lst:grafanaCelkovyMesic}]
+price = 3.2
+klimatizace = from(bucket: "kyblicek")
+  |> range(start: -30d)
+  |> filter(fn: (r) => r["domain"] == "switch")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["friendly_name"] == "Klimatizace kuchyne" or r["friendly_name"] == "Klimatizace pracovna" or r["friendly_name"] == "Klimatizace u televize")
+  |> map(fn: (r) => ({ r with _value: if r._value > 0.0 then 1.0 else 0.0 }))
+  |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+  |> map(fn: (r) => ({ r with _value: r._value * 1.0 }))
+  |> sum()
+  |> map(fn: (r) => ({ r with _value: r._value * price, kategorie: "Klimatizace" }))
+topeni = from(bucket: "kyblicek")
+  |> range(start: -30d)
+  |> filter(fn: (r) => r["domain"] == "switch")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["friendly_name"] == "Topeni kuchyne" or r["friendly_name"] == "Topeni pracovna" or r["friendly_name"] == "Topeni u televize")
+  |> map(fn: (r) => ({ r with _value: if r._value > 0.0 then 1.0 else 0.0 }))
+  |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+  |> map(fn: (r) => ({ r with _value: r._value * 4.0 }))
+  |> sum()
+  |> map(fn: (r) => ({ r with _value: r._value * price, kategorie: "Topeni" }))
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=flux, breaklines=true, numbers=left, firstnumber=22, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
+zaluzie = from(bucket: "kyblicek")
+  |> range(start: -30d)
+  |> filter(fn: (r) => r["domain"] == "switch")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["friendly_name"] == "Leva zaluzie" or r["friendly_name"] == "Prava zaluzie")
+  |> map(fn: (r) => ({ r with _value: if r._value > 0.0 then 1.0 else 0.0 }))
+  |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+  |> map(fn: (r) => ({ r with _value: r._value * 0.15 }))
+  |> sum()
+  |> map(fn: (r) => ({ r with _value: r._value * price, kategorie: "Zaluzie" }))
+  svetla = from(bucket: "kyblicek")
+  |> range(start: -30d)
+  |> filter(fn: (r) => r["domain"] == "light")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> map(fn: (r) => ({ r with _value: if r._value > 0.0 then 1.0 else 0.0 }))
+  |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+  |> map(fn: (r) => ({ r with _value: r._value * 0.015 }))
+  |> sum()
+  |> map(fn: (r) => ({ r with _value: r._value * price, kategorie: "Svetla" }))
+  union(tables: [klimatizace, topeni, zaluzie, svetla]) // celkova sumu
+  |> group()
+  |> sum()
+  |> map(fn: (r) => ({ r with typ: "Celkove naklady" }))
+  |> yield(name: "Celkove mesicni naklady (Kc)")
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Průběh teploty - Query A}, label={lst:grafanaTeplota}]
+from(bucket: "kyblicek")
+  |> range(start: -1h)
+  |> filter(fn: (r) => r["domain"] == "sensor")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["_measurement"] == "C")
+  |> filter(fn: (r) => r["entity_id"] == "venek_teplota")
+  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)
+  |> yield(name: "Teplota venku")
+\end{lstlisting}
+\begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Průběh teploty - Query B}, label={lst:grafanaTeplota}]
+from(bucket: "kyblicek")
+  |> range(start: -1h)
+  |> filter(fn: (r) => r["domain"] == "sensor")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["_measurement"] == "C")
+  |> filter(fn: (r) => r["entity_id"] == "kuchyn_teplota")
+  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)
+  |> yield(name: "Teplota v kuchyni")
+\end{lstlisting}
+\begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Průběh teploty - Query C}, label={lst:grafanaTeplota}]
+from(bucket: "kyblicek")
+  |> range(start: -1h)
+  |> filter(fn: (r) => r["domain"] == "sensor")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["_measurement"] == "C")
+  |> filter(fn: (r) => r["entity_id"] == "koupelna_teplota")
+  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)
+  |> yield(name: "Teplota v koupelne")
+\end{lstlisting}
+\begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Průběh teploty - Query D}, label={lst:grafanaTeplota}]
+from(bucket: "kyblicek")
+  |> range(start: -1h)
+  |> filter(fn: (r) => r["domain"] == "sensor")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["_measurement"] == "C")
+  |> filter(fn: (r) => r["entity_id"] == "obyvak_teplota")
+  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)
+  |> yield(name: "Teplota v obyvacim pokoji")
+\end{lstlisting}
 \begin{figure}[!ht]
   \begin{center}
-  \includegraphics[scale=0.8]{obrazky/Přehled.png}
+  \includegraphics[scale=0.40]{obrazky/Grafana.png}
   \end{center}
-  \caption[WebMaker - Hlavní obrazovka]{WebMaker - Hlavní obrazovka}
-  \label{fig:hlavniObrazovka}
+  \caption[Vzhled dashboardu]{Vzhled dashboardu}
+  \label{fig:GrafanaDashboard}
 \end{figure}
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[scale=0.8]{obrazky/Venek.png}
-  \end{center}
-  \caption[WebMaker - Obrazovka venek]{WebMaker - Obrazovka venek}
-  \label{fig:venek}
-\end{figure}
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[scale=0.8]{obrazky/koupelna.png}
-  \end{center}
-  \caption[WebMaker - Obrazovka koupelna]{WebMaker - Obrazovka koupelna}
-  \label{fig:koupelna}
-\end{figure}
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[scale=0.8]{obrazky/Kuchyň.png}
-  \end{center}
-  \caption[WebMaker - Obrazovka kuchyně]{WebMaker - Obrazovka kuchyně}
-  \label{fig:kuchyn}
-\end{figure}
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[scale=0.8]{obrazky/Obyvaci_pokoj.png}
-  \end{center}
-  \caption[WebMaker - Obrazovka obyvací pokoj]{WebMaker - Obrazovka obyvací pokoj}
-  \label{fig:obyvak}
-\end{figure}
-\chapter{Portainer YAML}
-\label{apend:portainer}
-\chapter{Stack YAML}
-\label{apend:stackyaml}
