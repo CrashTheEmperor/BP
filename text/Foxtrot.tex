@@ -308,43 +308,43 @@ Dále tato knihovna obsahuje datové struktury, které obsahují definice jednot
                 \hline
                 Typ objektu KNX & Datový typ PLC & Popis  \\
                 \hline\hline
-                DPT 01 & T\_KNX\_OBJECT\_DPT1 & Binár -- 1 Bit \\
+                DPT 01 & T\_KNX\_OBJECT\_DPT1 & Binární signál -- 1 Bit \\
                 \hline
-                DPT 02 & T\_KNX\_OBJECT\_DPT2 & Binár s kontrolou (Priorita) -- 2 Bits \\
+                DPT 02 & T\_KNX\_OBJECT\_DPT2 & Binární signál s kontrolou (Priorita) -- 2 Bity \\
                 \hline
                 DPT 03 & T\_KNX\_OBJECT\_DPT3 & Stmívání nahoru/dolů -- 4 Bit \\
                 \hline
-                DPT 04 & T\_KNX\_OBJECT\_DPT4 & Znak -- 1 Byte \\
+                DPT 04 & T\_KNX\_OBJECT\_DPT4 & Znak -- 1 Bajt \\
                 \hline
-                DPT 05 & T\_KNX\_OBJECT\_DPT5 & Scaling -- 1 Byte (8 Bitová Unsigned hodnota) \\
+                DPT 05 & T\_KNX\_OBJECT\_DPT5 & Škálování -- 1 Bajt (8 Bitová hodnota) \\
                 \hline
-                DPT 06 & T\_KNX\_OBJECT\_DPT6 & Signed hodnota -- 1 Byte \\
+                DPT 06 & T\_KNX\_OBJECT\_DPT6 & Hodnota se znaménkem -- 1 Bajt \\
                 \hline
-                DPT 07 & T\_KNX\_OBJECT\_DPT7 & Unsigned hodnota -- 2 Bytes \\
+                DPT 07 & T\_KNX\_OBJECT\_DPT7 & Hodnota bez znaménka -- 2 Bajty \\
                 \hline
-                DPT 08 & T\_KNX\_OBJECT\_DPT8 & Signed hodnota -- 2 Bytes \\
+                DPT 08 & T\_KNX\_OBJECT\_DPT8 & Hodnota se znaménkem -- 2 Bajty \\
                 \hline
-                DPT 09 & T\_KNX\_OBJECT\_DPT9 & Float hodnota -- 2 Bytes \\
+                DPT 09 & T\_KNX\_OBJECT\_DPT9 & Hodnota s desetinnou čárkou -- 2 Bajty\\
                 \hline
-                DPT 10 & T\_KNX\_OBJECT\_DPT10 & Čas -- 3 Bytes \\
+                DPT 10 & T\_KNX\_OBJECT\_DPT10 & Čas -- 3 Bajty \\
                 \hline
-                DPT 11 & T\_KNX\_OBJECT\_DPT11 & Datum -- 3 Bytes \\
+                DPT 11 & T\_KNX\_OBJECT\_DPT11 & Datum -- 3 Bajty \\
                 \hline
-                DPT 12 & T\_KNX\_OBJECT\_DPT12 & Unsigned hodnota -- 4 Bytes \\
+                DPT 12 & T\_KNX\_OBJECT\_DPT12 & Hodnota bez znaménka -- 4 Bajty \\
                 \hline
-                DPT 13 & T\_KNX\_OBJECT\_DPT13 & Signed hodnota -- 4 Bytes \\
+                DPT 13 & T\_KNX\_OBJECT\_DPT13 & Hodnota se znaménkem -- 4 Bajty \\
                 \hline
-                DPT 14 & T\_KNX\_OBJECT\_DPT14 & Float hodnota -- 4 Bytes \\
+                DPT 14 & T\_KNX\_OBJECT\_DPT14 & Hodnota s desetinnou čárkou -- 4 Bajty \\
                 \hline
-                DPT 15 & T\_KNX\_OBJECT\_DPT15 & Access data -- 4 Bytes \\
+                DPT 15 & T\_KNX\_OBJECT\_DPT15 & Přístupová data -- 4 Bajty \\
                 \hline
-                DPT 16 & T\_KNX\_OBJECT\_DPT16 & Řetězec znaků -- 14 Bytes \\
+                DPT 16 & T\_KNX\_OBJECT\_DPT16 & Řetězec znaků -- 14 Bajty \\
                 \hline
-                DPT 17 & T\_KNX\_OBJECT\_DPT17 & Scéna -- 1 Byte \\
+                DPT 17 & T\_KNX\_OBJECT\_DPT17 & Scéna -- 1 Bajt \\
                 \hline
-                DPT 18 & T\_KNX\_OBJECT\_DPT18 & Kontroler scén -- 1 Byte \\
+                DPT 18 & T\_KNX\_OBJECT\_DPT18 & Kontroler scén -- 1 Bajt \\
                 \hline
-                DPT unknown & T\_KNX\_OBJECT\_RAW & Max. 14 Byte, Data jako pole, byte-by-byte \\
+                DPT unknown & T\_KNX\_OBJECT\_RAW & Max. 14 Bajtů, Data jako pole, byte-by-byte \\
                 \hline
             \end{tabular}
 \end{table}
@@ -398,7 +398,52 @@ KNX_TEMPER := datapoint4.value;// Posílání teploty
 END_PROGRAM
 \end{lstlisting}
 \subsection{Komunikace MQTT}
-Bude přidáno  11.5.2024 po úspěšném testování a realizaci.
+Tato sekce je zaměřená na realizaci komunikace skrze protokol MQTT, který je navržen jako lehký přenos zpráv mezi zařízeními a aplikacemi. Jeho cílovou skupinou jsou zařízení s malou kódovou stopou a minimální šířkou pásma sítě. \cite{MQTT}
+
+Základními myšlenkami protokolu MQTT je posílání zpráv mezi vydavatelem (publisher) a odběratelem(client) skrze zprostředkovatele (broker). Tento broker zajišťuje, že zprávy jsou doručeny správným odběratelům. Vydavatel a odběratel nemusí být navzájem známi a komunikují pouze skrze brokera. \cite{MQTT}
+
+Tento druh komunikace je realizován pomocí packetů (balíků dat) posílaných mezi zařízeními. Jednotlivé datové balíky jsou tvořen třemi částmi \cite{MQTTEsentials}:
+\begin{itemize}
+    \item \textbf{Fixní hlavičku} - obsahuje informace o typu packetu, příznaky a velikost zbylé části packetu 
+    \item \textbf{Volitelnou hlavičku} - obsahuje dynamické informace o packetu
+    \item \textbf{Datový obsah} - obsahuje data, která se posílají mezi zařízeními \newline
+\end{itemize}
+Zprávy se poté posílají na určité téma (topic), které je definováno jako hierarchická struktura. Tato struktura je tvořena jednotlivými úrovněmi oddělenými lomítkem. V případě této práce je dobrým příkladem téma \textit{plc/Connect/Publisher}, kde:
+\begin{itemize}
+    \item \textbf{plc} - označuje zařízení, které zprávu odesílá
+    \item \textbf{Connect} - která část systému zprávu odesílá
+    \item \textbf{Publisher} - bližší rozlišení \newline
+\end{itemize}
+Dálší část je text samotné zprávy, která je odeslána na dané téma. Tato zpráva může mít libovolnou strukturu i velikost(maximálně 256 MB). Tělem zprávy je text ve formátu JSON, který se lze pochopit jako hierarchická struktura dat. Vertikálně je struktura rozdělena do úrovní pomocí vnořených objektů a polí. Horizontálně je struktura členěna do jednotlivých klíč:hodnota párů na jedné úrovni, kde každý klíč reprezentuje konkrétní parametr. Příkladem takové zprávy je:
+\begin{lstlisting}[language=JSON, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Příklad zprávy v JSON}, label={lst:json}]
+{
+    "device": "plc",
+    "location": {
+        "room": "kitchen",
+        "floor": 1
+    },
+    "sensors": {
+        "temperature": {
+            "value": 22.5,
+            "unit": "C"
+        },
+        "humidity": {
+            "value": 45,
+            "unit": "%"
+        }
+    },
+    "status": "online",
+    "timestamp": "2024-06-01T12:34:56Z"
+}
+\end{lstlisting}
+
+\noindent Součástí zprávy je i kvalita služeb \textit{QoS} (Quality of Service), která určuje úroveň spolehlivosti doručení zprávy. Tato úroveň je nastavena na 0 (doručení maximálně jednou bez záruky), 1(doručená alespoň jednou) nebo 2(doručená přesně jednou s potvrzením příjemce) \cite{MQTTEsentials}. V případě této práce byla zvolena úroveň QoS 1, která je dostatečná pro většinu aplikací a poskytuje dobrou rovnováhu mezi spolehlivostí a výkonem. 
+
+Poslední součástí zprávy je \textit{Last Will and Testament} (LWT), což je zpráva, která je odeslána brokerem v případě, že se zařízení odpojí bez předchozího oznámení. Tato zpráva může být užitečná pro monitorování stavu zařízení a detekci výpadků \cite{MQTTEssentials}.
+
+
+
+
 \subsection{Vizualizace}
 V této sekci je popsána tvorba vizualizace panelu pomocí integrovaného webového serveru. Nastavení a realizace webového serveru je realizována pomocí integrovaného nástroje WebMaker. Tento nástroj je popsán v dokumentaci \cite{WebMaker}.
 Prvním krokem k vytvoření je vytvoření struktury projektu. V tomto případě to bude 5 stránek ve formátu .XML zasazených do webové struktury: \newline

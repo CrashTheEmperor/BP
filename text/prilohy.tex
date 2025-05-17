@@ -58,9 +58,11 @@ VAR_GLOBAL
   SHUTDOWN_MQTT   : BOOL := FALSE; //SHUTDOWN FROM MQTT
 END_VAR
 \end{lstlisting}
-\chapter{Definice funkčního bloku fbRoomTempMod}
+\chapter{Definice funkčních složitějších funkčních bloků}
+\label{apend:fb}
+\subsection{fbRoomTempMod}
 \label{apend:fbRoomTempMod}
-\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Definice funkčního bloku fbRoomTempMod}, label={lst:fbRoomTempMod}]
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={fbRoomTempMod}, label={lst:fbRoomTempMod}]
 FUNCTION_BLOCK fbRoomTempMod
   VAR_INPUT
     Heat_1       : BOOl; // Topení vstup 1[-]
@@ -94,11 +96,11 @@ FUNCTION_BLOCK fbRoomTempMod
   VAR
     INIT         : BOOL := FALSE; //INIT bloku
     TimeStep     : REAL := 0.0; // Hodnota kroku v ms
-    VAir         : REAL := 0.0; // Obsah vzduchu[m^3]
-    MAir         : REAL := 0.0; // Váha vzduchu[Kg]
 \end{lstlisting}
 \pagebreak
-\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=36, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=34, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
+    VAir         : REAL := 0.0; // Obsah vzduchu[m^3]
+    MAir         : REAL := 0.0; // Váha vzduchu[Kg]
     QAir         : REAL := 0.0; // Energie změna o 1degC[J]
     RoomTemp     : REAL := 20.0;// Pokojová teplota[degC]
     DeltaTemp    : REAL := 0.0; // Teplota za cyklus[degC]
@@ -137,11 +139,11 @@ FUNCTION_BLOCK fbRoomTempMod
     FiWall_3     : REAL := 0.0; // Tepelný tok 3[J/s]
     FiWall_4     : REAL := 0.0; // Tepelný tok 4[J/s]
     FiFloor      : REAL := 0.0; // Tepelný tok podlaha[J/s]
-    FiCeiling    : REAL := 0.0; // Tepelný tok strop[J/s]
-  END_VAR
 \end{lstlisting}
 \pagebreak
-\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=76, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=74, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
+    FiCeiling    : REAL := 0.0; // Tepelný tok strop[J/s]
+  END_VAR
   VAR CONSTANT
     RoAir : REAL := 1.204; // Hustota vzduchu[Kg/m^3]
     CpAir : REAL := 1005.0; // Tepelná kap vzduchu[J/(kg*K)]
@@ -180,12 +182,12 @@ DeltaTempWall_1 := wall_temp1 - RoomTemp;
 DeltaTempWall_2 := wall_temp2 - RoomTemp;
 DeltaTempWall_3 := wall_temp3 - RoomTemp;
 DeltaTempWall_4 := wall_temp4 - RoomTemp;
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=114, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
 DeltaTempFloor := floor_temp - RoomTemp;
 DeltaTempCeiling := ceiling_temp - RoomTemp;
 
-\end{lstlisting}
-\pagebreak
-\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=116, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
 (* Ošetření teploty *)
 (* Výpočet tepelných toků přes stěny *)
 FiWall_1 := (LambdaBrick * AreaWall1 * DeltaTempWall_1) / wall_thic1;
@@ -221,12 +223,12 @@ END_IF;
 (* Topení 2 *)
 IF Heat_2 THEN
   FiHeatTmp2 := FiHeatTmp2 + AlphaHeat * (Heat_2_WATTS - FiHeatTmp2);
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=152, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
 ELSE
   FiHeatTmp2 := FiHeatTmp2 * EXP(-KHeatFall2 * (TimeStep));
 END_IF;
-\end{lstlisting}
-\pagebreak
-\begin{lstlisting}[language=ST, breaklines=true, numbers=left, firstnumber=154, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
 (* Klimatizace 1 *)
 IF Cold_1 THEN
   FiColdTmp1 := FiColdTmp1 + AlphaCold * (Cold_1_WATTS - FiColdTmp1);
@@ -259,9 +261,9 @@ INIT := TRUE;
 END_FUNCTION_BLOCK
 \end{lstlisting}
 \newpage
-\chapter{Popis funkčního bloku fbBath}
+\subsection{Popis funkčního bloku fbBath}
 \label{apend:fbBath}
-\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Definice funkčního bloku fbBath}, label={lst:fbBath}]
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={fbBath}, label={lst:fbBath}]
   FUNCTION_BLOCK fbBath
   VAR_INPUT
     SV6_ON       : BOOl; //Vizu světlo 6 on
@@ -292,9 +294,9 @@ END_FUNCTION_BLOCK
 \end{figure}
 \pagebreak
 \newpage
-\chapter{Definice funkčního bloku fbKitch}
+\subsection{fbKitch}
 \label{apend:fbKitch}
-\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Definice funkčního bloku fbKitch}, label={lst:fbKitch}]
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={fbKitch}, label={lst:fbKitch}]
   FUNCTION_BLOCK fbKitch
   VAR_INPUT
     SV1_ON         : BOOl; //Vizu světlo 1 on
@@ -334,6 +336,7 @@ END_FUNCTION_BLOCK
     fbClimat3 : fbKNXVisuBool;
   END_VAR
 \end{lstlisting}
+\pagebreak
 \begin{figure}[!ht]
   \begin{center}
   \includegraphics[scale=0.7]{obrazky/fbKitch.png}
@@ -341,10 +344,11 @@ END_FUNCTION_BLOCK
   \caption[Logika funkčního bloku fbKitch]{Logika funkčního bloku fbKitch}
   \label{fig:fbKitch}
 \end{figure}
+
 \pagebreak
-\chapter{Definice funkčního bloku fbLivRoom}
+\subsection{fbLivRoom}
 \label{apend:fbLivRoom}
-\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Definice funkčního bloku fbLivRoom}, label={lst:fbLivRoom}]
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={fbLivRoom}, label={lst:fbLivRoom}]
 FUNCTION_BLOCK fbLivRoom
   VAR_INPUT
     SV3_ON          : BOOl; //Vizu světlo 3 on
@@ -432,15 +436,15 @@ FUNCTION_BLOCK fbLivRoom
 \end{lstlisting}
 \begin{figure}[!ht]
   \begin{center}
-  \includegraphics[scale=0.6]{obrazky/fbLivRoom.png}
+  \includegraphics[scale=0.58]{obrazky/fbLivRoom.png}
   \end{center}
   \caption[Logika funkčního bloku fbLivRoom]{Logika funkčního bloku fbLivRoom}
   \label{fig:fbLivRoom}
 \end{figure}
 \pagebreak
-\chapter{Definice funkčního bloku fbOutz}
+\subsection{fbOutz}
 \label{apend:fbOutz}
-\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Definice funkčního bloku fbOutz}, label={lst:fbOutz}]
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={fbOutz}, label={lst:fbOutz}]
   FUNCTION_BLOCK fbOutz
   VAR_INPUT
     SV7_ON       : BOOl R_EDGE; //Vizu světlo 7 on
@@ -801,8 +805,10 @@ ELSE
 END_IF;
 END_PROGRAM
 \end{lstlisting}
-\chapter{Docker YAMLy}
+\chapter{Docker YAML soubory}
 \label{apend:dockeryaml}
+\subsection{Portainer YAML}
+\label{apend:portaineryaml}
 \begin{lstlisting}[language=YAML, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Portainer YAML}, label={lst:portaineryaml}]
 services:
   portainer:
@@ -815,6 +821,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
 \end{lstlisting}
+\pagebreak
+\subsection{Stack YAML}
+\label{apend:stackyaml}
 \begin{lstlisting}[language=YAML, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Stack YAML}, label={lst:stackyaml}]
 services:
   home-assistant:
@@ -839,9 +848,6 @@ services:
       - /mnt/sda1/usb/config/influxdb:/etc/influxdb2
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
-\end{lstlisting}
-\pagebreak
-\begin{lstlisting}[language=YAML, breaklines=true, numbers=left, firstnumber=24, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
     environment:
       - INFLUXDB_DB=db0
       - DOCKER_INFLUXDB_INIT_MODE=setup
@@ -856,6 +862,9 @@ services:
     ports:
       - 3000:3000
     restart: unless-stopped
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=YAML, breaklines=true, numbers=left, firstnumber=38, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
     volumes:
       - /mnt/sda1/usb/data/grafana:/var/lib/grafana
       - /etc/grafana/provisioning:/etc/grafana/provisioning
@@ -882,12 +891,12 @@ services:
 \end{lstlisting}
 \begin{figure}[!ht]
   \begin{center}
-  \includegraphics[scale=0.42]{obrazky/portainer.png}
+  \includegraphics[scale=0.4]{obrazky/portainer.png}
   \end{center}
   \caption[Portainer Stack]{Portainer Stack}
   \label{fig:portainer}
 \end{figure}
-\chapter{Home Assistant configuration.yaml}
+\chapter{Home Assistant Konfigurační soubor}
 \label{apend:configyaml}
 \begin{lstlisting}[language=YAML, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Home Assistant configuration.yaml}, label={lst:configyaml}]
 # Loads default set of integrations. Do not remove.            
@@ -963,8 +972,9 @@ mqtt:
       command_topic: "ha/SHUTDOWN"                              
       payload_press: "true" 
 \end{lstlisting}
-\chapter{Grafana dashboardy}
+\chapter{Nastavení přehledů v Grafaně}
 \label{apend:grafana}
+\subsection{Grafana - Spotřeba}
 \begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Spotřeba klimatizace}, label={lst:grafanaKlimatizaceEnergie}]
 from(bucket: "kyblicek")
   |> range(start: -1h)
@@ -1017,7 +1027,7 @@ from(bucket: "kyblicek")
   |> yield(name: "Spotreba svetel za posledni hodinu (kWh)")
 \end{lstlisting}
 \begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Rozložení spotřeby}, label={lst:grafanaSpotreba}]
-from(bucket: "kyblicek")
+  from(bucket: "kyblicek")
   |> range(start: -1h)
   |> filter(fn: (r) => r["domain"] == "switch")
   |> filter(fn: (r) => r["_field"] == "value")
@@ -1032,8 +1042,56 @@ from(bucket: "kyblicek")
   |> sum(column: "_value")
   |> map(fn: (r) => ({ r with _value: r._value / 1000.0 }))
   |> yield(name: "Spotreba klimatizace za posledni hodinu (kWh)")
+from(bucket: "kyblicek")
+  |> range(start: -1h)
+  |> filter(fn: (r) => r["domain"] == "switch")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["friendly_name"] == "Leva zaluzie" or r["friendly_name"] == "Prava zaluzie")
+  |> map(fn: (r) => ({ r with _value: float(v: r._value) * 150.0 }))
 \end{lstlisting}
 \pagebreak
+\begin{lstlisting}[language=flux, breaklines=true, numbers=left, firstnumber=22, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
+  |> aggregateWindow(every: 1m, fn: last, createEmpty: true)
+  |> fill(column: "_value", usePrevious: true)
+  |> window(every: 1h, createEmpty: false)
+  |> integral(unit: 1h)
+  |> last()
+  |> group(columns: [])
+  |> sum(column: "_value")
+  |> map(fn: (r) => ({ r with _value: r._value / 1000.0}))
+  |> yield(name: "Spotreba zaluzii")
+from(bucket: "kyblicek")
+  |> range(start: -1h)
+  |> filter(fn: (r) => r["domain"] == "switch")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["friendly_name"] == "Topeni kuchyne" or r["friendly_name"] == "Topeni pracovna" or r["friendly_name"] == "Topeni u televize")
+  |> map(fn: (r) => ({ r with _value: float(v: r._value) * 4000.0 }))
+  |> aggregateWindow(every: 1m, fn: last, createEmpty: true)
+  |> fill(column: "_value", usePrevious: true)
+  |> window(every: 1h, createEmpty: false)
+  |> integral(unit: 1h)
+  |> last()
+  |> group(columns: [])
+  |> sum(column: "_value")
+  |> map(fn: (r) => ({ r with _value: r._value / 1000.0 }))
+  |> yield(name: "Spotreba topeni za posledni hodinu (kWh)")
+from(bucket: "kyblicek")
+  |> range(start: -1h)
+  |> filter(fn: (r) => r["domain"] == "light")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> map(fn: (r) => ({ r with _value: float(v: r._value) * 15.0 }))
+  |> aggregateWindow(every: 1m, fn: last, createEmpty: true)
+  |> fill(column: "_value", usePrevious: true)
+  |> window(every: 1h, createEmpty: false)
+  |> integral(unit: 1h)
+  |> last()
+  |> group(columns: [])
+  |> sum(column: "_value")
+  |> map(fn: (r) => ({ r with _value: r._value / 1000.0 }))
+  |> yield(name: "Spotr;eba svetel za posledni hodinu (kWh)")
+\end{lstlisting}
+\pagebreak
+\subsection{Grafana - Spínání}
 \begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Spínání klimatizace}, label={lst:grafanaKlimatizace}]
 from(bucket: "kyblicek")
   |> range(start: -24h)
@@ -1074,6 +1132,8 @@ from(bucket: "kyblicek")
   |> fill(column: "_value", usePrevious: true)
   |> yield(name: "Stav zaluzii kazdou minutu")
 \end{lstlisting}
+\pagebreak
+\subsection{Grafana - Celkové měsíční náklady}
 \begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Celkové měsíční náklady}, label={lst:grafanaCelkovyMesic}]
 price = 3.2
 klimatizace = from(bucket: "kyblicek")
@@ -1096,9 +1156,6 @@ topeni = from(bucket: "kyblicek")
   |> map(fn: (r) => ({ r with _value: r._value * 4.0 }))
   |> sum()
   |> map(fn: (r) => ({ r with _value: r._value * price, kategorie: "Topeni" }))
-\end{lstlisting}
-\pagebreak
-\begin{lstlisting}[language=flux, breaklines=true, numbers=left, firstnumber=22, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
 zaluzie = from(bucket: "kyblicek")
   |> range(start: -30d)
   |> filter(fn: (r) => r["domain"] == "switch")
@@ -1106,6 +1163,9 @@ zaluzie = from(bucket: "kyblicek")
   |> filter(fn: (r) => r["friendly_name"] == "Leva zaluzie" or r["friendly_name"] == "Prava zaluzie")
   |> map(fn: (r) => ({ r with _value: if r._value > 0.0 then 1.0 else 0.0 }))
   |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=flux, breaklines=true, numbers=left, firstnumber=32, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
   |> map(fn: (r) => ({ r with _value: r._value * 0.15 }))
   |> sum()
   |> map(fn: (r) => ({ r with _value: r._value * price, kategorie: "Zaluzie" }))
@@ -1125,6 +1185,7 @@ zaluzie = from(bucket: "kyblicek")
   |> yield(name: "Celkove mesicni naklady (Kc)")
 \end{lstlisting}
 \pagebreak
+\subsection{Grafana - Průběh teploty}
 \begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Průběh teploty - Query A}, label={lst:grafanaTeplota}]
 from(bucket: "kyblicek")
   |> range(start: -1h)
@@ -1155,6 +1216,7 @@ from(bucket: "kyblicek")
   |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)
   |> yield(name: "Teplota v koupelne")
 \end{lstlisting}
+\pagebreak
 \begin{lstlisting}[language=flux, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Grafana - Průběh teploty - Query D}, label={lst:grafanaTeplota}]
 from(bucket: "kyblicek")
   |> range(start: -1h)
@@ -1167,8 +1229,8 @@ from(bucket: "kyblicek")
 \end{lstlisting}
 \begin{figure}[!ht]
   \begin{center}
-  \includegraphics[scale=0.40]{obrazky/Grafana.png}
+  \includegraphics[scale=0.37]{obrazky/Grafana.png}
   \end{center}
-  \caption[Vzhled dashboardu]{Vzhled dashboardu}
+  \caption[Vzhled přehledu v Grafaně]{Vzhled přehledu v Grafaně}
   \label{fig:GrafanaDashboard}
 \end{figure}
