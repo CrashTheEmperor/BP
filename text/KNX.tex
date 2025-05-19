@@ -1,66 +1,72 @@
 \chapter{Sběrnicový systém KNX}
-Existuje velké množství sběrnicových systémů, ale asociace KNX s 500 členskými společnostmi a 8000 produkty je v této době největší na trhu. \cite{Asociace KNX}
+Existuje velké množství sběrnicových systémů, ale asociace KNX s 500 členskými společnostmi a 8000 produkty je v současnosti největší na trhu. \cite{Asociace KNX}
 
-Pro vstup do asociace~je nutné aby žadatel splňoval požadovanou kvalitu (kompatibilita s ISO 9001~- zavedený systém kontroly kvality v podniku), vzájemná kompatibilita výrobků s ostatními členy, konfigurační kompatibilita (možná konfigurace za použití KNX Engineering Tool Software, zkráceně ETS), zpětná kompatibilita (kompatibilita starých instalací s nynějšími a budoucími instalacemi). \cite{KNX principles}
+\noindent Pro vstup do asociace je nutné, aby bylo splněno několik kritérií \cite{KNX principles}:
+\begin{itemize}
+  \item \textbf{splňovat požadovanou kvalitu} -- kompatibilita s ISO 9001
+  \item \textbf{vzájemná kompatibilita s ostatními členy}
+  \item \textbf{konfigurační kompatibilita} -- možná konfigurace za použití KNX Engineering Tool Software, zkráceně ETS
+  \item \textbf{zpětná kompatibilita} -- kompatibilita starých instalací s nynějšími a budoucími instalacemi \newline
+\end{itemize}
 
-Výhodou takto velké asociace je již zmíněná vzájemná kompatibilita komponent členských společností, tisíce KNX certifikovaných skupin výrobků (pokrytí jakéhokoliv myslitelného pole aplikací), podpora všech komunikačních médií (kroucený pár TP, powerline PL, radiofrekvenční RF a rozhraní IP/Ethernet/WLAN), použití jednoho softwaru~(ETS) na projektování a programování všech výrobků členských společností. \cite{KNX principles}
+\noindent Výhodou takto velké asociace je již zmíněná vzájemná kompatibilita komponent členských společností, tisíce KNX certifikovaných skupin výrobků (pokrytí jakéhokoliv myslitelného pole aplikací), podpora všech komunikačních médií (kroucený pár TP, powerline PL, radiofrekvenční RF a rozhraní IP/Ethernet/WLAN), použití jednoho softwaru~(ETS) na projektování a programování všech výrobků členských společností. \cite{KNX principles}
 
-KNX je také normalizováno v Evropě, USA, Číně a mezinárodně prostřednictvím norem. Tyto normy zajišťují snadné rozšíření a výměnu instalace za novou a již zmíněnou kompatibilitu mezi společnostmi. \cite{KNX basics}
+KNX je také normalizováno v Evropě, USA, Číně a mezinárodně prostřednictvím norem. Tyto normy zajišťují snadné rozšíření instalace, případně její výměnu za novou, nebo již zmíněnou kompatibilitu mezi společnostmi. \cite{KNX basics}
 
 \section{Historie}
 \subsection{EIBA}
-Asociace byla založena v Belgii, roku 1990 pod názvem European Installation Bus Association~(EIBA) se záměrem vytvářet instalace schopné komunikace pomocí sběrnic. Jako první komunikační médium byl použitý TP a aby se zajistila kompatibilita mezi produkty se členské společnosti dohodly na používání jednoho systému (standardu). Mezi další důležité milníky patří \cite{KNX history}:
+Asociace byla založena v Belgii roku 1990 pod názvem European Installation Bus Association~(EIBA) se záměrem vytvářet instalace schopné komunikace pomocí sběrnic. Jako první komunikační médium byl použit TP. Pro zajištění kompatibility mezi produkty se členské společnosti dohodly na používání jednoho systému (standardu). Mezi další důležité milníky patří \cite{KNX history}:
 \begin{itemize}
-\item 1991 - první školení EIBA
-\item 1992 - první certifikované zařízení na trhu
-\item 1993 - představení první verze ETS na trhu 
-\item 1994 - vznikl prvních školících center
-\item 1996 - vznik The Scientific Partnership (spolupráce s výzkumnými institucemi)
-\item[] \hspace{0.821cm} - použití PL jako komunikační médium
+\item \textbf{1991} -- první školení EIBA
+\item \textbf{1992} -- první certifikované zařízení na trhu
+\item \textbf{1993} -- představení první verze ETS na trhu 
+\item \textbf{1994} -- vznik prvních školících center
+\item \textbf{1996} -- vznik The Scientific Partnership
+\item[] \hspace{0.95cm} -- PL použito jako komunikační médium
 \end{itemize}
 
 \subsection{KNX}
-Roku 1999 se EIBA sloučila se společností Batibus Club International (BCI) a European Home Systems Association (EHSA) a~přijaly název Konnex Association. Sídlem asociace byl ustanoven Brusel. Toto sloučení nemělo vliv na zpětnou kompatibilu a~tudíž jsou všechny nové produkty kompatibilní s produkty nesoucími logo EIB. Důležité milníky pro KNX \cite{KNX  history}:
+Roku 1999 se EIBA sloučila se společnostmi Batibus Club International (BCI) a European Home Systems Association (EHSA).~Přijaly název Konnex Association. Sídlem asociace byl ustanoven Brusel. Toto sloučení nemělo vliv na zpětnou kompatibilu, tudíž jsou všechny nové produkty kompatibilní s produkty nesoucími logo EIB. Důležité milníky pro KNX \cite{KNX  history}:
 \begin{itemize}
-\item 2001 - vytvoření nového standardu KNX se základem ve standardu EIB
-\item 2003 - standard schválen, jako evropská norma  EN 50090
-\item 2004 - standard schválen, jako americká norma  ANSI/ASHRAE 135
-\item[] \hspace{0.821cm} - přidání přenosového média RF do standardu KNX
-\item 2006 - standard schválen, jako světová norma  ISO/IEC 14543-3
-\item[] \hspace{0.821cm} - přejmenování asociace na KNX
-\item 2007 - standard schválen, jako jedna z čínských norem GB/Z 20965
-\item[] \hspace{0.821cm} - KNX IP bylo představeno jako čtvrté přenosové médium
-\item 2013 - standard schválen, jako jediná čínská norma GB/T 20965
+\item \textbf{2001} -- vytvoření nového standardu KNX se základem ve standardu EIB
+\item \textbf{2003} -- standard schválen jakožto evropská norma EN 50090
+\item \textbf{2004} -- standard schválen, jako americká norma  ANSI/ASHRAE 135
+\item[] \hspace{0.95cm} -- přidání přenosového média RF do standardu KNX
+\item \textbf{2006} -- standard schválen, jako světová norma  ISO/IEC 14543-3
+\item[] \hspace{0.95cm} -- přejmenování asociace na KNX
+\item \textbf{2007} -- standard schválen, jako jedna z čínských norem GB/Z 20965
+\item[] \hspace{0.95cm} -- KNX IP bylo představeno jako čtvrté přenosové médium
+\item \textbf{2013} -- standard schválen, jako jediná čínská norma GB/T 20965
 \end{itemize}
 
 \section{Možnosti použití technologie}
-Použití inteligentní instalace umožňuje využití celého objektu s maximálním potenciálem a tím maximálně ulehčit uživateli práci. Níže jsou uvedeny příklady použití instalace KNX \cite{Systemove Argumenty}:
+Použití inteligentní instalace umožňuje využití celého objektu s maximálním potenciálem a tím ulehčit uživateli práci. Níže jsou uvedeny příklady použití instalace KNX \cite{Systemove Argumenty}:
 \begin{itemize}
-    \item{Centrální ovládání - Možnost ovládat celou instalaci z jednoho zařízení (např. centrální panel, mobil) odkudkoli.}
-    \item Realizace centrálních funkcí - Při odchodu z domu zhasnutí světel, spuštění žaluzií, vypnutí zásuvkových obvodů, nebo naopak při vstupu zapnutí topení a osvětlení.
-    \item Regulace teplot (topení, chlazení) - Regulace teploty každé místnosti zvlášť. Lze také nastavit při otevření okna vypnutí topení.
-    \item Režimy nastavených teplot - Lze nastavit tepelné režimy (Ekonomický, Komfort,...), které by měly budovu chránit před přehřátím, či promrznutím. 
-    \item Světelné scény -  Lze nastavit intenzitu osvětlení, která osvětlení budou svítit, případně i barvu, kterou budou zářit.
-    \item Rozdělení místností na více obvodů
-    \item Použití virtuálních asistentů - Je možno ovládat instalaci hlasovými povely přes virtuální asistenty (Alexa, Google Home,...)
-    \item Simulace přítomnosti - Při nepřítomnosti na delší dobu lze nastavit spínání světel, které navodí dojem, že obyvatel neopustil budovu.
-    \item Kontrola spotřeby energií - Lze monitorovat spotřebu energií v každém obvodu zvlášť a díky tomu omezit spotřebu, vypnout spotřebič při překročení určité hranice, nebo optimalizovat vlastní zdroje energie (fotovoltaické panely).
+    \item \textbf{Centrální ovládání} -- možnost ovládat celou instalaci z jednoho zařízení (např. centrální panel, mobil)
+    \item \textbf{Realizace centrálních funkcí} -- při odchodu z domu zhasnutí světel, spuštění žaluzií, vypnutí zásuvkových obvodů...
+    \item \textbf{Regulace teplot (topení, chlazení)} -- regulace teploty každé místnosti zvlášť (lze nastavit vypnutí topení při otevření okna)
+    \item \textbf{Režimy nastavených teplot} -- tepelné režimy (Ekonomický, Komfort,...) chránící před přehřátím či promrznutím. 
+    \item \textbf{Světelné scény} --  intenzita osvětlení, volba světel, případně i barva
+    \item \textbf{Rozdělení místností na více obvodů}
+    \item \textbf{Použití virtuálních asistentů} -- ovládání instalace hlasovými povely přes virtuální asistenty (Alexa, Google Home,...)
+    \item \textbf{Simulace přítomnosti} -- simulace přítomnosti v objektu pomocí ovládání žaluzií a osvětlení
+    \item \textbf{Kontrola spotřeby energií} -- monitorování a optimalizace spotřeby energií
 \end{itemize}
 
 \section{Sběrnicové instalace}
-Sběrnicová instalace je založená na koncepci ICT (Information and Communication Technology). Tři hlavní aspekty této koncepce jsou \cite{KNX principles}:
+Sběrnicová instalace je založená na koncepci ICT (Information and Communication Technology). Třemi hlavními aspekty této koncepce jsou \cite{KNX principles}:
 \begin{itemize}
-\item Náhrada klasických spínačů tlačítkovými ovladači schopnými komunikace, nebo připojení klasických spínačů k rozhraním schopných komunikace
-\item Připojení rozhraní se schopností komunikace, nebo nepřímého ovládání (spínací přístroje schopné komunikace) ke všem spotřebičům
-\item Propojení veškerých přístrojů schopných komunikace kabelem určeným na bezpečné malé napětí
+\item náhrada klasických spínačů tlačítkovými ovladači schopnými komunikace, nebo připojení klasických spínačů k rozhraním schopných komunikace
+\item připojení rozhraní se schopností komunikace, nebo nepřímého ovládání (spínací přístroje schopné komunikace) ke všem spotřebičům
+\item propojení veškerých přístrojů schopných komunikace kabelem určeným na bezpečné malé napětí
 \end{itemize}
 \subsection{Sběrnicové přístroje}
-Zařízení připojené ke sběrnici se schopností komunikovat s dalšími přístroji se nazývá sběrnicovým přístrojem a je tvořeno těmito částmi (viz. Obr. \ref{fig:Součásti sběrnicového přístroje}) \cite{KNX principles}:
+Zařízení připojené ke sběrnici se schopností komunikovat s dalšími přístroji se nazývá sběrnicovým přístrojem a je tvořeno těmito částmi (viz Obr. \ref{fig:Součásti sběrnicového přístroje}) \cite{KNX principles}:
 
 \begin{itemize}
-\item Přenosový modul - vytváří rozhraní pro přenos informací
-\item Mikrokontroler - komunikace mezi přenosovým modulem a aplikačním modulem
-\item Aplikační modul - obvod tvořící přístroj\footnote{Spojení přenosového modulu a Mikrokontroleru tvoří tzv. sběrnicovou spojku (bus coupler unit BCU.}
+\item \textbf{Přenosový modul} -- vytváří rozhraní pro přenos informací
+\item \textbf{Mikrokontroler} -- komunikace mezi přenosovým modulem a aplikačním modulem
+\item \textbf{Aplikační modul} -- obvod tvořící přístroj\footnote{Spojení přenosového modulu a mikrokontroleru tvoří tzv. sběrnicovou spojku (bus coupler unit BCU.}
 \end{itemize}
 \begin{figure}[!h]
   \begin{center}
@@ -69,13 +75,13 @@ Zařízení připojené ke sběrnici se schopností komunikovat s dalšími př�
   \caption[Součásti sběrnicového přístroje \cite{KNX principles}] {Součásti sběrnicového přístroje \cite{KNX principles}}
   \label{fig:Součásti sběrnicového přístroje}
 \end{figure}
-Přístroje lze ještě dělit na aktivní a pasivní. Pasivní přístroje nejsou součástí ICT, ale jedná se o podpůrné přístroje určené pro podporu procesu. Ve zkratce to znamená, že nekomunikují s ostatními přístroji. Jedním z příkladů pasivních přístrojů jsou napájecí zdroje.  Příkladem pasivních přístrojů jsou napájecí zdroje (Napájecí zdroje mohou být rozšířené ještě o ICT, ale není to časté).  
+Přístroje lze ještě dělit na aktivní a pasivní. Pasivní přístroje nejsou součástí ICT, ale jedná se o podpůrné přístroje určené pro podporu procesu (nekomunikují s ostatními přístroji). Jedním z příkladů pasivních přístrojů jsou napájecí zdroje. Příkladem pasivních přístrojů jsou napájecí zdroje. Napájecí zdroje mohou být rozšířené ještě o ICT, ale není to časté.  
 Aktivní přístroje lze rozdělit do těchto kategorií \cite{KNX principles}:
 \begin{itemize}
-\item Rozhraní - propojuje sběrnici a PC
-\item Spojky - Optimalizují komunikaci v systému
-\item Snímače - Předávají informace sběrnicovému systému
-\item Akční členy - propojují klasické spotřebiče se sběrnicovým systémem
+\item \textbf{Rozhraní} -- propojuje sběrnici a PC
+\item \textbf{Spojky} -- optimalizují komunikaci v systému
+\item \textbf{Snímače} -- předávají informace sběrnicovému systému
+\item \textbf{Akční členy} -- propojují klasické spotřebiče se sběrnicovým systémem
 \end{itemize}
 
 \subsection{Adresování}
@@ -89,9 +95,9 @@ Individuální adresa je v instalaci jedinečná, tj. neexistuje další stejná
   \label{fig:Struktura individuální adresy]}
 \end{figure}
 
-Nastavování individuální adresy na přístroji probíhá většinou stiskem programovacího tlačítka na přístroji. Při stisknutí tlačítka se rozsvítí programovácí LED. Individuální adresa se přístroji přiděluje natrvalo. Po přidělení již ETS posílá příslušná data (aplikace, konfigurace, parametry, skupinové adresy).
+Nastavování individuální adresy na přístroji probíhá většinou stiskem programovacího tlačítka na přístroji. Při stisknutí tlačítka se rozsvítí programovací LED. Individuální adresa se přístroji přiděluje natrvalo. Po přidělení již ETS posílá příslušná data (aplikace, konfigurace, parametry, skupinové adresy).
 
-Při uvedení do provozu komunikace probíhá pomocí skupinových adres. Jedná se o adresy definované programátorem pro každou funkci v systému. Celkově je možno použít 65535 adres s tím, že adresa 0/0/0 je rezervována pro tzv. broadcast (Hlášení všem přístrojům na sběrnici). Programátor si také může zvolit, kterou z uvedených struktur použije (viz Obr. \ref{fig:Příklad struktury skupinových adres}). 
+Při uvedení do provozu probíhá komunikace pomocí skupinových adres. Jedná se o adresy definované programátorem pro každou funkci v systému. Celkově je možno použít 65535 adres, přičemž adresa 0/0/0 je rezervována pro tzv. broadcast (hlášení všem přístrojům na sběrnici). Programátor si také může zvolit, kterou z uvedených struktur použije (viz Obr. \ref{fig:Příklad struktury skupinových adres}). 
 \begin{figure}[!h]
   \begin{center}
     \includegraphics[scale=0.6]{obrazky/Skupinove adresovani.png}
@@ -99,17 +105,17 @@ Při uvedení do provozu komunikace probíhá pomocí skupinových adres. Jedná
   \caption[Příklad struktury skupinových adres \cite{Celkovy prehled}]{Příklad struktury skupinových adres \cite{Celkovy prehled}}
   \label{fig:Příklad struktury skupinových adres}  
 \end{figure}
-Nejčastěji se využívá třístupňová struktura kvůli přehlednosti. Hlavní skupina se používá na číslo podlaží,  střední skupina na funkci (např. 1 = osvětlení, 2 = topení, 3 = stínění etc.)a podskupina pro konkrétní spotřebič, nebo skupinu spotřebičů. \cite{Celkovy prehled}
+Nejčastěji se využívá třístupňová struktura kvůli přehlednosti. Hlavní skupina se používá na číslo podlaží,  střední skupina na funkci (např. 1 = osvětlení, 2 = topení, 3 = stínění etc.)a podskupina pro konkrétní spotřebič nebo skupinu spotřebičů. \cite{Celkovy prehled}
 \\
 \\
 \\
 \subsection{Komunikace po sběrnici}
 Komunikace přístrojů na sběrnici probíhá pomocí tzv. telegramů (viz Obr. \ref{fig:Struktura telegramu}), kde je délka dat závislá na typu datového bodu  (1bit - 14bytů).
-Nejdůležitější části telegramu jsou tři bloky \cite{Celkovy prehled}:
+Nejdůležitějšími částmi telegramu jsou tři bloky \cite{Celkovy prehled}:
 \begin{itemize}
-\item Zdrojová adresa - udává adresu přístroje který telegram vyslal
-\item Cílová adresa - adresa přístroje, kterému je telegram určen
-\item Užitečná data - příkaz co má daný přístroj vykonat\\
+\item\textbf{Zdrojová adresa} -- udává adresu přístroje, který telegram vyslal
+\item \textbf{Cílová adresa} -- adresa přístroje, kterému je telegram určen
+\item \textbf{Užitečná data} -- příkaz, který má daný přístroj vykonat\\
 \end{itemize}
 \begin{figure}[!h]
   \begin{center}
@@ -130,7 +136,7 @@ Komunikace na sběrnici probíhá pouze v případě, že je na sběrnici logick
   \label{fig:Struktura bitu kroucené dvojlinky}
 \end{figure}
 
-Aby jsme se vyhli kolizím a jeden z přístrojů mohl vysílat je přenos řízen principem CSMA/CA (Carrier Sense Multiple Access with Collision Avoidance vícenásobný přenos s vyhnutím se kolizím), který funguje tak, že pokud přístroj odesílající logickou “1” detekuje logickou “0”, aby se uvolnila cesta pro přenos jinému přístroji. Přístroj s přerušeným přenosem sleduje provoz na sběrnici a vyčká do konce přenosu jiného zařízení a poté zkusí znova vysílat. \cite{Celkovy prehled}
+Aby se zabránilo kolizím a umožnilo vysílání pouze jednomu přístroji, je přenos řízen metodou CSMA/CA (Carrier Sense Multiple Access with Collision Avoidance –- vícenásobný přístup s detekcí nosné a vyhýbáním se kolizím). Přístroj, který chce vysílat logickou „1“, nejprve sleduje sběrnici; pokud detekuje logickou „0“, přenos přeruší a vyčká na uvolnění sběrnice. Po ukončení přenosu jiného zařízení se pokusí vysílat znovu. \cite{Celkovy prehled}
 \subsection{KNXnet/IP}
 \label{KNXnet/IP}
 
@@ -146,20 +152,20 @@ Tunelování umožňuje bod–bod komunikaci mezi KNX sběrnicí a IP klientem. 
     \newline Režim B přidělí každému tunelovacímu klientovi \textbf{unikátní} \textit{Individual Address}. Tudíž lze monitorovat a spravovat každou relaci individuálně.
 
   \item \textbf{Kombinovaný režim (Routing + Tunnelling)}  
-    \newline V Režimu C server kromě přidělení dedikovaných tunelů funguje i jako KNX/IP Router pro multicast skupinových telegramů. Má tedy jednu IA pro routování (např. 1.1.0), tak další IA pro tunnelling relace. Díky tomu zvládne jak point-to-point servis a diagnostiku, tak i point-to-multipoint přenosy mezi subnety. \newline
+    \newline V Režimu C server kromě přidělení dedikovaných tunelů funguje i jako KNX/IP router pro multicast skupinových telegramů. Má tedy jednu IA pro routování (např. 1.1.0) a další IA pro tunnelling relace. Díky tomu zvládne jak point-to-point servis a diagnostiku, tak i point-to-multipoint přenosy mezi subnety. \newline
 \end{itemize}
 \begin{figure}[!h]
   \begin{center}
-    \includegraphics[scale=0.7]{obrazky/KNX_Tunelling.png}
+    \includegraphics[scale=0.6]{obrazky/KNX_Tunelling.png}
   \end{center}
   \caption[Tunelování \cite{KNXTunnel}]{Tunelování \cite{KNXTunnel}}
   \label{fig:Tunelovani}
 \end{figure}
-\subsubsection{Routing (Routing)} 
+\subsubsection{Routování (Routing)} 
 Routing zajišťuje přenos skupinových (point-to-multipoint) telegramů mezi více KNX liniovými segmenty(linky/subnety). Každý KNXnet/IP Router přijímá příchozí telegramy na multicastové skupině a podle filtrovaných adres je znovu vysílá na KNX sběrnici. Díky tomu umožňuje velmi rychlé doručení telegramů současně do více destinací. \cite{KNXRouting}
 \begin{figure}[!h]
   \begin{center}
-    \includegraphics[scale=0.7]{obrazky/KNX_Routing.png}
+    \includegraphics[scale=0.6]{obrazky/KNX_Routing.png}
   \end{center}
   \caption[Routování \cite{KNXRouting}]{Routování \cite{KNXRouting}}
   \label{fig:Routovani}
@@ -170,17 +176,18 @@ Datové typy byly standardizovány za účelem zajištění kompatibility podobn
 \begin{itemize}
     \item Není uložena v paměti zařízení.
     \item Není nikdy součástí telegramu
-    \item Je pouze v projektu ETS\\
+    \item Je pouze v projektu ETS \newline
 \end{itemize}
-Typy datových bodů jsou zvláště důležité pro diagnostiku to znamená, že umožňují ETS monitorovat data spojená se skupinovými objekty, např. místo "data = 85 A8" je zobrazeno "data = -6 °C". \cite{Datapoint}\\
-\\Struktura datového bodu a notace \cite{Datapoint}:
-\begin{itemize}
-    \item Datový typ : formát + kódování
-    \item Velikost: rozsah hodnot + jednotky
-\end{itemize}
-Notace datového bodu se píše ve tvaru X.YYY, neboli DATOVÝ TYP.VELIKOST.
 
-\begin{table}[h]
+\noindent Typy datových bodů jsou zvláště důležité pro diagnostiku. To znamená, že umožňují ETS monitorovat data spojená se skupinovými objekty, např. místo "data = 85 A8" je zobrazeno "data = -6 °C". \cite{Datapoint}
+
+Struktura datového bodu je tvořená dvěma částmi a zapisuje ve tvaru X.YYY, neboli DATOVÝ TYP.VELIKOST. Tyto části jsou \cite{Datapoint}:
+\begin{itemize}
+    \item \textbf{Datový typ} -- formát + kódování
+    \item \textbf{Velikost} -- rozsah hodnot + jednotky \newline
+\end{itemize}
+
+\begin{table}[!ht]
  \caption[Přehled nejpoužívanějších datových typů]{Přehled nejpoužívanějších datových typů}
    \small
     \centering
@@ -207,34 +214,34 @@ Notace datového bodu se píše ve tvaru X.YYY, neboli DATOVÝ TYP.VELIKOST.
 	  \end{tabular}
 \end{table}
 
-Díky existenci datového bodu jsme schopní nastavit hodnotu osvětlení 3 různými způsoby \cite{Systemove Argumenty}:
+Důsledkem existence datového bodu je schopnost nastavit hodnotu osvětlení 3 různými způsoby \cite{Systemove Argumenty}:
 \begin{itemize}
-    \item Zapnutí/Vypnutí
-    \item Krokové stmívání - Při poslání telegramu "start stmívání" osvětlení krokově roste o definovanou hodnotu. Po poslání "stop stmívání" hodnota neroste.
-    \item Procentuální stmívání- Realizuje se pomocí cyklického posílání telegramu. Při každém přijetí telegramu se zvedne jas o nastavenou hodnotu.
+    \item \textbf{Zapnutí/Vypnutí}
+    \item \textbf{Krokové stmívání} -- Při poslání telegramu "start stmívání" osvětlení krokově roste o definovanou hodnotu. Po poslání "stop stmívání" hodnota neroste.
+    \item \textbf{Procentuální stmívání} -- Realizuje se pomocí cyklického posílání telegramu. Při každém přijetí telegramu se zvedne jas o nastavenou hodnotu.
 \end{itemize}
 
 \section{Zabezpečení}
-Rozdíl mezi zařízeními KNX a zabezpečenými KNX Secure je ten, že zařízení KNX Secure jsou schopna šifrovat a dešifrovat telegramy. Tato technologie dodává instalaci extra zabezpečení, a to během uvádění instalace do provozu, tak i poté za běhu. Telegramy jsou zašifrované zabezpečenými zařízeními KNX se nazývají zabezpečené telegramy.
+Rozdíl mezi zařízeními KNX a zabezpečenými KNX Secure je ten, že zařízení KNX Secure jsou schopna šifrovat a dešifrovat telegramy. Tato technologie dodává instalaci extra zabezpečení, a to během uvádění instalace do provozu, tak i poté za běhu. Telegramy jsou zašifrované zabezpečenými zařízeními KNX a nazývají se zabezpečené telegramy.
 \\Lze rozlišit dva typy šifrovaných telegramů KNX \cite{KNX Secure}:
 \begin{itemize}
-\item{Zcela zašifrované}
-\begin{itemize}
-\item{Lze použít pouze na zařízeních KNX IP a je označováno jako KNX IP Secure.}
-\item{Používá se, pro zabezpečení části intalace, která je vystavená externí IP síti (typicky se jedná o páteřní linku).}
-\end{itemize}
-\item{Čatečně zašifrované}
-\begin{itemize}
-\item{Lze požít na libovolné komunikační zařízní KNX. Zařízení používající tento typ zabezpečení se nazývají KNX Data Secure}
-\item{Toto šifrování můžeme použít i pro KNX IP, ale pouze pro tu část instalace, která není vystavena externí IP síti.}
-\end{itemize}
+  \item \textbf{Zcela zašifrované}
+  \begin{itemize}
+    \item lze použít pouze na zařízeních KNX/IP (KNX IP Secure)
+    \item používá se, pro zabezpečení části intalace, která je vystavená externí IP síti (typicky se jedná o páteřní linku)
+  \end{itemize}
+  \item \textbf{Čatečně zašifrované}
+  \begin{itemize}
+    \item lze požít na libovolné komunikační zařízení KNX (KNX Data Secure)
+    \item používá se pouze pro instalaci, která není vystavena extení IP síti
+  \end{itemize}
 \end{itemize}
 Oba typy zabezpečení obsahují MAC (Message Authentication Code).
 \\Zabezpečená zařízení mají zabezpečený režim, který je v projektu ETS reprezentován vlastností nazvanou „Secure Commissioning“. Pouze když je tento režim aktivován, zařízení je schopno šifrovat a dešifrovat telegramy.
 
-Zabezpečená zařízení mají tzv. "Tool Key". V moment, když je aktivován zabezpečený režim zařízení, je ETS schopen komunikovat s tímto zařízením pouze pokud zná Tool Key tohoto zařízení.
+Zabezpečená zařízení mají tzv. "Tool Key". V momentě, kdy je aktivován zabezpečený režim zařízení, je ETS schopen komunikovat s tímto zařízením pouze pokud zná Tool Key tohoto zařízení.
 
-Zabezpečená zařízení obsahují také Factory Default Setup Key (FDSK). FDSK je jedinečný pro každé zařízení a nelze jej upravovat ani mazat. ETS tento klíč může načíst jenom pomocí certifikátu (25znakový kód, který obsahuje sériové číslo a FDSK). Tool Key je v zásadě z výroby nastaven na FDSK. Tool Key může být také zpětně nastaven na FDSK pomocí tzv. "master resetu", který uvadí výrobce. 
+Zabezpečená zařízení obsahují také Factory Default Setup Key (FDSK). FDSK je jedinečný pro každé zařízení a nelze jej upravovat ani mazat. ETS tento klíč může načíst jenom pomocí certifikátu (25znakový kód, který obsahuje sériové číslo a FDSK). Tool Key je z výroby nastaven na FDSK. Tool Key může být také zpětně nastaven na FDSK pomocí tzv. "master resetu", který uvadí výrobce. 
 
 Po přidání zabezpečeného zařízení KNX  do ETS a po přidání jeho certifikátu, ETS automaticky nastaví svůj Tool Key v projektu. To znamená, že uživatel ETS nemůže definovat/upravit Tool Key ručně, Tool Key také není viditelný pro uživatele ETS. \cite{KNX Secure}
 
@@ -245,19 +252,18 @@ Pro sběrnici KNX lze použít pouze tyto struktury kabeláže:
     \item Hvězdicová
      \item Liniová
      \item Stromová
-     \item Kombinace výše uvedených\\ \\ \\
+     \item Kombinace výše uvedených
 \end{itemize}
 \begin{figure}[!h]
   \begin{center}
-    \includegraphics[scale=0.6]{obrazky/Ukazka topologie.png}
+    \includegraphics[scale=0.55]{obrazky/Ukazka topologie.png}
   \end{center}
   \caption[Ukázka topologie KNX\cite{Topologie}]{Ukázka topologie KNX\cite{Topologie}}
   \label{fig:Ukázka topologie KNX}
 \end{figure}
 
-\newpage
 \subsection{Individuální adresa}
-Individuální adresa se nastavuje s ohledem na umístění v topologii (Viz. Podkapitola \ref{Adresování}).
+Individuální adresa se nastavuje s ohledem na umístění v topologii (viz Podkapitola \ref{Adresování}).
 \begin{table}[h]
  \caption[Individuální adresy v topologii \cite{Topologie}]{Individuální adresy v topologii \cite{Topologie}}
    \small
@@ -280,14 +286,13 @@ Individuální adresa se nastavuje s ohledem na umístění v topologii (Viz. Po
 	    \hline
 	  \end{tabular}
 \end{table}
-\newpage
 \subsection{Spojka}
 V případě,že jsou v instalaci použity spojky a mají přiřazeny správné individuální adresy, budou při projektování v programu ETS (Kapitola \ref{ETS}) automaticky vytvořeny filtrační tabulky jednotlivých spojek. Filtrační tabulka obsahuje skupinové adresy, které smí projít skrz příslušnou spojku (obsahuje všechny obsažené skupinové adresy, které adresují SU umístěné za spojkou). Tudíž každá linie pracuje nezávisle.
 
- Spojky jsou vytvořeny pro montáž na DIN lištu, kde se připojují primární i sekundární linie pomocí sběrnicové svorkovnice. Primární linie také funguje, jako napájení mikrokontroleru a při výpadku sítě ohlásí tuto skutečnost na sekundární linii. Jednou z výhod pojky je možnost programování z obou linií. Obsahují také žluté signalizující LED, které blikají pouze v případě, že spojka propustí telegram na příslušnou linii. Další vlastností spojky je galvanické oddělení mezi primární a sekundární linií. Poslední vlastností spojky je možnost přeměny na liniový opakovač. Opakovač se rozliší od spojky absencí nuly na konci individuální adresy (X.X.1 apod.). Využívá se pro rozšíření linie o další segment s 64 US. Tento úsek je limitován délkou kabelu, který může měřit maximálně 1000m. \cite{Topologie}
- 
+Spojky jsou vytvořeny pro montáž na DIN lištu, kde se připojují primární i sekundární linie pomocí sběrnicové svorkovnice. Primární linie také funguje, jako napájení mikrokontroleru a při výpadku sítě ohlásí tuto skutečnost na sekundární linii. Jednou z výhod spojky je možnost programování z obou linií. Obsahují také žluté signalizující LED, které blikají pouze v případě, že spojka propustí telegram na příslušnou linii. Další vlastností spojky je galvanické oddělení mezi primární a sekundární linií. Poslední vlastností spojky je možnost přeměny na liniový opakovač. Opakovač se rozliší od spojky absencí nuly na konci individuální adresy (X.X.1 apod.). Využívá se pro rozšíření linie o další segment s 64 US. Tento úsek je limitován délkou kabelu, který může měřit maximálně 1000 metrů. \cite{Topologie}
+
 \subsection{Routingové číslo}
-Každý telegram, který je vyslán přístrojem na obsahuje routingové číslo, které začíná na hodnotě 6. Toto číslo při každém průchodu spojkou, či opakovačem se dekrementuje dokud nedosáhne nulové hodnoty. Tuto vlastnost berou filtrační tabulky v potaz.
+Každý telegram, který je vyslán přístrojem,obsahuje routingové číslo, které začíná na hodnotě 6. Toto číslo se při každém průchodu spojkou či opakovačem dekrementuje, dokud nedosáhne nulové hodnoty. Tuto vlastnost berou filtrační tabulky v potaz.
 Pokud se jedná o servisní telegram, tak routingové číslo má hodnotu 7, která se při průchodu spojkou nedekrementuje. \footnote{Spojky vyrobeny po roce 2019 mají schopnost tuto hodnotu dekrementovat}. Tuto skutečnost berou v potaz i filtrační tabulky, které toto číslo ignorují, a tudíž všechny spojky tento telegram propustí. Tento telegram se vždy dostane k požadovanému účastníku bez ohledu na umístění.
 Toto číslo také brání zasmyčkování (nekonečnému kolování) telegramu. \cite{Topologie}
 \subsection{Interní a externí rozhraní}

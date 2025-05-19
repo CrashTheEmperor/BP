@@ -615,7 +615,7 @@ KNX_TEMPER := datapoint34.value;
 END_PROGRAM
 \end{lstlisting}
 \pagebreak
-\chapter{Program komunikace mezi PLC a Home Assistant - MQTT}
+\chapter{Program komunikace mezi PLC a Home Assistantem}
 \label{apend:MQTTComm}
 \begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Program komunikace mezi PLC a Home Assistant \protect\textendash{} MQTT}, label={lst:prgMQTTComm}]
 PROGRAM prgMQTTComm
@@ -623,7 +623,7 @@ PROGRAM prgMQTTComm
   Pub       : fbMQTTPublisher;
   Subs      : fbMQTTSubscriber;
 
-  brokerIPaddr : STRING := '192.168.255.1';
+  brokerIPaddr : STRING := '192.168.xxx.xxx';
   brokerPort   : UINT   := 1883;
   localPort    : UINT   := 60000;
   localPort2   : UINT   := 50000;
@@ -805,6 +805,43 @@ ELSE
 END_IF;
 END_PROGRAM
 \end{lstlisting}
+\chapter{Vizualizace pomocí WebMakeru}
+\label{apend:webmaker}
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[scale=0.70]{obrazky/Přehled.png}
+  \end{center}
+  \caption[WebMaker - přehled]{WebMaker - přehled}
+  \label{fig:webmaker}
+\end{figure}
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[scale=0.70]{obrazky/Venek.png}
+  \end{center}
+  \caption[WebMaker - Veranda]{WebMaker - Veranda}
+  \label{fig:webmaker2}
+\end{figure}
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[scale=0.70]{obrazky/Kuchyň.png}
+  \end{center}
+  \caption[WebMaker - Kuchyně]{WebMaker -Kuchyně}
+  \label{fig:webmaker3}
+\end{figure}
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[scale=0.70]{obrazky/Koupelna.png}
+  \end{center}
+  \caption[WebMaker - Koupelna]{WebMaker - Koupelna}
+  \label{fig:webmaker4}
+\end{figure}
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[scale=0.70]{obrazky/Obyvaci_pokoj.png}
+  \end{center}
+  \caption[WebMaker - Obývací pokoj]{WebMaker - Obývací pokoj}
+  \label{fig:webmake5}
+\end{figure}
 \chapter{Docker YAML soubory}
 \label{apend:dockeryaml}
 \subsection{Portainer YAML}
@@ -889,14 +926,7 @@ services:
       - /mnt/sda1/usb/data/mosquitto:/mosquitto/data
       - /mnt/sda1/usb/logs/mosquitto:/mosquitto/log
 \end{lstlisting}
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[scale=0.4]{obrazky/portainer.png}
-  \end{center}
-  \caption[Portainer Stack]{Portainer Stack}
-  \label{fig:portainer}
-\end{figure}
-\chapter{Home Assistant Konfigurační soubor}
+\chapter{Home Assistant - konfigurační soubor}
 \label{apend:configyaml}
 \begin{lstlisting}[language=YAML, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Home Assistant configuration.yaml}, label={lst:configyaml}]
 # Loads default set of integrations. Do not remove.            

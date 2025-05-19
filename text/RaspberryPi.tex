@@ -1,26 +1,29 @@
-\chapter{Raspberry Pi 5}
-Jedná se o jednodeskový počítač, který je určen pro široké spektrum aplikací od IoT, rozpoznáváni obrazu, strojového učení, robotiku až po multimediální aplikace. Mezi hlavní výhody patří nízká cena, malé provozní náklady, možná modularita přes GPIO piny, PCI expres a USB porty a velkým množstvím tzv. HAT modulů, které jsou určeny pro rozšíření funkcí. \cite{Raspberry Pi 5}.
+\chapter{Open-source platformy}
+Tato kapitola se zaměřuje na možnost vizualizace a ovládní domácí automatizace pomocí open-source technologií (software s otevřeným kódem), které je možné využít v případě nedostatku financí nebo pro uživatele, kteří chtějí mít plnou kontrolu nad svým systémem. V případě tohoto řešení byl vybrán přístup pomocí kontejnerizace, který umožňuje snadné nasazení a škálování aplikací, ale také snadné zálohování a migraci v případě poruch.
+
+\section{Raspberry Pi 5}
+Jedná se o jednodeskový počítač, který je určen pro široké spektrum aplikací od IoT, rozpoznávání obrazu, strojového učení, robotiky až po multimediální aplikace. Mezi hlavní výhody patří nízká cena, malé provozní náklady, možná modularita přes GPIO piny, PCI expres a USB porty a velké množství tzv. HAT modulů, které jsou určeny pro rozšíření funkcí. \cite{Raspberry Pi 5}.
 
 Pro tuto aplikaci bylo zvoleno Raspberry Pi 5 s 16 GB RAM, pamětí 256 GB a operačním systémem Raspberry Pi OS, který je stavěn na Linuxové distribuci Debianu. Hlavním důvodem výběru byla nízká cena, ale i jednoduchá dostupnost pro případného zájemce o domácí automatizaci, který by si chtěl systém ovládání a vizualizace vytvořit sám.
 
-Jediným závažnějším problémem totoho zařízení je "obrušování" paměťové karty na které je nahrán operační systém. Tento problém je způsoben častým zápisem, který postupně snižuje životnost, rychlost a velikost paměti. V krajních případech i může dojít k úplnému zničení a ztrátě dat. K zamezení tohoto problému se historicky používala technika \textit{wear leveling} - rozložení zápisu na celou paměťovou kartu, aby se snížil počet zápisů na jednotlivé buňky \cite{wear leveling}. Teď už je možné použít M.2 NVMe SSD disk, který je připojen přes PCI expres a je mnohem rychlejší než paměťová karta. Tento disk je možné použít i jako bootovací disk, což zamezí problémům s bootováním a ztrátou dat. Další možností jak zpomalit toto obrušování je připojení USB flash disku, který za obětování rychlosti dokáže zamezit opotřebování paměti díky přenesení souborů s vyšší frekvencí zápisu - v tomto případě databáze.
+Jediným závažnějším problémem tohoto zařízení je degradace paměťové karty, na které je nahrán operační systém. Tento problém je způsoben častým zápisem, který postupně snižuje životnost, rychlost a velikost paměti. V krajních případech může dojít i k úplnému zničení a ztrátě dat. K předcházení tohoto problému se historicky používala technika \textit{wear leveling} - rozložení zápisu na celou paměťovou kartu, aby se snížil počet zápisů na jednotlivé buňky \cite{wear leveling}. Teď už je možné použít M.2 NVMe SSD disk, který je připojen přes PCI expres a je mnohem rychlejší než paměťová karta. Tento disk je možné použít i jako bootovací disk, což zamezí problémům s bootováním a ztrátou dat. Další možností, jak zpomalit tuto degradaci, je připojení USB flash disku. Flash disk dokáže zamezit opotřebování paměti díky přenesení souborů s vyšší frekvencí zápisu - v tomto případě databáze, nicméně rychlost zápisu se tímto sníží.
 \begin{figure}[!ht]
     \begin{center}
         \includegraphics[scale=0.30]{obrazky/RaspberryPi5.jpg}
     \end{center}
-    \caption[Raspberry Pi5 \cite{Raspberry Pi 5}]{Raspberry Pi5 \cite{Raspberry Pi 5}}
+    \caption[Raspberry Pi5~\cite{Raspberry Pi 5}]{Raspberry Pi5~\cite{Raspberry Pi 5}}
     \label{fig:RaspberryPi}
 \end{figure}
 \newpage
-Alternativou k Raspberry Pi 5 můžou být LattePanda, ASUS NUC a podobné mikropočítače, které mají větší výkon, větší možnost výběru operačního systému (dostatečný výkon na Windows) a robustnost. Tyto výhody jsou kompenzovány vyšší pořizovací cenou, spotřebou a velikostí.
+Alternativou k Raspberry Pi 5 mohou být LattePanda, ASUS NUC a podobné mikropočítače, které mají vyšší výkon, větší možnost výběru operačního systému (dostatečný výkon na Windows) a robustnost. Tyto výhody jsou kompenzovány vyšší pořizovací cenou, spotřebou a velikostí.
 \section{Docker Compose}
-Docker Compose je nástroj pro definici a správu více kontejnerových aplikací. Umožňuje uživatelům definovat aplikaci pomocí \textit{YAML} souboru, které obsahují informace o kontejnerových službách, sítích a uložištích. \cite{Docker Compose}
+Docker Compose je nástroj pro definici a správu více kontejnerových aplikací. Umožňuje uživatelům definovat aplikaci pomocí \textit{YAML} souboru, které obsahují informace o kontejnerových službách, sítích a úložištích. \cite{Docker Compose}
 
-Instalace Docker Compose je jednoduchá a rozepsaná na oficiálních stránkách Dockeru. Obsahuje pouze tři kroky, které jsou již připravené pro kopírování do terminálu. \cite{DockerInstallationForDebian}
+Instalace Docker Compose je jednoduchá a rozepsaná na oficiálních stránkách Dockeru. Obsahuje pouze tři kroky, které jsou již připraveny pro kopírování do terminálu. \cite{DockerInstallationForDebian}
 
 \subsection{Kontejnerizace}
-Kontejnerizace je způsob virzualizace aplikací, které umožňuje spouštět v izolovaném prostředí s garancí funkčnosti v jakémkoliv prostředí, založený na linuxové technologii LXC (Linux Containers). Tento způsob je výhodný pro nasazení aplikací, které mají různé závislosti a konfigurace. Umožňuje také snadné nasazení a škálování aplikací. Dále tento způsob virtualizace dodávat kompletní prostředí, jako jiné virtuální stroje, ale s menšími režijními nároky na výkon a paměť, které přichází s fungováním separátního kernelu a simulací veškerého hardware. \cite{ContainerAndVirtualization}
-V případě této práce byl navrhnut Docker Stack, který je složený z několika kontejnerů, které spolu komunikují a vytváří tak komplexní systém na ovládání a vizualizaci domácí automatizace. Vzhled tohoto stacku i s komunikacemi je zobrazen na Obr. \ref{fig:DockerStack}.
+Kontejnerizace je způsob virtualizace aplikací založený na linuxové technologii LXC (Linux Containers), která umožňuje spouštět aplikace v izolovaném prostředí se zárukou jejich funkčnosti v různých systémech. Tento přístup je výhodný pro nasazení aplikací s různými závislostmi a konfiguracemi a umožňuje jejich snadné nasazení i škálování. Na rozdíl od tradičních virtuálních strojů poskytuje kontejnerizace kompletní běhové prostředí s menšími nároky na výkon a paměť, protože nevyžaduje samostatný kernel ani simulaci veškerého hardwaru. \cite{ContainerAndVirtualization}
+V případě této práce byl navrhnut Docker Stack, který je složen z několika kontejnerů, které spolu komunikují a vytváří tak komplexní systém na ovládání a vizualizaci domácí automatizace. Vzhled tohoto stacku i s komunikacemi je zobrazen na Obr. \ref{fig:DockerStack}.
 \begin{figure}[!ht]
     \begin{center}
         \includegraphics[scale=0.30]{obrazky/stack.png}
@@ -31,7 +34,7 @@ V případě této práce byl navrhnut Docker Stack, který je složený z něko
 \subsection{Tvorba YAML souboru}
 YAML soubor je textový soubor, který obsahuje definici kontejnerů a jejich konfigurací. Je napsán v jazyce YAML (YAML Ain't Markup Language), což je formát pro serializaci dat \cite{YAML}. Níže je příklad vzhledu YAML souboru (Výpis \ref{lst:dockeryaml}), který by měl pomoci ke snadnému pochopení struktury a syntaxe \cite{ComposeYamlExample}.
 
-Dále pak může YAML soubor obsahovat i enviromentální proměnné, které se používají k nastavení kontejneru. Tyto proměnné mouhou být obsaženy v souboru .env, který se používá k uchování citlivých informací, jako jsou hesla a API klíče. Tento soubor je načítán při spuštění kontejneru. \cite{ENV}
+Dále pak může YAML soubor obsahovat i enviromentální proměnné, které se používají k nastavení kontejneru. Tyto proměnné mohou být obsaženy v souboru .env, který se používá k uchovávání citlivých informací, jako jsou například hesla a API klíče. Tento soubor je načítán při spuštění kontejneru. \cite{ENV}
 \begin{lstlisting}[language=YAML, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption=YAML soubor, label=lst:dockeryaml]
 version: "3" # Verze Docker Compose
 services: # Sluzby
@@ -42,6 +45,9 @@ services: # Sluzby
             - name_of_network # Jmeno site na ktere pobezi kontejner
         depends_on: # Zavislosti
             - name_of_service # Jmeno kontejneru na kterem zavisi
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=YAML, breaklines=true, numbers=left, firstnumber=10, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
         environment: # Promenne prostredi
             - PUID=1000 # ID uzivatele, ktery bude mit pristup k souborum
             - PGID=1000 # ID skupiny, ktera bude mit pristup k souborum
@@ -61,18 +67,23 @@ services: # Sluzby
                     memory: 256m # Minimalni pamet
                     cpus: "0.5" # Minimalni CPU
         restart: always # Restart kontejneru pri padu
-\end{lstlisting}
-\pagebreak
-\begin{lstlisting}[language=YAML, breaklines=true, numbers=left, firstnumber=29, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
         labels: # Metada
             - "com.docker.compose.project=project_name" # Nazev projektu
             - "com.docker.compose.service=service_name" # Nazev sluzby
             - "com.docker.compose.version=1.0" # Verze sluzby
 \end{lstlisting}
-\noindent Celková implementace a je v zobrazen v příloze \ref{apend:dockeryaml}.
+\noindent Celková implementace a je zobrazena v příloze~\ref{apend:dockeryaml}.
 \subsection{Portainer}
-Jedná se o open-source kontejner, který slouží jako webové rozhraní pro správu Dockeru. Umožňuje uživatelům spravovat kontejnery, image (obrazy -- šablony pro vytváření kontejnerů), 
-stohy (stohy -- skupiny kontejnerů, které spolu komunikují), sítě, uložiště, čtení logů, sledování výkonu, správa portů a další funkce. Jednou z předních výhod je jednoduchost použití kromě rozhraní (Obr . \ref{fig:portainer}) je i propojení s Docker Hubem, což je veřejná knihovna kontejnerů. \cite{Portainer} 
+Jedná se o open-source kontejner, který slouží jako webové rozhraní pro správu Dockeru. Umožňuje uživatelům spravovat kontejnery, image (obrazy – šablony pro vytváření kontejnerů), 
+stohy (stohy – skupiny kontejnerů, které spolu komunikují), sítě, uložiště, čtení logů, sledování výkonu, správa portů a další funkce. Jednou z předních výhod je jednoduchost použití; kromě rozhraní (Obr.~\ref{fig:portainer}) je i propojení s Docker Hubem, což je veřejná knihovna kontejnerů. \cite{Portainer} 
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[scale=0.39]{obrazky/portainer.png}
+  \end{center}
+  \caption[Portainer Stack]{Portainer Stack}
+  \label{fig:portainer}
+\end{figure}
+\pagebreak
 \section{Mosquitto}
 Mosquitto je open-source broker společnosti Eclipse pro protokol MQTT (Message Queuing Telemetry Transport – více v podkapitole \ref{subsection:MQTT}). Zajišťuje komunikaci mezi vydavatelem a odběratelem v závislosti na oprávněních a kvalitě služeb (\textit{QoS}). Jednou z výhod tohoto brokeru je jednoduchost implementace a nízké nároky na výkon. Dále umožňuje šifrování pomocí \textit{TLS}, které zajišťuje bezpečnost přenosu dat, podporuje cloudové služby a různé platformy. K dispozici je také knihovna pro jazyk \textit{C}, která implementuje celý protokol. \cite{Mosquitto}
 
@@ -118,21 +129,21 @@ Pro jednodušší ovládání a přehlednost byly vytvořeny vlastní vizualizac
 
 Pro potřebu sledování historie jednotlivých zařízení je možné použít vestavěnou funkci Home Assistantu - \textit{History}, která zobrazuje blízkou historii. Pro sledování delší historie bohužel neexistuje adekvátní řešení, protože Home Assistant ukládá historii do SQLite databáze, která není určena pro dlouhodobé ukládání dat. Proto byla použita integrace \textit{InfluxDB}. Další výhodou použití externí databáze je možnost sledovat historii i bez připojení k Home Assistantu. 
 
-Připojení této databáze je uvedeno v příloze \ref{apend:configyaml}.
+Připojení této databáze je uvedeno v příloze~\ref{apend:configyaml}.
 \section{InfluxDB}
 Jedná se o open-source databázi určenou pro ukládání časových řad. Databáze je optimalizována pro čtení a zápis velkého množství dat, která se následně využívají k analýze v reálném čase. Její hlavní výhodou je rychlost a efektivita při práci s velkým množstvím dat. Pro udržení rychlosti byly implementovány retenční politiky, které určují, jak dlouho se data uchovávají a jakým způsobem se agregují. \cite{InfluxDB} \newline
 
-Databáze je tvořena několika základními koncepty \cite{InfluxDBKeyConcepts}:
+Databáze je tvořena několika základními koncepty~\cite{InfluxDBKeyConcepts}:
 \begin{itemize}
-    \item \textbf{Bucket} - kontejner pro ukládání dat
-    \item \textbf{Measurement} - popis dat ukládaných do bucketu
-    \item \textbf{Series} - skupina bodů se stejným tagem a měřením
-    \item \textbf{Point} - jednotkový záznam v bucketu
-    \item \textbf{Field} - hodnota ukládaná do bucketu
-    \item \textbf{Tag} - klíč používaný k identifikaci dat v bucketu
-    \item \textbf{Timestamp} - časový údaj o uložení dat
-    \item \textbf{Retention policy} - pravidlo pro uchovávání dat v bucketu
-    \item \textbf{Continuous query} - dotaz, který se provádí automaticky v pravidelných intervalech.  \newline
+    \item \textbf{Bucket} – kontejner pro ukládání dat
+    \item \textbf{Measurement} – popis dat ukládaných do bucketu
+    \item \textbf{Series} – skupina bodů se stejným tagem a měřením
+    \item \textbf{Point} – jednotkový záznam v bucketu
+    \item \textbf{Field} – hodnota ukládaná do bucketu
+    \item \textbf{Tag} – klíč používaný k identifikaci dat v bucketu
+    \item \textbf{Timestamp} – časový údaj o uložení dat
+    \item \textbf{Retention policy} – pravidlo pro uchovávání dat v bucketu
+    \item \textbf{Continuous query} – dotaz, který se provádí automaticky v pravidelných intervalech.
 \end{itemize}
 Kontejner této databáze běží na portu 8086. Po vytvoření kontejneru je potřeba nastavit uživatelské jméno a heslo pro přístup do databáze. Dále je potřeba nastavit bucket, do kterého se budou ukládat data – základní informace, délku uchovávání, způsob agregace dat a přístup přes API. Všechny tyto informace se nastavují pomocí webového rozhraní.
 
@@ -140,7 +151,7 @@ Webové rozhraní také umožňuje vytvářet a spravovat uživatelské účty a
 \section{Grafana}
 Grafana je open-source platforma pro vizualizaci a analýzu dat. Umožňuje uživatelům vytvářet interaktivní grafy, tabulky a panely pro zpracování dat z různých zdrojů a také nastavovat upozornění na základě těchto dat. Disponuje širokým portfoliem pluginů, které umožňují připojení k různým databázím a službám. Grafana je velmi populární mezi vývojáři a administrátory, kteří potřebují monitorovat a analyzovat data v reálném čase. \cite{Grafana} \newline
 
-Vizualizace v Grafaně je tvořena pomocí přehledů (dashboardů), které obsahují panely. Tyto panely mohou mít různé typy grafů \cite{GrafanaVisualization}:
+Vizualizace v Grafaně je tvořena pomocí přehledů (dashboardů), které obsahují panely. Tyto panely mohou mít různé typy grafů~\cite{GrafanaVisualization}:
 \begin{itemize}
     \item \textbf{Grafy a diagramy}
     \begin{itemize}
@@ -181,7 +192,6 @@ Vizualizace v Grafaně je tvořena pomocí přehledů (dashboardů), které obsa
         \item \textbf{News} – RSS kanály \newline
     \end{itemize}
 \end{itemize}
-Stejně jako v předchozích podkapitolách je i zde možné vytvářet a spravovat uživatelské účty a přístupová práva prostřednictvím webového rozhraní, tentokrát na portu 3000.
+Stejně jako v předchozích podkapitolách je i zde možné vytvářet a spravovat uživatelské účty a přístupová práva prostřednictvím webového rozhraní, tentokrát na portu 3000. \newline
 
-Grafana v této práci sloužila jako nástroj pro zpracování historických dat instalace, konkrétně pro sledování spotřeby energie, jejího rozložení, měsíčních nákladů a historie sepnutí jednotlivých zařízení. Implementace a vzhled jednotlivých grafů jsou uvedeny v příloze \ref{apend:grafana}. 
-
+\noindent Grafana v této práci sloužila jako nástroj pro zpracování historických dat instalace, konkrétně pro sledování spotřeby energie, jejího rozložení, měsíčních nákladů a historie sepnutí jednotlivých zařízení. Implementace a vzhled jednotlivých grafů jsou uvedeny v příloze \ref{apend:grafana}. 

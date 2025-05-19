@@ -1,9 +1,9 @@
 \chapter{Vizualizace skrze programovatelný logický automat}
 \label{sec:vizualizace_automat}
 V této kapitole se nachází popis jednotlivých částí ovládání instalace skrze PLC firmy TECO - CP-2007 \cite{TECO}, které obsahuje knihovny pro práci s KNX/IP \cite{KNXlib} a MQTT \cite{MQTTlib} a dále integrovaný webový server pro vizualizaci \cite{WebMaker}. Všechny tyto části jsou podrobněji rozvedeny v následujících podkapitolách.
-Ovládání a vizualizace instalace je možné provádět i skrze PLC jiných výrobců za předpokladu, že mají implementované knihovny pro komunikace KNX/IP a MQTT. PLC výrobce TECO bylo vybráno kvůli jeho specializaci na domácí automatizaci, dostupnosti a ceně.
+Ovládání a vizualizace instalace je možné provádět i skrze PLC jiných výrobců za předpokladu, že mají implementované knihovny pro komunikace KNX/IP a MQTT. PLC výrobce TECO bylo vybráno díky jeho specializaci na domácí automatizaci, dostupnosti a ceně.
 \section{CP - 2007}
-Jedná se základní modul řídícího systému Foxtrot v provední s jednojádrovým procesorem ARMv7 o frekvenci 792MHz a databoxem o velikosti 128kB, který je vyroben pro přichycení na DIN Lištu. Obsahuje 2 ethernet porty, 2 sériové porty, 15 vstupů z nichž je 14 univerzálních a 1 galvanicky oddělený digitální, 15 výstupů z nichž je 11 releových a 4 analogové. Dále pak obsahuje 2 sloty na rozšiřující moduly. \cite{TECO}
+Jedná se o základní modul řídícího systému Foxtrot v provedení s jednojádrovým procesorem ARMv7 o frekvenci 792MHz a databoxem o velikosti 128kB, který je vyroben pro přichycení na DIN Lištu. Obsahuje 2 ethernet porty, 2 sériové porty, 15 vstupů, z nichž je 14 univerzálních a 1 galvanicky oddělený digitální, 15 výstupů, z nichž je 11 releových a 4 analogové. Dále pak obsahuje 2 sloty na rozšiřující moduly. \cite{TECO}
 
 \begin{figure}[!ht]
     \begin{center}
@@ -54,7 +54,7 @@ Ovládání instalace bylo realizováno v programovacím prostředí společnost
         \item IEC Manažer
         \item Asistent 16 → 32 (Převod 16bitového projektu na 32bitový)
         \item Texty KEY2 (Správa textových řetězců pro operační panely KEY2)
-        \item Import KNX (Import konfigurace KNX IP BAOS z csv souboru)
+        \item Import KNX (Import konfigurace KNX/IP BAOS z csv souboru)
         \item Firmware Updater
         \item Project Loader
         \item Set PLC IP
@@ -116,18 +116,18 @@ FUNCTION_BLOCK fbKNXVisuBool
 \begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Definice funkčního bloku fbKNXShutters}, label={lst:fbKNXShutters}]
     FUNCTION_BLOCK fbKNXShutters
     VAR_INPUT
-      UP           : BOOL R_EDGE; //Rolety nahorů Vizu
-      DOWN         : BOOL R_EDGE; //Rolety dolů Vizu
-      UP_STEP      : BOOL; //Rolety nahorů krok Vizu
-      DOWN_STEP    : BOOL; //Rolety dolů krok Vizu
-      FB_UP        : BOOL; //KNX Rolety Feedback nahorů
-      FB_DOWN      : BOOL; //KNX Rolety Feedback dolů
+      UP           : BOOL R_EDGE; //Rolety nahoru Vizu
+      DOWN         : BOOL R_EDGE; //Rolety dolu Vizu
+      UP_STEP      : BOOL; //Rolety nahoru krok Vizu
+      DOWN_STEP    : BOOL; //Rolety dolu krok Vizu
+      FB_UP        : BOOL; //KNX Rolety Feedback nahoru
+      FB_DOWN      : BOOL; //KNX Rolety Feedback dolu
     END_VAR
     VAR_OUTPUT
       OUT_CMD      : DT_CMD_BOOL; //KNX CMD
       OUT_STEP_CMD : DT_CMD_BOOL; //KNX CMD krok
-      OUT_UP       : BOOL; //Visu nahorů
-      OUT_DOWN     : BOOL; //Visu dolů
+      OUT_UP       : BOOL; //Visu nahoru
+      OUT_DOWN     : BOOL; //Visu dolu
     END_VAR
     VAR
       TP_TIME : TIME := T#1S; //KNX CMD délka
@@ -145,8 +145,7 @@ FUNCTION_BLOCK fbKNXVisuBool
     \label{fig:fbKNXShutters}
 \end{figure}
 \subsubsection{fbRoomTempMod}
-Na modelování teploty místnosti byl vytvořen jednoduchý matematický model, který měl za úkol zobrazit změnu v závislosti na působení topení a klimatizace.
-Uvažujeme, že místnost je kvádr o rozměrech specifikovaných uživatelským vstupem Tento kvádr je naplněný vzduchem, který má určitou váhu, ze které lze vypočítat energie potřebná ke změně o teploty o 1 °C.
+Na modelování teploty místnosti byl vytvořen jednoduchý matematický model, který měl za úkol zobrazit změnu v závislosti na působení topení a klimatizace. Uvažujeme, že místnost je kvádr o rozměrech specifikovaných uživatelským vstupem. Tento kvádr je naplněný vzduchem, který má určitou váhu, ze které lze vypočítat energii potřebnou ke změně teploty o 1 °C.
 
 \begin{equation}
     V = a \cdot b \cdot c
@@ -162,14 +161,14 @@ Uvažujeme, že místnost je kvádr o rozměrech specifikovaných uživatelským
 \end{equation}
 \noindent\textit{Kde:}
 \begin{itemize}
-    \item $V$ - objem vzduchu v místnosti [m$^3$]
-    \item $a$, $b$, $c$ - rozměry místnosti [m]
-    \item $m$ - hmotnost vzduchu v místnosti [kg]
-    \item $\rho$ - hustota vzduchu při tlaku jedné atmosféry a teplotě 20 °C - 1.204 [kg/m$^3$]
-    \item $Q$ - energie potřebná ke změně teploty o 1 °C [J]
-    \item $c_p$ - měrná tepelná kapacita vzduchu - 1005 [J$\cdot$kg$^{-1}\cdot$K$^{-1}$] \newline
+    \item $V$ -- objem vzduchu v místnosti [m$^3$]
+    \item $a$, $b$, $c$ -- rozměry místnosti [m]
+    \item $m$ -- hmotnost vzduchu v místnosti [kg]
+    \item $\rho$ -- hustota vzduchu při tlaku jedné atmosféry a teplotě 20 °C - 1.204 [kg/m$^3$]
+    \item $Q$ -- energie potřebná ke změně teploty o 1 stupeň teploty [J]
+    \item $c_p$ -- měrná tepelná kapacita vzduchu - 1005 [J$\cdot$kg$^{-1}\cdot$K$^{-1}$] \newline
 \end{itemize}
-\noindent Dále uvažujeme obal kvádru (stěny, podlahu a strop) s různými tloušťkami a tepelnými vodivostmi (Fourierův zákon vedení tepla \ref{eq:tepelny_tok}). Pro zjednodušení výpočtu se předpokládá, že dveře a okna místnosti nemají rozdílný vliv oproti stěnám a tudíž tepelný tok zůstává na celé ploše strany stejný a směr toku závisí pouze na poměru teplot na obou stranách zdi. Dále je předpoklad nulových teplot z jiných směrů. Také budeme předpokládat, že materiál bude všude stejný a to cihla. 
+\noindent Dále uvažujeme obal kvádru (stěny, podlahu a strop) s různými tloušťkami a tepelnými vodivostmi (Fourierův zákon vedení tepla \ref{eq:tepelny_tok}). Pro zjednodušení výpočtu se předpokládá, že dveře a okna místnosti nemají rozdílný vliv oproti stěnám, tudíž tepelný tok zůstává na celé ploše strany stejný. Zároveň směr toku závisí pouze na poměru teplot na obou stranách zdi. Dále je předpoklad nulových teplot z jiných směrů. Také budeme předpokládat, že materiál bude všude stejný a to pálená cihla. 
 
 \begin{equation}
     S = a \cdot b
@@ -185,15 +184,15 @@ Uvažujeme, že místnost je kvádr o rozměrech specifikovaných uživatelským
 \end{equation}
 \noindent\textit{Kde:}
 \begin{itemize}
-    \item $S$ - plocha strany [m$^2$]
-    \item $a$, $b$, $c$ - rozměry strany [m]
-    \item $\Delta T$ - rozdíl teploty na obou stranách strany [°C]
-    \item $T_{in}$ - teplota uvnitř místnosti [°C]
-    \item $T_{out}$ - teplota venku [°C]
-    \item $\phi _{Strana}$ - tepelný tok [W]
-    \item $\lambda$ - tepelná vodivost cihly - 0.4 [W$\cdot$m$^{-1}\cdot$K$^{-1}$] \newline
+    \item $S$ -- plocha strany [m$^2$]
+    \item $a$, $b$, $c$ -- rozměry strany [m]
+    \item $\Delta T$ -- rozdíl teploty na obou stranách strany [°C]
+    \item $T_{in}$ -- teplota uvnitř místnosti [°C]
+    \item $T_{out}$ -- teplota venku [°C]
+    \item $\phi _{Strana}$ -- tepelný tok [W]
+    \item $\lambda$ -- tepelná vodivost cihly - 0.4 [W$\cdot$m$^{-1}\cdot$K$^{-1}$] \newline
 \end{itemize}
-\noindent Další součástí simulace je topení a klimatizace, které jsou dodávány pouze jako binární signály. Pro jednoduché modelování byly vytvořeny funkce růstu (logaritmický) a poklesu (exponenciální) výkonu. Tyto funkce jsou zobrazeny na Obr. \ref{fig:simulace_funkce} Dále k těmto rovnicím byly vytvořeny korekční členy, které ovlivňují rychlost funkcí a tudíž více přiblížily chování funkcí více realitě.
+\noindent Další součástí simulace je topení a klimatizace, které jsou dodávány pouze jako binární signály. Pro jednoduché modelování byly vytvořeny funkce růstu (logaritmický) a poklesu (exponenciální) výkonu. Tyto funkce jsou zobrazeny na Obr. \ref{fig:simulace_funkce} Dále byly k těmto rovnicím vytvořeny korekční členy, které ovlivňují rychlost funkcí, a tedy více přiblížily chování funkcí realitě.
 
 \begin{equation}
     f_{Růst}(t) = \frac{ln(1 + k_{Růst} \cdot t)}{ln(1 + k_{Růst} \cdot t_{MaxRůst})} \cdot y_{Max}
@@ -214,17 +213,17 @@ Uvažujeme, že místnost je kvádr o rozměrech specifikovaných uživatelským
 \newpage
 \noindent\textit{Kde:}
 \begin{itemize}
-    \item $f_{Růst}(x)$ - funkce růstu výkonu [W]
-    \item $k_{Růst}$ - korekční člen pro pokles [-]
-    \item $t$ - čas [s]
-    \item $t_{MaxRůst}$ - maximální čas růstu výkonu [s]
-    \item $y_{Max}$ - maximální výkon [W]
-    \item $t_{80}$ - čas potřebný k dosažení 80\% výkonu [s]
-    \item $f_{Pokles}(x)$ - funkce poklesu výkonu [W]
-    \item $k_{Pokles}$ - korekční člen pro růst [-] 
-    \item $y$ - aktuální výkon [W]
-    \item $\varepsilon$ - cílová hodnota pod kterou se výkon musí dostat [W]
-    \item $t_{MaxPokles}$ - maximální čas poklesu výkonu [s]
+    \item $f_{Růst}(x)$ -- funkce růstu výkonu [W]
+    \item $k_{Růst}$ -- korekční člen pro pokles [-]
+    \item $t$ -- čas [s]
+    \item $t_{MaxRůst}$ -- maximální čas růstu výkonu [s]
+    \item $y_{Max}$ -- maximální výkon [W]
+    \item $t_{80}$ -- čas potřebný k dosažení 80\% výkonu [s]
+    \item $f_{Pokles}(x)$ -- funkce poklesu výkonu [W]
+    \item $k_{Pokles}$ -- korekční člen pro růst [-] 
+    \item $y$ -- aktuální výkon [W]
+    \item $\varepsilon$ -- cílová hodnota, pod kterou se výkon musí dostat [W]
+    \item $t_{MaxPokles}$ -- maximální čas poklesu výkonu [s]
 \end{itemize}
 \begin{figure}[!ht]
     \begin{center}
@@ -233,7 +232,7 @@ Uvažujeme, že místnost je kvádr o rozměrech specifikovaných uživatelským
     \caption[Průběh funkcí pro simulaci]{Průběh funkcí pro simulaci}
     \label{fig:simulace_funkce}
 \end{figure}
-\noindent Toto funkce bylo potřeba převést do rekurzivní podoby, aby bylo možné je implementovat do funkčního bloku.
+\noindent Tyto funkce bylo potřeba převést do rekurzivní podoby, aby bylo možné je implementovat do funkčního bloku.
 \begin{equation}
     y_{RůstTed} = y_{RůstPred} + \frac{ln(1 + k_{Růst} \cdot \Delta t)}{ln(1 + k_{Růst} \cdot T_{Max})} \cdot (y_{Max} - y_{RůstPred}) 
     \label{eq:rust_rekurzivni}
@@ -244,18 +243,18 @@ Uvažujeme, že místnost je kvádr o rozměrech specifikovaných uživatelským
 \end{equation}
 \noindent\textit{Kde:}
 \begin{itemize}
-    \item $y_{RůstTed}$ - nový výkon [W]
-    \item $y_{RůstPred}$ - předchozí výkon [W]
-    \item $k_{Růst}$ - korekční člen pro pokles [-]
-    \item $\Delta t$ - časový krok [s]
-    \item $T_{Max}$ - maximální čas růstu výkonu [s]
-    \item $y_{Max}$ - maximální výkon [W]
-    \item $y_{PoklesTed}$ - nový výkon [W]
-    \item $y_{PoklesPred}$ - předchozí výkon [W] \newline
+    \item $y_{RůstTed}$ -- nový výkon [W]
+    \item $y_{RůstPred}$ -- předchozí výkon [W]
+    \item $k_{Růst}$ -- korekční člen pro pokles [-]
+    \item $\Delta t$ -- časový krok [s]
+    \item $T_{Max}$ --maximální čas růstu výkonu [s]
+    \item $y_{Max}$ -- maximální výkon [W]
+    \item $y_{PoklesTed}$ -- nový výkon [W]
+    \item $y_{PoklesPred}$ -- předchozí výkon [W] \newline
 \end{itemize}
-\noindent Po vyčtení výkonu topení a klimatizace zbývá vypočítat teplotu v místnosti. Ten se získá součtu aktuální hodnoty teploty a přírůstku podílu působích toků a potřebné energie ke změně teploty (Rov. \ref{eq:energie}). Rovnice pro celkový tepelný tok je dána jako součet tepelných toků ze stran, výkonu topení a klimatizace (působí záporně).
+\noindent Po vyčtení výkonu topení a klimatizace zbývá vypočítat teplotu v místnosti. Ta se získá součtem aktuální hodnoty teploty, přírůstku podílu působících toků a potřebné energie ke změně teploty. (Rov. \ref{eq:energie}). Rovnice pro celkový tepelný tok je dána jako součet tepelných toků ze stran, výkonu topení a klimatizace (působí záporně).
 \begin{equation}
-    T_{Aktualni} = T_{Predchozi} + \frac{\phi _{Celkovy}}{Q}
+    T_{Aktualni} = T_{Predchozi} + \frac{\phi _{Celkovy} \cdot \Delta t}{Q}
     \label{eq:aktualni_teplota}
 \end{equation}
 \begin{equation}
@@ -264,12 +263,13 @@ Uvažujeme, že místnost je kvádr o rozměrech specifikovaných uživatelským
 \end{equation}
 \noindent\textit{Kde:}
 \begin{itemize}
-    \item $T_{Aktualni}$ - aktuální teplota [°C]
-    \item $T_{Predchozi}$ - předchozí teplota [°C]
-    \item $\phi _{Celkovy}$ - celkový tepelný tok [W]
-    \item $\phi _{Strana_i}$ - tepelný tok ze strany i [W]
-    \item $\phi _{Topeni}$ - tepelný tok z topení [W]
-    \item $\phi _{Klimatizace}$ - tepelný tok z klimatizace [W] \newline
+    \item $T_{Aktualni}$ -- aktuální teplota [°C]
+    \item $T_{Predchozi}$ -- předchozí teplota [°C]
+    \item $\Delta t$ -- časový krok [s]
+    \item $\phi _{Celkovy}$ -- celkový tepelný tok [W]
+    \item $\phi _{Strana_i}$ -- tepelný tok ze strany \textit{i} [W]
+    \item $\phi _{Topeni}$ -- tepelný tok z topení [W]
+    \item $\phi _{Klimatizace}$ -- tepelný tok z klimatizace [W] \newline
 \end{itemize}
 
 \noindent Průběh teploty v místnosti je zobrazen na Obr. \ref{fig:simulace_teplota}, kde je demonstrováno chování při běhu topení a klimatizace v horním grafu. Ve spodní části grafu je zase zobrazeno chování teploty bez působení topení a klimatizace. Teplota okolí je v tomto případě nastavená na 21 °C. Z průběhu lze vypozorovat, že se teplota ustálí na teplotu okolí a tudíž, lze považovat model za korektní.
@@ -282,11 +282,11 @@ Uvažujeme, že místnost je kvádr o rozměrech specifikovaných uživatelským
     \label{fig:simulace_teplota}
 \end{figure}
 
-\noindent Tento funkční blok byl použit pro simulaci teploty v obývacím pokoji, kuchyni. Definice tohoto funkčního bloku je zobrazena kvůli své velikosti v příloze \ref{apend:fbRoomTempMod}. Pro venkovní teplotu byl použit signál, který byl napojen na teploměr na panelu. V případě koupelny byla teplota simulována jako sinusoida v rozmezí 18-22 °C a periodou 3 minuty. Tento způsob byl zvolen kvůli absenci teploměru a akčního členu pro řízení teploty. 
+\noindent Tento funkční blok byl použit pro simulaci teploty v obývacím pokoji, kuchyni. Definice tohoto funkčního bloku je zobrazena kvůli své velikosti v příloze \ref{apend:fbRoomTempMod}. Pro venkovní teplotu byl použit signál, který byl napojen na teploměr na panelu. V případě koupelny byla teplota simulována jako sinusoida v rozmezí 18-22 °C s periodou 3 minuty. Tento způsob byl zvolen kvůli absenci teploměru a akčního členu pro řízení teploty. 
 
 \subsubsection{funkční bloky jednotlivých místností}
 \label{subsection:fb_mistnosti}
-Funkční bloky jednotlivých místností se skládají z výše uvedených funkcí, které byly poskládány v závislosti na požadavcích jednotlivých místností - viz. Obr. \ref{fig:Vzheled panelu}. Všechny funkční bloky mají definici vypsanou v přílohách dokumentu:
+Funkční bloky jednotlivých místností se skládají z výše uvedených funkcí, které byly poskládány v závislosti na požadavcích jednotlivých místností - viz Obr. \ref{fig:Vzheled panelu}. Všechny funkční bloky mají definici vypsanou v přílohách dokumentu:
 \begin{itemize}
     \item \textbf{fbBath} - V příloze \ref{apend:fbBath}
     \item \textbf{fbKitch} - V příloze \ref{apend:fbKitch}
@@ -314,44 +314,44 @@ Dále tato knihovna obsahuje datové struktury, které obsahují definice jednot
                 \hline
                 DPT 03 & T\_KNX\_OBJECT\_DPT3 & Stmívání nahoru/dolů -- 4 Bit \\
                 \hline
-                DPT 04 & T\_KNX\_OBJECT\_DPT4 & Znak -- 1 Bajt \\
+                DPT 04 & T\_KNX\_OBJECT\_DPT4 & Znak -- 1 bajt \\
                 \hline
-                DPT 05 & T\_KNX\_OBJECT\_DPT5 & Škálování -- 1 Bajt (8 Bitová hodnota) \\
+                DPT 05 & T\_KNX\_OBJECT\_DPT5 & Škálování -- 1 bajt (8 Bitová hodnota) \\
                 \hline
-                DPT 06 & T\_KNX\_OBJECT\_DPT6 & Hodnota se znaménkem -- 1 Bajt \\
+                DPT 06 & T\_KNX\_OBJECT\_DPT6 & Hodnota se znaménkem -- 1 bajt \\
                 \hline
-                DPT 07 & T\_KNX\_OBJECT\_DPT7 & Hodnota bez znaménka -- 2 Bajty \\
+                DPT 07 & T\_KNX\_OBJECT\_DPT7 & Hodnota bez znaménka -- 2 bajty \\
                 \hline
-                DPT 08 & T\_KNX\_OBJECT\_DPT8 & Hodnota se znaménkem -- 2 Bajty \\
+                DPT 08 & T\_KNX\_OBJECT\_DPT8 & Hodnota se znaménkem -- 2 bajty \\
                 \hline
-                DPT 09 & T\_KNX\_OBJECT\_DPT9 & Hodnota s desetinnou čárkou -- 2 Bajty\\
+                DPT 09 & T\_KNX\_OBJECT\_DPT9 & Hodnota s desetinnou čárkou -- 2 bajty\\
                 \hline
-                DPT 10 & T\_KNX\_OBJECT\_DPT10 & Čas -- 3 Bajty \\
+                DPT 10 & T\_KNX\_OBJECT\_DPT10 & Čas -- 3 bajty \\
                 \hline
-                DPT 11 & T\_KNX\_OBJECT\_DPT11 & Datum -- 3 Bajty \\
+                DPT 11 & T\_KNX\_OBJECT\_DPT11 & Datum -- 3 bajty \\
                 \hline
-                DPT 12 & T\_KNX\_OBJECT\_DPT12 & Hodnota bez znaménka -- 4 Bajty \\
+                DPT 12 & T\_KNX\_OBJECT\_DPT12 & Hodnota bez znaménka -- 4 bajty \\
                 \hline
-                DPT 13 & T\_KNX\_OBJECT\_DPT13 & Hodnota se znaménkem -- 4 Bajty \\
+                DPT 13 & T\_KNX\_OBJECT\_DPT13 & Hodnota se znaménkem -- 4 bajty \\
                 \hline
-                DPT 14 & T\_KNX\_OBJECT\_DPT14 & Hodnota s desetinnou čárkou -- 4 Bajty \\
+                DPT 14 & T\_KNX\_OBJECT\_DPT14 & Hodnota s desetinnou čárkou -- 4 bajty \\
                 \hline
-                DPT 15 & T\_KNX\_OBJECT\_DPT15 & Přístupová data -- 4 Bajty \\
+                DPT 15 & T\_KNX\_OBJECT\_DPT15 & Přístupová data -- 4 bajty \\
                 \hline
-                DPT 16 & T\_KNX\_OBJECT\_DPT16 & Řetězec znaků -- 14 Bajty \\
+                DPT 16 & T\_KNX\_OBJECT\_DPT16 & Řetězec znaků -- 14 bajty \\
                 \hline
-                DPT 17 & T\_KNX\_OBJECT\_DPT17 & Scéna -- 1 Bajt \\
+                DPT 17 & T\_KNX\_OBJECT\_DPT17 & Scéna -- 1 bajt \\
                 \hline
-                DPT 18 & T\_KNX\_OBJECT\_DPT18 & Kontroler scén -- 1 Bajt \\
+                DPT 18 & T\_KNX\_OBJECT\_DPT18 & Kontroler scén -- 1 bajt \\
                 \hline
-                DPT unknown & T\_KNX\_OBJECT\_RAW & Max. 14 Bajtů, Data jako pole, byte-by-byte \\
+                DPT unknown & T\_KNX\_OBJECT\_RAW & Max. 14 bajtů, Data jako pole, byte-by-byte \\
                 \hline
             \end{tabular}
 \end{table}
-\subsubsection{Realizace komununikace KNX/IP}
-Pro realizaci v tomto případě byla potřeba kromě přidání knihovny, a vytvoření programu ještě nastavit ethernet port. V tomto případě to byl do \textit{ETH2} přidán obecný kanál \textit{UNI1}, který bylo potřeba nastavit jako TCP Server. Dále je pak nutné vytvořit proměnných dle tabulky datapointů \ref{tab:Datapointy pro komunikaci KNX IP BAOS 774 s PLC}, získat jejich adresy a poté je vložit do pole.
+\subsubsection{Realizace komunikace KNX/IP}
+Pro realizaci v tomto případě bylo potřeba kromě přidání knihovny a vytvoření programu ještě i nastavit ethernet port. V tomto případě byl do \textit{ETH2} přidán obecný kanál \textit{UNI1}, který bylo potřeba nastavit jako TCP Server. Dále je pak nutné vytvořit několik proměnných dle tabulky datapointů \ref{tab:Datapointy pro komunikaci KNX IP BAOS 774 s PLC}, získat jejich adresy a poté je vložit do pole.
 
-Dalším krokem je nastavení funkčního bloku \textit{fbKnxIpBaosBin}. Nejprve se nastaví číslo prvního a posledního datapointu, který má funkční blok zpracovat, poté se nastaví použitý ethernet port a IP adresa KNX/IP BAOS 774 instalace. Nakonec se předá do portu \textit{knxList} námi definované pole s adresami.Po tomto kroku je už možné pracovat s proměnnými a vytvoření logik.
+Dalším krokem je nastavení funkčního bloku \textit{fbKnxIpBaosBin}. Nejprve se nastaví číslo prvního a posledního datapointu, který má funkční blok zpracovat, poté se nastaví použitý ethernet port a IP adresa KNX/IP BAOS 774 instalace. Nakonec se předá do portu \textit{knxList} námi definované pole s adresami. Po tomto kroku je už možné pracovat s proměnnými a vytvoření ovládací logiku.
 
 V případě této práce se používají pouze 3 druhy datapointů a to:
 \begin{itemize}
@@ -385,6 +385,8 @@ knx( firstKnxObject := 1,
      ethCode := ETH2_uni2,
      knxIP := STRING_TO_IPADR('192.168.xxx.xxx'),
      knxList := void( knxObjectList));
+\end{lstlisting}
+\begin{lstlisting}[language=ST, breaklines=true, firstnumber=25, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
 
 SV1_FB := datapoint1.value; // Feedback
 IF SV1_CMD THEN datapoint2.value := SV1_CMD.CMD_VAL; // CMD
@@ -398,8 +400,10 @@ KNX_TEMPER := datapoint4.value;// Posílání teploty
 END_PROGRAM
 \end{lstlisting}
 \subsection{Komunikace MQTT}
+\label{subsection:MQTT}
 Tato sekce je zaměřená na realizaci komunikace skrze protokol MQTT, který je navržen jako lehký přenos zpráv mezi zařízeními a aplikacemi. Jeho cílovou skupinou jsou zařízení s malou kódovou stopou a minimální šířkou pásma sítě. \cite{MQTT}
 
+\subsubsection{Protokol}
 Základními myšlenkami protokolu MQTT je posílání zpráv mezi vydavatelem (publisher) a odběratelem(client) skrze zprostředkovatele (broker). Tento broker zajišťuje, že zprávy jsou doručeny správným odběratelům. Vydavatel a odběratel nemusí být navzájem známi a komunikují pouze skrze brokera. \cite{MQTT}
 
 Tento druh komunikace je realizován pomocí packetů (balíků dat) posílaných mezi zařízeními. Jednotlivé datové balíky jsou tvořen třemi částmi \cite{MQTTEsentials}:
@@ -441,23 +445,103 @@ Dálší část je text samotné zprávy, která je odeslána na dané téma. Ta
 
 Poslední součástí zprávy je \textit{Last Will and Testament} (LWT), což je zpráva, která je odeslána brokerem v případě, že se zařízení odpojí bez předchozího oznámení. Tato zpráva může být užitečná pro monitorování stavu zařízení a detekci výpadků \cite{MQTTEssentials}.
 
+\subsubsection{MQTTlib}
+Pro realizaci komunikace mezi PLC a Home Assistantem byla použita knihovna MQTTlib, která obsahuje funkční bloky pro nastolení komunikace - \textit{fbMQTTPublisher}, \textit{fbMQTTSubscriber}. \cite{MQTTlib}
 
+Prvním krokem pro realizaci komunikace je nastavení ethernet portu, který bude použit pro komunikaci. V případě této práce byl použit stejný port jako pro KNX/IP komunikaci (\textit{ETH2}). Na tomto portu byly vytvořeny dva obecné kanály \textit{UNI0} a \textit{UNI1}, které byly nastaveny jako TCP clienty s šíkou pásma 512 bytů. Počet kanálu závisí na počtu nastolených spojení. Pro jednoduchost se jedná o jedno spojení pro publikování a jedno pro odběr zpráv. 
 
+Dalším krokem je nastavení funkčních bloků. V obou případech je nastavení obdobné. Nejprve se nastaví kanál na kterém bude komunikace probíhat - IP adresa brokeru, port brokeru, lokální port, časový interval pro kontrolu spojení a délku nečinosti. Dále se nastaví parametry komunikace a poslední vůle:
+\begin{itemize}
+    \item \textbf{clientID\_auto} - automatické generování identifikátoru klienta
+    \item \textbf{clientID} - identifikátor klienta
+    \item \textbf{loginName} - uživatelské jméno pro připojení k brokeru
+    \item \textbf{loginPass} - heslo pro připojení k brokeru
+    \item \textbf{retain} - určuje zda má být zpráva uchována na brokeru
+    \item \textbf{QoS} - určuje úroveň kvality služeb
+    \item \textbf{cleanSession} - určuje zda má broker uložit stav relace po výpadku
+    \item \textbf{topic} - téma komunikace
+    \item \textbf{mess} - zpráva komunikace
+    \item \textbf{flag} - určuje zda má být poslední vůle odeslána v případě odpojení klienta bez předchozího oznámení \newline
+\end{itemize}
 
+Po nastavení funkčních bloků je potřeba definovat proměnné na uchovávání zpráv. Maximální délka zprávy je 256 znaků pro oba funkční bloky. Níže je uveden příklad nastavení komunikace pro publikování zprávy:
+\begin{lstlisting}[language=ST, breaklines=true, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small, caption={Příklad nastavení komunikace pro publikování zprávy}, label={lst:publikace}]
+PROGRAM prgMQTTPub
+    VAR
+        mqttPub : fbMQTTPublisher;
+
+        brokerIPaddr      : STRING := '192.168.xxx.xxx'; // IP adresa brokeru
+        brokerPort        : UINT := 1883; // Port brokeru
+        localPort         : UINT := 60000; // Lokalni port
+        keepAlive         : BOOL  := TRUE; // Udrzeni spojeni po vypadku
+        keepAliveInterval : TIME  := T#60s; // Konec spojeni bez dat
+        pingInterval      : TIME  := T#10s; // Kontrola spojeni
+\end{lstlisting}
+\begin{lstlisting}[language=ST, breaklines=true, firstnumber=11, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
+        connTimeOut       : TIME  := T#5s; // Maximalni delka odezvy
+
+        pubComParam   : T_MQTT_COM_PUB_PARAM := (
+        pRetain := TRUE, // Uchovani zpravy na brokeru
+        qos     := 1, // Kvalita sluzeb
+        dup     := FALSE, // Opakovani zpravy
+        clean   := FALSE // Uchovani stavu relace
+        );
+
+        willParamPub  : T_MQTT_COM_WILL_PARAM := (
+        wRetain := FALSE, // Uchovani posledni vule na brokeru
+        topic   := 'plc/Connect/Publisher', // Tema poslední vule
+        mess    := 'Disconnected', // Zprava posledni vule
+        flag    := TRUE, // Odeslani posledni vule
+        qos     := 1 // Kvalita sluzeb
+        );
+
+        jsonPayload : STRING[255]; // Zprava
+        topic      : STRING[80] := 'plc/test'; // Tema
+    END_VAR
+
+jsonPayload := CONCAT(
+    '{',"test",'}'
+);
+mqttPub(
+    chanCode          := ETH2_uni1, // Fyzicky kanal
+    brokerIP          := STRING_TO_IPADR(brokerIPaddr),
+    brokerPort        := brokerPort,
+    localPort         := localPort,
+    connect           := TRUE, // Pripojit k brokeru
+    keepAlive         := keepAlive,
+    keepAliveInterval := keepAliveInterval,
+    pingInterval      := pingInterval,
+    connTimeOut       := connTimeOut,
+    clientId_auto     := FALSE, // Automaticke generovani ID
+    clientId          := 'TEST_PUB', // ID klienta
+    comParam          := pubComParam, // Parametry komunikace
+    willParam         := willParamPub, // Parametry posledni vule
+    topicTxt          := topic, // Tema
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[language=ST, breaklines=true, firstnumber=50, numbers=left, numberstyle=\small, numbersep=10pt, frame=single, basicstyle=\ttfamily\small]
+    dataTxt           := jsonPayload, // Zprava
+    sendCom           := TRUE // Odeslani zpravy
+);
+END_PROGRAM
+\end{lstlisting}
+
+Implementace použitá v této práci je uvedena v příloze \ref{apend:MQTTComm}. Jedná se o nastavení komunikace pro komunikaci s Home Assistantem, který přijímá hodnoty teplot místností a odesílá příkaz pro celkové vypnutí instalace. 
 \subsection{Vizualizace}
 V této sekci je popsána tvorba vizualizace panelu pomocí integrovaného webového serveru. Nastavení a realizace webového serveru je realizována pomocí integrovaného nástroje WebMaker. Tento nástroj je popsán v dokumentaci \cite{WebMaker}.
-Prvním krokem k vytvoření je vytvoření struktury projektu. V tomto případě to bude 5 stránek ve formátu .XML zasazených do webové struktury: \newline
+
+Prvním krokem je vytvoření struktury projektu. V tomto případě to bude 5 stránek ve formátu .XML zasazených do webové struktury: \newline
 
 \dirtree{%
 .1 /Vizualizace.
 .2 Prehled - PAGE1.xml.
-.2 Venek - PAGE2.xml.
+.2 Veranda - PAGE2.xml.
 .2 Kuchyn - PAGE3.xml.
 .2 Koupelna - PAGE4.xml.
 .2 Obyvaci\_pokoj - PAGE5.xml. 
 }
 \vspace{0.3cm}
-Druhým krokem bylo importování sady ikonek, které byly použity jako vícerozměrné obrázky napojené na výstupy funkčních bloků uvedených v podkapitole \ref{subsection:fb_mistnosti}. Tyto ikony byly získány na stránce Flaticon \cite{Flaticon}, která poskytuje vektorové ikony na projekty zdarma s možností úpravy. 
+Druhým krokem bylo importování sady ikon, které byly použity jako vícerozměrné obrázky napojené na výstupy funkčních bloků uvedených v podkapitole \ref{subsection:fb_mistnosti}. Tyto ikony byly získány na stránce Flaticon \cite{Flaticon}, která poskytuje vektorové ikony na projekty zdarma s možností úpravy. 
 
 
 \begin{figure}[!ht]
@@ -468,5 +552,5 @@ Druhým krokem bylo importování sady ikonek, které byly použity jako vícero
     \label{fig:ikony}
 \end{figure}
 
-Dále se musely vytvořit ovládací tlačítka pro ovládání jednotlivých objektů. Tato tlačítka byla také vytvořena jako vícerozměrné obrázky, které byly napojeny na vstupy funkčních bloků. Pro zobrazování teplot v jednotlivých místnostech byla použita zadávací poles parametrem \textit{Read only}. 
-Výsledná vizualizace je uvedena v příloze \ref{apend:vizualizace}. Vzhled byl zvolen minimalistický a funkční s ohledem na viditelnost a přehlednost. Pozadí bylo zvoleno černé, aby šel lépe vidět kontrast ikon a textu. Dalším důvodem byla ochrana zraku při ovládání v noci.
+Dále se musely vytvořit ovládací tlačítka jednotlivých objektů. Tato tlačítka byla také vytvořena jako vícerozměrné obrázky, které byly napojeny na vstupy funkčních bloků. Pro zobrazování teplot v jednotlivých místnostech byla použita zadávací pole s parametrem \textit{Read only}. 
+Výsledná vizualizace je uvedena v příloze \ref{apend:webmaker}. Vzhled byl zvolen minimalistický a funkční s ohledem na viditelnost a přehlednost. Černé pozadí zdůrazňuje kontrast ikon a textu. Dalším důvodem byla ochrana zraku při ovládání v noci.
