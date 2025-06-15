@@ -74,7 +74,7 @@
 
 
 
-%\begin{document}
+\begin{document}
 
 % v případě zakomentování následujícího se zobrazí v pravém dolním rohu slajdů klikatelné navigační symboly 
 \disablenavigationsymbols
@@ -87,12 +87,17 @@
 	% nadpis snímku
 	\frametitle{Obsah}
 	\begin{itemize}
-			\item Cíle práce
-			\item Tvorba instalace
-			\item Parametrizace
-			\item Tvorba skupinových adres
-			\item Výsledky
-			\item Závěr
+			\item Cíle práce.
+			\item Architektura.
+			\item Tvorba instalace.
+			\item Realizace ovládání a komunikace skrze PLC.
+			\item Simulace teploty.
+			\item WebMaker.
+			\item Docker Compose.
+			\item Vizualizace Home Assistant.
+			\item Vizualizace Grafana.
+			\item Výsledky.
+			\item Závěr.
 	\end{itemize}
 \end{frame}
 
@@ -101,127 +106,217 @@
 	\frametitle{Cíle práce}
 	\begin{itemize}
 			\item Seznámení s technologií KNX.
-			    \begin{itemize}
-					\item Historie.
-					\item Možnosti použití technologie.
-					\item Sběrnicová instalace.
-					\item Zabezpečení.
-					\item Topologie.
-				\end{itemize}
-			\item Seznámení se společností Flowbox.
+			\begin{itemize}
+				\item Historie, možnosti použití, sběrnicová instalace, zabezpečení a topologie.
+			\end{itemize}
 			\item Vytvoření programu pomocí softwaru ETS.
-				\begin{itemize}
-					\item Tvorba instalace.
-					\item Parametrizace.
-					\item Skupinové adresy.
-				\end{itemize}
+			\begin{itemize}
+				\item Tvorba instalace, parametrizace a tvorba skupinových adres.
+			\end{itemize}
+			\item Vizualizace skrze PLC - CP-2007.
+			\begin{itemize}
+				\item Logiky, komunikace mezi PLC a panelem, komunikace mezi PLC a Raspberry Pi, vizualizace.
+			\end{itemize}
+			\item Vizualizace za použití open-source řešení - Raspberry Pi 5.
+			\begin{itemize}
+				\item Docker Compose, Portainer, Mosquitto, Home Assistant, InfluxDB a Grafana.
+			\end{itemize}
 	\end{itemize}
 \end{frame}
 
-%%%%%%%%%%%%%
 \begin{frame} 
-	\frametitle{Tvorba instalace}
-	\begin{itemize}
-	    \item Kroky tvorby:
-	        \begin{itemize}
-	            \item Zvolení typu páteřní linie, skupinové adresy a topologie.
-	            \item Segmentace budovy.
-	            \item Výběr prvku z katalogu.
-	        \end{itemize}
-	\end{itemize}
-			\begin{figure}%	
+	% nadpis snímku
+	\frametitle{Architektura}
+			\begin{figure} [!ht]
 				\centering
-				\vspace{0.2cm}	              % horizontální mezera
-				\includegraphics[width=1\columnwidth]{obrazky/Katalog.png}
-				\caption{Katalog}
-				%\caption{Popisek obrázku}%
-				%\label{obr:ukazka}
+				%\vspace{0.2cm}	              % horizontální mezera
+				\includegraphics[width=0.75\columnwidth]{obrazky/architecture.png}
+				\caption{Architektura}
 			\end{figure}
 \end{frame}
 
-
 \begin{frame} 
 	\frametitle{Tvorba instalace}
-	
-	\begin{columns}[T] 								% prostředí sloupce s umístěním nahoře
-		\begin{column}{0.35\textwidth}		% první sloupec
-			Pracovní plocha znázorňuje:\\[2ex]
+	\begin{itemize}
+		\item Kroky tvorby:
 			\begin{itemize}
-				\item Umístění.
-				\item Individuální adresy.
-				\item Aplikační program.
-				\item Výrobce.
-				\item Produkt.
+				\item Výběr topologie – volba přenosového média(TP, IP, RF, PL), páteřní linky a segmentace sítě.
+				\item Výběr prvku z katalogu.
+				\item Parametrizace.
+				\item Vytvoření skupinových adres.
+			\end{itemize}
+	\end{itemize}
+	\begin{figure} [!ht]	
+		\centering
+		\vspace{0.2cm}	              % horizontální mezera
+		\includegraphics[width=0.8\columnwidth]{obrazky/Přístroje v ETS.png}
+		\caption{Přístroje v ETS}
+		%\caption{Popisek obrázku}%
+		%\label{obr:ukazka}
+	\end{figure}										% ukončení prostředí sloupce
+\end{frame}
+
+\begin{frame} 
+	\frametitle{Realizace ovládání a komunikace skrze PLC}
+	\begin{columns}
+		\begin{column}{0.7\textwidth}
+			
+			\begin{itemize}
+				\item Vytvoření logiky v PLC.
+				\begin{itemize}
+					\item Funkční bloky určený k ovládání.
+					\item Funkční blok pro simulaci teploty.
+					\item Funkční bloky realizující pokoje.
+				\end{itemize}
+				\item Komunikace mezi PLC a panelem - KNX/IP.
+				\item Komunikace mezi PLC a Raspberry Pi - MQTT.
 			\end{itemize}
 		\end{column}
-		%
-		\begin{column}{0.75\textwidth}		% druhý sloupec
-			\begin{figure}%	
+		\begin{column}{0.3\textwidth}
+			\begin{figure} [!ht]	
 				\centering
-				\vspace{1cm}	              % horizontální mezera
-				\includegraphics[width=1\columnwidth]{obrazky/Přístroje v ETS.png}
-				\caption{Přístroje v ETS}
-				%\caption{Popisek obrázku}%
-				%\label{obr:ukazka}
+				\includegraphics[width=1\columnwidth]{obrazky/plc.png}
+				\caption{PLC - CP-2007}
+			\end{figure}		
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame} 
+	\frametitle{Simulace teploty}
+	\begin{itemize}
+		\item Funkce růstvu v rekurzivním tvaru:
+	\end{itemize}
+	\begin{equation}
+		y = y_{Posl} + \frac{ln(1 + k \cdot \Delta t)}{ln(1 + k \cdot T_{Max})} \cdot (y_{Max} - y_{Posl}) 
+	\end{equation}
+	\begin{itemize}
+		\item Funkce poklesu v rekurzivním tvaru:
+	\end{itemize}
+	\begin{equation}
+		y = y_{Posl} \cdot e^{-k \cdot \Delta t}
+	\end{equation}		
+\end{frame}
+
+\begin{frame}
+	\frametitle{Simulace teploty}
+	\begin{figure} [!ht]	
+		\centering              % horizontální mezera
+		\includegraphics[width=0.65\columnwidth]{obrazky/simulace_teploty_kuchyne.pdf}
+		\caption{Příklad simulace teploty}
+	\end{figure}										% ukončení prostředí sloupce
+\end{frame}
+
+\begin{frame} 
+	\frametitle{WebMaker}
+	\begin{itemize}
+		\item Tvorba webového rozhraní.
+		\item Vytvoření přístupových údajů a přidělování práv.
+		\item Propojení objektů s proměnnými.
+	\end{itemize}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure} [!ht]	
+				\centering
+				\includegraphics[width=1\columnwidth]{obrazky/Přehled.png}
+				\caption{WebMaker - Přehled}
+			\end{figure}	
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{figure} [!ht]	
+				\centering
+				\includegraphics[width=1\columnwidth]{obrazky/Obyvaci_pokoj.png}
+				\caption{WebMaker - Obývací pokoj}
 			\end{figure}
 		\end{column}
-	\end{columns}											% ukončení prostředí sloupce
+	\end{columns}
 \end{frame}
 
 \begin{frame} 
-	\frametitle{Parametrizace}
-	\begin{itemize}
-	    \item Výběr provedení.
-	    \item Nastavování vnitřních senzorů.
-	    \item Nastavování funkcí.
-	    \item Nastavování scén.
-	\end{itemize}
-			\begin{figure}%	
+	\frametitle{Docker Compose}
+	\begin{columns}
+		\begin{column}{0.6\textwidth}
+			\begin{itemize}
+				\item Izolace aplikací a jejich závislostí. % Izolace znamená, že každá aplikace běží v samostatném kontejneru a jejich závislosti jsou oddělené od ostatních aplikací.
+				\item Snadné nasazení a škálování aplikací.
+				\item Opakovatelné a konzistentní prostředí napříč vývojovými a produkčními servery.
+				\item Jednoduchá správa více služeb v rámci jednoho projektu.
+				\item Efektivní využití systémových prostředků.
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.4\textwidth}
+			\begin{figure} [!ht]	
 				\centering
-				\vspace{0.2cm}	              % horizontální mezera
-				\includegraphics[width=.5\columnwidth]{obrazky/Ukazka parametrizace.png}
-				\caption{Ukázka parametrizace}
-				%\caption{Popisek obrázku}%
-				%\label{obr:ukazka}
+				\includegraphics[width=1\columnwidth]{obrazky/stack.png}
+				\caption{Docker Compose - Stack}
 			\end{figure}
+		\end{column}
+	\end{columns}
 \end{frame}
 
 \begin{frame} 
-	\frametitle{Tvorba skupinových adres}
+	\frametitle{Vizualizace Home Assistant}
 	\begin{itemize}
-	    \item Kroky tvorby skupinových adres:	
-	        \begin{itemize}
-	            \item Vytvoření hlavní skupinové adresy.
-	            \item Vytvoření střední skupinové adresy.
-	            \item Vytvoření podskupinové adresy.
-	            \item Vložení objektů z přístrojů.
-	        \end{itemize}
+		\item Podpora široké škály zařízení a protokolů.
+		\item Umožňuje vytvářet automatizace, scénáře a vizualizace.
+		\item Komunita a ekosystém s množstvím integrací.
+		\item Možnost přizpůsobení uživatelského rozhraní.
+		\item Lze měřit a spravovat spotřebu energie(spotřebiče, síť, obnovitelné zdroje).
 	\end{itemize}
-
-			\begin{figure}%	
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure} [!ht]	
 				\centering
-				\vspace{0.2cm}	              % horizontální mezera
-				\includegraphics[width=1\columnwidth]{obrazky/Ukazka skupinovych adres.png}
-				\caption{Ukázka skupinových adres}
-				%\caption{Popisek obrázku}%
-				%\label{obr:ukazka}
+				\includegraphics[width=0.875\columnwidth]{obrazky/Dashboard2.png}
+				\caption{Funkční vizualizace}
 			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{figure} [!ht]	
+				\centering
+				\includegraphics[width=0.9\columnwidth]{obrazky/Dashboard3.png}
+				\caption{Vizualizace dle umístění}
+			\end{figure}
+		\end{column}
+	\end{columns}
 \end{frame}
+
+\begin{frame} 
+	\frametitle{Vizualizace Grafana}
+	\begin{columns}
+		\begin{column}{0.6\textwidth}
+	\begin{itemize}
+		\item Vizualizace a analýza dat.
+		\item Podpora různých datových zdrojů (InfluxDB, Prometheus, MySQL).
+		\item Umožňuje vytvářet interaktivní grafy a zobrazovače.
+		\item Možnost sledování a upozorňení na události v reálném čase.
+	\end{itemize}
+		\end{column}
+		\begin{column}{0.4\textwidth}
+			\begin{figure} [!ht]	
+				\centering              % horizontální mezera
+				\includegraphics[width=0.9\columnwidth]{obrazky/Grafana.png}
+				\caption{Grafana}
+			\end{figure}	
+		\end{column}
+	\end{columns}
+\end{frame}									% ukončení prostředí sloupce
 
 %%%%%%%%%%%%%
 \begin{frame} 
 	\frametitle{Výsledky}
 	\begin{columns}[T] 								% prostředí sloupce s umístěním nahoře
 		\begin{column}{0.6\textwidth}		% první sloupec
-	        \begin{itemize}
-	            \item Hotová kapitola zaměřená na sběrnicový systém KNX.
-	            \item Navázaný kontakt se společností Flowbox.
-	            \item Hotová kapitola zaměřená na práci v ETS.
-	            \item Funkční program.
-	            \item Nenastavitelné tlačítko Berker.
-	        \end{itemize}
-	    \end{column}
-	    
+			\begin{itemize}
+				\item Funknčí instalace KNX.
+				\item Otestované komunikace mezi jednotlivými částmi.
+				\item Ovládání instalace z více míst. 
+				\item Ukládání dat do databáze.
+				\item Různé možnosti vizualizace.
+				\item Nenastavitelné tlačítko Berker.
+				\item Překročený počet zápisů na komunikační bráně IP Baos.
+			\end{itemize}
+		\end{column}
 	\begin{column}{0.4\textwidth}		% druhý sloupec
 			\begin{figure}%	
 				\includegraphics[width=.8\columnwidth]{obrazky/IMG_20211217_121402.jpg}
@@ -237,16 +332,21 @@
 %%%%%%%%%%%%%
 \begin{frame} 
 	\frametitle{Závěr}
-\begin{itemize}
-    \item Pro bližší seznámení s problematikou nutno absolvovat školení KNX.
-    \item Více, než polovina práce je hotova.
-    \item Do dalšího vydání práce:
-        \begin{itemize}
-            \item Nutnost změny dynamických scén.
-            \item Vytvoření komunikačního driveru ve spolupráci se společností Flowbox.
-            \item Vytvoření vizualizace skrze server Flowbox.
-        \end{itemize}
-\end{itemize}
+	\begin{itemize}
+		\item Práce obsahuje:
+			\begin{itemize}
+				\item Základní informace o sběrnici KNX.
+				\item Tvorbu instalace v softwaru ETS.
+				\item Realizaci ovládání, komunikace a vizualizaci skrze PLC.
+				\item Jiný přístup k vizualizaci pomocí open-source řešení.
+			\end{itemize} 
+		\item Přidaná hodnota práce:
+			\begin{itemize}
+				\item Popis komunikačního protokolu MQTT.
+				\item Zvětšení povědomí o možnostech použití open-source platforem.
+				\item Rozšíření informací obsažených v knihovnách PLC.
+			\end{itemize}
+	\end{itemize}
 \end{frame}
 
 
@@ -260,12 +360,54 @@
 \end{frame}
 
 % otázky oponenta
-%\frame{
-%\frametitle{Otázky oponenta}
-%	\emph{Jaká je souvislost Vašeho vzorce (1.2) s~Maxwellovými rovnicemi v~integrálním tvaru?}\\[2ex]
-	%
-%	Již staří Římané\,\dots
-%}
+\frame{
+\frametitle{Otázky oponenta}
+	\emph{Z jakého důvodu nebyl využit větší potenciál vizualizace v prostředí WebMaker (výhody, nevýhody, popis problémů v komunikaci)?}\\[2ex]
+	\begin{itemize}
+		\item Výhody:
+		\begin{itemize}
+			\item Průmyslové řešení.
+			\item Složitější a přesnější operace skrze PLC (regulátory).
+			\item Jednoducé ovládání.
+	\end{itemize}
+		\item Nevýhody:
+		\begin{itemize}
+			\item Jednoduché objekty.
+			\item Malé rozlišení.
+			\item Základní grafy.
+			\item Stáří řešení.
+		\end{itemize}
+		\item Problémy v komunikaci:
+		\begin{itemize}
+			\item Porucha vnitřní paměti KNX IP BAOS 774 - EEPROM.
+			\item Nedokáže z DNS dostat IP adresu.
+			\item Nedokáže ukládat nastavení objektů.
+		\end{itemize}
+	\end{itemize}
+}
 
-%\end{document}
+\frame{
+\frametitle{Otázky oponenta}
+	\emph{Jaké jsou nevýhody, hlavně bezpečnostní, pří využití open source platforem pro vizualizaci a ovládání systému?}\\[2ex]
+	\begin{itemize}
+		\item Nevýhody:
+		\begin{itemize}
+			\item Závislost na komunitě.
+			\item Nedostatek oficiální podpory.
+			\item Možné problémy s kompatibilitou.
+			\item Vyšší nároky na znalosti uživatele.
+		\end{itemize}
+		\item Bezpečnostní rizika:
+		\begin{itemize}
+			\item Výpadky napájení.
+			\item Zabezpečení je závislé přímo na zdatnosti zhotovitele.
+			\item Možnost chyb v dalších aktualizacích.
+			\item Známé zranitelnosti v open-source software, které ještě nebyly opraveny.
+			\item Nešifrované komunikace některých protokolů.
+			\item Zadní vrátka v open-source software.
+		\end{itemize}
+	\end{itemize}
+}
+
+\end{document}
 
